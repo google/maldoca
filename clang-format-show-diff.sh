@@ -1,4 +1,4 @@
-# Copyright 2020 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,17 +20,16 @@ clang-format --version
 
 EXIT_CODE=0
 
-for FILE in maldoca/vba/* \
-            maldoca/vba/antivirus/* \
-            maldoca/vba/ast/* \
-            maldoca/vba/parser/* \
-            maldoca/vba/test/* \
-            maldoca/base/* \
+for FILE in maldoca/base/* \
+            maldoca/base/testing/* \
+            maldoca/base/utf8/* \
             maldoca/pdf_parser/* \
+            maldoca/pdf_parser/proto/* \
             maldoca/service/* \
             maldoca/service/common/* \
-            maldoca/service/common/yara/* \
-            maldoca/service/common/pdf_sandbox/*; do
+            maldoca/service/common/proto/* \
+            maldoca/vba/* \
+            maldoca/vba/antivirus/*; do
   case $FILE in
     *.h|*.cc|*.proto)
       # Run clang-format, then compare the output.
