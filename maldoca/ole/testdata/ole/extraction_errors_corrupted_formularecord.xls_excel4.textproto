@@ -1,0 +1,264 @@
+summary_information {
+  byte_order: 65534
+  version: 0
+  system_id: 131082
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  property_set {
+    fmtid {
+      data: "\340\205\237\362\371Oh\020\253\221\010\000+\'\263\331"
+    }
+    property {
+      property_id: 1
+      type: kVtI2
+      value {
+        int: 1252
+      }
+    }
+    property {
+      property_id: 4
+      type: kVtLpstr
+      value {
+        str: "John"
+      }
+    }
+    property {
+      property_id: 8
+      type: kVtLpstr
+      value {
+        str: "John"
+      }
+    }
+    property {
+      property_id: 18
+      type: kVtLpstr
+      value {
+        str: "Microsoft Excel"
+      }
+    }
+    property {
+      property_id: 12
+      type: kVtFiletime
+      value {
+        uint: 132605447090000000
+      }
+    }
+    property {
+      property_id: 13
+      type: kVtFiletime
+      value {
+        uint: 132605451990000000
+      }
+    }
+    property {
+      property_id: 19
+      type: kVtI4
+      value {
+        int: 0
+      }
+    }
+  }
+}
+document_summary_information {
+  byte_order: 65534
+  version: 0
+  system_id: 131082
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  property_set {
+    fmtid {
+      data: "\002\325\315\325\234.\033\020\223\227\010\000+,\371\256"
+    }
+    property {
+      property_id: 1
+      type: kVtI2
+      value {
+        int: 1252
+      }
+    }
+    property {
+      property_id: 15
+      type: kVtLpstr
+      value {
+        str: ""
+      }
+    }
+    property {
+      property_id: 23
+      type: kVtI4
+      value {
+        int: 1048576
+      }
+    }
+    property {
+      property_id: 11
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 16
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 19
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 22
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 13
+      type: kVtVectorVtLpstr
+      value {
+        vector {
+          type: kVtLpstr
+          value {
+            str: "Sheet1"
+          }
+          value {
+            str: "INTERNAL_NAME1"
+          }
+          value {
+            str: "INTERNAL_NAME2"
+          }
+        }
+      }
+    }
+    property {
+      property_id: 12
+      type: kVtVectorVtVariant
+      value {
+        vector {
+          type: kVtVariant
+          value {
+            str: "Worksheets"
+          }
+          value {
+            int: 1
+          }
+          value {
+            str: "Named Ranges"
+          }
+          value {
+            int: 2
+          }
+        }
+      }
+    }
+  }
+}
+ole_dirs {
+  name: "Root Entry"
+  entry_type: 5
+  clsid {
+    data: " \010\002\000\000\000\000\000\300\000\000\000\000\000\000F"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  child_index: 1
+  child_index: 2
+  child_index: 3
+}
+ole_dirs {
+  name: "Workbook"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 15841
+  stream_hash: "\201\372\303Z\032\306d\036\r\263\233.\247\337Cv\034\313@,"
+  strings: "333333"
+  strings: "?333333"
+  strings: "Accent1"
+  strings: "Accent2"
+  strings: "Accent3"
+  strings: "Accent4"
+  strings: "Accent5"
+  strings: "Accent6"
+  strings: "Calculation"
+  strings: "Calibri"
+  strings: "Calibri Light1"
+  strings: "Calibri1"
+  strings: "Calibri1*"
+  strings: "Check Cell"
+  strings: "Currency"
+  strings: "EXTERNAL_NAME"
+  strings: "Explanatory Text"
+  strings: "Heading 1"
+  strings: "Heading 2"
+  strings: "Heading 3"
+  strings: "Heading 4"
+  strings: "HelloWorld"
+  strings: "INTERNAL_NAME1:"
+  strings: "INTERNAL_NAME2:"
+  strings: "Linked Cell"
+  strings: "Neutral"
+  strings: "Normal"
+  strings: "Output"
+  strings: "Percent"
+  strings: "Sheet1"
+  strings: "Sheet1#"
+  strings: "TableStyleMedium2PivotStyleLight16"
+  strings: "Warning Text"
+  strings: "[Content_Types].xml"
+  strings: "[Content_Types].xmlPK"
+  strings: "_rels/.relsPK"
+  strings: "extraction_errors_base_external_doc.xlsx"
+  strings: "ffffff"
+  strings: "theme/theme/_rels/themeManager.xml.rels"
+  strings: "theme/theme/_rels/themeManager.xml.relsPK"
+  strings: "theme/theme/theme1.xml"
+  strings: "theme/theme/theme1.xmlPK"
+  strings: "theme/theme/themeManager.xml"
+  strings: "theme/theme/themeManager.xmlPK"
+  xls_formula: true
+}
+ole_dirs {
+  name: " DocumentSummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "\247\3214\373\001\353N\314A]Q\361\303j\324\240\307a\241\323"
+}
+ole_dirs {
+  name: " SummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "1\232\343[\"\n\327\361jY\270\352\036\212\374\235\321\300\017\310"
+}
+excel4_macros {
+  extraction_errors {
+    msg: "Failed to parse record. Expected size is: 3330, but available data size is: 122."
+  }
+  ast_str: "formulas { cell { row_idx: 2 col_idx: 0 } formula { expression { binary { op: XL_BINARY_OP_CONCAT lhs { constant { str { value: \"Hello\" options { is_16bit: false } } } } rhs { constant { str { value: \"World\" options { is_16bit: false } } } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 3 col_idx: 0 } formula { extraction_errors { msg: \"There can only be one final expression per formula; found: 0\" } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 0 col_idx: 0 } formula { expression { operand { name { external { id: 0 sheet_ref { doc { value: \"\\001extraction_errors_base_external_doc.xlsx\" options { is_16bit: false } } is_global_reference: true } } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 1 col_idx: 0 } formula { expression { operand { ref { ref_3d { sheet_ref { doc { value: \"\\001extraction_errors_base_external_doc.xlsx\" options { is_16bit: false } } sheet { name { value: \"Sheet1\" options { is_16bit: false } } idx: 1 } } } cell_address { row_idx: 2 col_idx: 0 is_relative_row: true is_relative_col: true } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } definitions { name { user_defined { value: \"INTERNAL_NAME1\" options { is_16bit: false } } } formula { expression { operand { ref { ref_3d { sheet_ref { doc { } is_internal_reference: true sheet { name { value: \"Sheet1\" options { is_16bit: false } } idx: 1 } } } cell_address { row_idx: 2 col_idx: 0 is_relative_row: false is_relative_col: false } } } } } sheet_idx: 0 id: 0 } definitions { name { user_defined { value: \"INTERNAL_NAME2\" options { is_16bit: false } } } formula { expression { operand { ref { ref_3d { sheet_ref { doc { } is_internal_reference: true sheet { name { value: \"Sheet1\" options { is_16bit: false } } idx: 1 } } } cell_address { row_idx: 3 col_idx: 0 is_relative_row: false is_relative_col: false } } } } } sheet_idx: 0 id: 1 } external_definitions { name { user_defined { value: \"EXTERNAL_NAME\" options { is_16bit: false } } } external_name { formula { ref { ref_3d { sheet_ref { doc { value: \"\\001extraction_errors_base_external_doc.xlsx\" options { is_16bit: false } } sheet { name { value: \"Sheet1\" options { is_16bit: false } } idx: 1 } } } cell_address { row_idx: 1 col_idx: 0 is_relative_row: false is_relative_col: false } } } } id: 0 } sheets { idx: 1 state: XL_SHEET_STATE_VISIBLE type: XL_SHEET_TYPE_WORKSHEET name { value: \"Sheet1\" options { is_16bit: false } } } "
+  max_ast_recursion_depth: 11
+}

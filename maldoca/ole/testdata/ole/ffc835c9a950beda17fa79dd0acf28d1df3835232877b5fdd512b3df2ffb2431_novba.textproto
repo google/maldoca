@@ -1,0 +1,395 @@
+summary_information {
+  byte_order: 65534
+  version: 0
+  system_id: 131334
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  property_set {
+    fmtid {
+      data: "\340\205\237\362\371Oh\020\253\221\010\000+\'\263\331"
+    }
+    property {
+      property_id: 1
+      type: kVtI2
+      value {
+        int: 1252
+      }
+    }
+    property {
+      property_id: 4
+      type: kVtLpstr
+      value {
+        str: "lenovio"
+      }
+    }
+    property {
+      property_id: 7
+      type: kVtLpstr
+      value {
+        str: "Normal"
+      }
+    }
+    property {
+      property_id: 8
+      type: kVtLpstr
+      value {
+        str: "lenovio"
+      }
+    }
+    property {
+      property_id: 9
+      type: kVtLpstr
+      value {
+        str: "1"
+      }
+    }
+    property {
+      property_id: 18
+      type: kVtLpstr
+      value {
+        str: "Microsoft Office Word"
+      }
+    }
+    property {
+      property_id: 10
+      type: kVtFiletime
+      value {
+        uint: 1200000000
+      }
+    }
+    property {
+      property_id: 12
+      type: kVtFiletime
+      value {
+        uint: 132372792600000000
+      }
+    }
+    property {
+      property_id: 13
+      type: kVtFiletime
+      value {
+        uint: 132372793800000000
+      }
+    }
+    property {
+      property_id: 14
+      type: kVtI4
+      value {
+        int: 1
+      }
+    }
+    property {
+      property_id: 15
+      type: kVtI4
+      value {
+        int: 0
+      }
+    }
+    property {
+      property_id: 16
+      type: kVtI4
+      value {
+        int: 0
+      }
+    }
+    property {
+      property_id: 19
+      type: kVtI4
+      value {
+        int: 0
+      }
+    }
+  }
+}
+document_summary_information {
+  byte_order: 65534
+  version: 0
+  system_id: 131334
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  property_set {
+    fmtid {
+      data: "\002\325\315\325\234.\033\020\223\227\010\000+,\371\256"
+    }
+    property {
+      property_id: 1
+      type: kVtI2
+      value {
+        int: 1252
+      }
+    }
+    property {
+      property_id: 15
+      type: kVtLpstr
+      value {
+        str: ""
+      }
+    }
+    property {
+      property_id: 5
+      type: kVtI4
+      value {
+        int: 1
+      }
+    }
+    property {
+      property_id: 6
+      type: kVtI4
+      value {
+        int: 1
+      }
+    }
+    property {
+      property_id: 17
+      type: kVtI4
+      value {
+        int: 0
+      }
+    }
+    property {
+      property_id: 23
+      type: kVtI4
+      value {
+        int: 786432
+      }
+    }
+    property {
+      property_id: 11
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 16
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 19
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 22
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 13
+      type: kVtVectorVtLpstr
+      value {
+        vector {
+          type: kVtLpstr
+          value {
+            str: ""
+          }
+        }
+      }
+    }
+    property {
+      property_id: 12
+      type: kVtVectorVtVariant
+      value {
+        vector {
+          type: kVtVariant
+          value {
+            str: "Title"
+          }
+          value {
+            int: 1
+          }
+        }
+      }
+    }
+  }
+}
+comp_obj {
+  version: 2563
+  user_type: "Microsoft Office Word 97-2003 Document"
+  clipboard_format: "MSWordDoc"
+  app_version: "Word.Document.8"
+}
+ole_dirs {
+  name: "Root Entry"
+  entry_type: 5
+  clsid {
+    data: "\006\t\002\000\000\000\000\000\300\000\000\000\000\000\000F"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 132372793923810000
+  child_index: 1
+  child_index: 2
+  child_index: 3
+  child_index: 11
+  child_index: 12
+  child_index: 13
+}
+ole_dirs {
+  name: "1Table"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 6750
+  stream_hash: "w!\035\265\021\217W\206\257;\332\350\"W\262\367\273\256M\207"
+}
+ole_dirs {
+  name: " CompObj"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 121
+  stream_hash: "\233\037\016=Z\241\263U\232\376\025N\213E\235\013\214\2439\363"
+}
+ole_dirs {
+  name: "Macros"
+  entry_type: 1
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 132372793920610000
+  modification_timestamp: 132372793923010000
+  child_index: 4
+  child_index: 9
+  child_index: 10
+}
+ole_dirs {
+  name: "VBA"
+  entry_type: 1
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 132372793920610000
+  modification_timestamp: 132372793922010000
+  child_index: 5
+  child_index: 6
+  child_index: 7
+  child_index: 8
+}
+ole_dirs {
+  name: "dir"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 575
+  stream_hash: "\006\360\277VF\020\213\204\221\001\274FV\246QFE`\206\014"
+}
+ole_dirs {
+  name: "NewMacros"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 5548
+  stream_hash: "\301\013\330\345\020\365*\270\204\361\267\255\001\'\230\343l\2269y"
+}
+ole_dirs {
+  name: "_VBA_PROJECT"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 2888
+  stream_hash: "\335\235\001h1\206xa\227\260\225\226yb\262W\245>\037\220"
+}
+ole_dirs {
+  name: "ThisDocument"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 924
+  stream_hash: "W\313L\224={\234?\371?\313\304\376\024\237\357\342\251\263\005"
+}
+ole_dirs {
+  name: "PROJECTwm"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 71
+  stream_hash: "g9\025\262\230\016\026y\357\221\341\244\010\271\226<\325\020\221\260"
+}
+ole_dirs {
+  name: "PROJECT"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 418
+  stream_hash: "\231^\332\243\034\372\212\236\201\026@jl\332\236\317\335\226\016\225"
+}
+ole_dirs {
+  name: "WordDocument"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "E)K\263\345\353\215\267jvQ\366g\227\365\036\347qSQ"
+}
+ole_dirs {
+  name: " DocumentSummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "\005mD\351\374v\337\224e\324\301]\321\355\265\022\204\255\030\304"
+}
+ole_dirs {
+  name: " SummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "\270\256R\310\277\257\037\204\337\313\031\203\201\274\207\3133!0\010"
+}

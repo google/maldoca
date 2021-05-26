@@ -1,0 +1,6 @@
+extraction_errors {
+  msg: "Failed to parse boundsheet record; continuing to parse: Failed to consume string of length 115"
+}
+is_encrypted: true
+ast_str: "formulas { cell { row_idx: 37353 col_idx: 41850 } formula { extraction_errors { msg: \"There can only be one final expression per formula; found: 0\" } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 32214 col_idx: 59260 } formula { extraction_errors { msg: \"There can only be one final expression per formula; found: 0\" } } options { is_recalculated_always: true is_calculated_on_open: false } sheet_idx: 1 } sheets { idx: 1 } "
+max_ast_recursion_depth: 4

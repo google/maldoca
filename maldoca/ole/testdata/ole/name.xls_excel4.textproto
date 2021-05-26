@@ -1,0 +1,51 @@
+ole_dirs {
+  name: "Root Entry"
+  entry_type: 5
+  clsid {
+    data: " \010\002\000\000\000\000\000\300\000\000\000\000\000\000F"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  child_index: 1
+  child_index: 2
+  child_index: 3
+}
+ole_dirs {
+  name: "Workbook"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 12970
+  xls_formula: true
+}
+ole_dirs {
+  name: " DocumentSummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+}
+ole_dirs {
+  name: " SummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+}
+excel4_macros {
+  ast_str: "formulas { cell { row_idx: 0 col_idx: 0 } formula { expression { constant { int { value: 1 } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 1 col_idx: 0 } formula { expression { constant { int { value: 2 } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 2 col_idx: 0 } formula { expression { constant { int { value: 3 } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 3 col_idx: 0 } formula { expression { operand { mem { mem_func { } expression { binary { op: XL_BINARY_OP_ISECT lhs { operand { name { internal { id: 0 } } } } rhs { operand { area { area { } cell_range { first_cell_address { row_idx: 1 col_idx: 0 is_relative_row: true is_relative_col: true } last_cell_address { row_idx: 2 col_idx: 0 is_relative_row: true is_relative_col: true } } } } } } } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 0 col_idx: 0 } formula { expression { operand { name { internal { id: 0 } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 2 } definitions { name { user_defined { value: \"FirstTwoCells\" options { is_16bit: false } } } formula { expression { operand { area { area_3d { sheet_ref { doc { } is_internal_reference: true sheet { name { value: \"Sheet1\" options { is_16bit: false } } idx: 1 } } } cell_range { first_cell_address { row_idx: 0 col_idx: 0 is_relative_row: false is_relative_col: false } last_cell_address { row_idx: 1 col_idx: 0 is_relative_row: false is_relative_col: false } } } } } } sheet_idx: 0 id: 0 } sheets { idx: 1 state: XL_SHEET_STATE_VISIBLE type: XL_SHEET_TYPE_WORKSHEET name { value: \"Sheet1\" options { is_16bit: false } } } sheets { idx: 2 state: XL_SHEET_STATE_VISIBLE type: XL_SHEET_TYPE_WORKSHEET name { value: \"Sheet2\" options { is_16bit: false } } } "
+  max_ast_recursion_depth: 13
+}

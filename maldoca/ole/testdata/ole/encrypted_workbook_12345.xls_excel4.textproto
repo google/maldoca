@@ -1,0 +1,215 @@
+summary_information {
+  byte_order: 65534
+  version: 0
+  system_id: 131082
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  property_set {
+    fmtid {
+      data: "\340\205\237\362\371Oh\020\253\221\010\000+\'\263\331"
+    }
+    property {
+      property_id: 1
+      type: kVtI2
+      value {
+        int: 1252
+      }
+    }
+    property {
+      property_id: 4
+      type: kVtLpstr
+      value {
+        str: "John"
+      }
+    }
+    property {
+      property_id: 8
+      type: kVtLpstr
+      value {
+        str: "John"
+      }
+    }
+    property {
+      property_id: 18
+      type: kVtLpstr
+      value {
+        str: "Microsoft Excel"
+      }
+    }
+    property {
+      property_id: 12
+      type: kVtFiletime
+      value {
+        uint: 132616574980000000
+      }
+    }
+    property {
+      property_id: 13
+      type: kVtFiletime
+      value {
+        uint: 132616577490000000
+      }
+    }
+    property {
+      property_id: 19
+      type: kVtI4
+      value {
+        int: 1
+      }
+    }
+  }
+}
+document_summary_information {
+  byte_order: 65534
+  version: 0
+  system_id: 131082
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  property_set {
+    fmtid {
+      data: "\002\325\315\325\234.\033\020\223\227\010\000+,\371\256"
+    }
+    property {
+      property_id: 1
+      type: kVtI2
+      value {
+        int: 1252
+      }
+    }
+    property {
+      property_id: 15
+      type: kVtLpstr
+      value {
+        str: ""
+      }
+    }
+    property {
+      property_id: 23
+      type: kVtI4
+      value {
+        int: 1048576
+      }
+    }
+    property {
+      property_id: 11
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 16
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 19
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 22
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 13
+      type: kVtVectorVtLpstr
+      value {
+        vector {
+          type: kVtLpstr
+          value {
+            str: "Sheet1"
+          }
+        }
+      }
+    }
+    property {
+      property_id: 12
+      type: kVtVectorVtVariant
+      value {
+        vector {
+          type: kVtVariant
+          value {
+            str: "Worksheets"
+          }
+          value {
+            int: 1
+          }
+        }
+      }
+    }
+  }
+}
+ole_dirs {
+  name: "Root Entry"
+  entry_type: 5
+  clsid {
+    data: " \010\002\000\000\000\000\000\300\000\000\000\000\000\000F"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  child_index: 1
+  child_index: 2
+  child_index: 3
+}
+ole_dirs {
+  name: "Workbook"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 15626
+  stream_hash: "}~\026\304\275\215{%\316\306\374\230)\255A\304\355(o\271"
+  strings: "IqJQkH4"
+  strings: "Microsoft Enhanced Cryptographic Provider v1.0"
+  strings: "QEAtm`"
+  strings: "fhk YL"
+  strings: "her57X@THy"
+  strings: "yDL_jB"
+  xls_formula: true
+}
+ole_dirs {
+  name: " DocumentSummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "\211\026\177\3747\330\335\262M)gR\353\331\256\212x\314\221\311"
+}
+ole_dirs {
+  name: " SummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "i-\253\254\275\317\345\225\353\265\273\321\2504w_K1%\343"
+}
+excel4_macros {
+  extraction_errors {
+    msg: "Failed to parse boundsheet record; continuing to parse: Failed to consume string of length 115"
+  }
+  is_encrypted: true
+  ast_str: "formulas { cell { row_idx: 37353 col_idx: 41850 } formula { extraction_errors { msg: \"There can only be one final expression per formula; found: 0\" } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 32214 col_idx: 59260 } formula { extraction_errors { msg: \"There can only be one final expression per formula; found: 0\" } } options { is_recalculated_always: true is_calculated_on_open: false } sheet_idx: 1 } sheets { idx: 1 } "
+  max_ast_recursion_depth: 4
+}

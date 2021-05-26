@@ -1,0 +1,4 @@
+excel4_macros {
+  ast_str: "formulas { cell { row_idx: 0 col_idx: 0 } formula { expression { operand { name { external { id: 0 sheet_ref { doc { value: \"\\001external_doc.xls\" options { is_16bit: false } } is_global_reference: true } } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } external_definitions { name { user_defined { value: \"EXTERNAL_NAME\" options { is_16bit: false } } } external_name { does_not_exist: true } id: 0 } sheets { idx: 1 state: XL_SHEET_STATE_VISIBLE type: XL_SHEET_TYPE_WORKSHEET name { value: \"Sheet1\" options { is_16bit: false } } } "
+  max_ast_recursion_depth: 10
+}

@@ -1,0 +1,257 @@
+sha256: "aae8e38cc6b1bb9cabf20f32a883921d54904ed064f34da94c5bc688dcc23121"
+doc_type: PDF
+general_doc_type: GENERAL_DOC_TYPE_PDF
+file_name: "image_and_text.pdf"
+file_size: 28070
+pdf {
+  base_features {
+    js_aggregate {
+      js_component_count: 0
+      average_space_ratio: 0
+      min_space_ratio: 0
+      max_space_ratio: 0
+      std_space_ratio: 0
+      average_number_ratio: 0
+      min_number_ratio: 0
+      max_number_ratio: 0
+      std_number_ratio: 0
+      launch_action_count: 0
+      launch_url_count: 0
+      download_count: 0
+      exec_count: 0
+      openfdf_count: 0
+      average_non_alphanumeric_ratio: 0
+      min_non_alphanumeric_ratio: 0
+      max_non_alphanumeric_ratio: 0
+      std_non_alphanumeric_ratio: 0
+      invalid_hex_js_count: 0
+      eval_count: 0
+      unescape_count: 0
+      fromcharcode_count: 0
+    }
+    pdf_metadata {
+      page_count: 1
+      title_dots_count: 0
+      title_dots_ratio: 0
+      title_lower_case_count: 0
+      title_lower_case_ratio: 0
+      title_upper_case_count: 0
+      title_upper_case_ratio: 0
+      title_number_count: 0
+      title_number_ratio: 0
+      title_non_alphanum_count: 3
+      title_non_alphanum_ratio: 1
+      author_dot_count: 0
+      author_dot_ratio: 0
+      author_length: 3
+      author_upper_case_ratio: 0
+      author_lower_case_ratio: 0
+      author_alphanum_ratio: 0
+    }
+    image_features {
+      width: 653
+      height: 193
+      horizontal_dpi: 100.46154
+      vertical_dpi: 100.695656
+      is_empty_image_object: false
+      size: 11907
+      image_format: 0
+    }
+    image_aggregate {
+      image_count: 1
+      min_width: 653
+      max_width: 653
+      average_width: 653
+      std_width: 0
+      min_height: 653
+      max_height: 653
+      average_height: 653
+      std_height: 0
+      min_horizontal_dpi: 100
+      max_horizontal_dpi: 100
+      average_horizontal_dpi: 100.46154
+      std_horizontal_dpi: 0
+      min_vertical_dpi: 100
+      max_vertical_dpi: 100
+      average_vertical_dpi: 100.695656
+      std_vertical_dpi: 0
+    }
+    page_structure_features {
+      num_of_children: 0
+      page_index: 0
+      no_struct_tree: true
+      page_objects {
+        unknown: false
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      page_objects {
+        unknown: false
+        text {
+          font_size: 14.659999847412109
+          font_name: "\347\211\201\346\205\251l"
+        }
+        has_transparency: true
+        failed_to_parse_object: false
+      }
+      num_of_objects: 18
+      num_of_annotations: 0
+      is_transparent: false
+    }
+    page_structure_aggregate {
+      page_count: 1
+      transparent_page_count: 0
+      no_struct_tree_page_count: 1
+      object_count: 18
+      failed_to_parse_object_count: 0
+      max_page_object: 18
+      min_page_object: 18
+      average_page_object: 18
+      std_page_object: 0
+      annotation_count: 0
+      failed_to_parse_annotation_count: 0
+      max_page_annotation: 0
+      min_page_annotation: 0
+      average_page_annotation: 0
+      std_page_annotation: 0
+      font_names: "\347\211\201\346\205\251l"
+      font_names: "\347\211\201\346\205\251l"
+      font_names: "\347\211\201\346\205\251l"
+      font_names: "\347\211\201\346\205\251l"
+      font_names: "\347\211\201\346\205\251l"
+      font_names: "\347\211\201\346\205\251l"
+      font_names: "\347\211\201\346\205\251l"
+      font_names: "\347\211\201\346\205\251l"
+      font_names: "\347\211\201\346\205\251l"
+      font_names: "\347\211\201\346\205\251l"
+      font_names: "\347\211\201\346\205\251l"
+      font_names: "\347\211\201\346\205\251l"
+    }
+    id: "aae8e38cc6b1bb9cabf20f32a883921d54904ed064f34da94c5bc688dcc23121"
+  }
+}
+

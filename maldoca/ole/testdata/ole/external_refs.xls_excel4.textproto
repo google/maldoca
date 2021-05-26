@@ -1,0 +1,264 @@
+summary_information {
+  byte_order: 65534
+  version: 0
+  system_id: 131082
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  property_set {
+    fmtid {
+      data: "\340\205\237\362\371Oh\020\253\221\010\000+\'\263\331"
+    }
+    property {
+      property_id: 1
+      type: kVtI2
+      value {
+        int: 1252
+      }
+    }
+    property {
+      property_id: 4
+      type: kVtLpstr
+      value {
+        str: "John"
+      }
+    }
+    property {
+      property_id: 8
+      type: kVtLpstr
+      value {
+        str: "John"
+      }
+    }
+    property {
+      property_id: 18
+      type: kVtLpstr
+      value {
+        str: "Microsoft Excel"
+      }
+    }
+    property {
+      property_id: 12
+      type: kVtFiletime
+      value {
+        uint: 132592407150000000
+      }
+    }
+    property {
+      property_id: 13
+      type: kVtFiletime
+      value {
+        uint: 132592425900000000
+      }
+    }
+    property {
+      property_id: 19
+      type: kVtI4
+      value {
+        int: 0
+      }
+    }
+  }
+}
+document_summary_information {
+  byte_order: 65534
+  version: 0
+  system_id: 131082
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  property_set {
+    fmtid {
+      data: "\002\325\315\325\234.\033\020\223\227\010\000+,\371\256"
+    }
+    property {
+      property_id: 1
+      type: kVtI2
+      value {
+        int: 1252
+      }
+    }
+    property {
+      property_id: 15
+      type: kVtLpstr
+      value {
+        str: ""
+      }
+    }
+    property {
+      property_id: 23
+      type: kVtI4
+      value {
+        int: 1048576
+      }
+    }
+    property {
+      property_id: 11
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 16
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 19
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 22
+      type: kVtBool
+      value {
+        boolean: false
+      }
+    }
+    property {
+      property_id: 13
+      type: kVtVectorVtLpstr
+      value {
+        vector {
+          type: kVtLpstr
+          value {
+            str: "Sheet1"
+          }
+          value {
+            str: "Sheet2"
+          }
+          value {
+            str: "HELLO"
+          }
+          value {
+            str: "WORLD"
+          }
+        }
+      }
+    }
+    property {
+      property_id: 12
+      type: kVtVectorVtVariant
+      value {
+        vector {
+          type: kVtVariant
+          value {
+            str: "Worksheets"
+          }
+          value {
+            int: 2
+          }
+          value {
+            str: "Named Ranges"
+          }
+          value {
+            int: 2
+          }
+        }
+      }
+    }
+  }
+}
+ole_dirs {
+  name: "Root Entry"
+  entry_type: 5
+  clsid {
+    data: " \010\002\000\000\000\000\000\300\000\000\000\000\000\000F"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  child_index: 1
+  child_index: 2
+  child_index: 3
+}
+ole_dirs {
+  name: "Workbook"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 16817
+  stream_hash: "oU\237Vn:5J1\351N\250\344w\252\003my\010\230"
+  strings: "333333"
+  strings: "?333333"
+  strings: "Accent1"
+  strings: "Accent2"
+  strings: "Accent3"
+  strings: "Accent4"
+  strings: "Accent5"
+  strings: "Accent6"
+  strings: "Calculation"
+  strings: "Calibri"
+  strings: "Calibri Light1"
+  strings: "Calibri1"
+  strings: "Calibri1*"
+  strings: "Check Cell"
+  strings: "Currency"
+  strings: "Explanatory Text"
+  strings: "HELLO:"
+  strings: "Heading 1"
+  strings: "Heading 2"
+  strings: "Heading 3"
+  strings: "Heading 4"
+  strings: "Hello!"
+  strings: "Linked Cell"
+  strings: "Neutral"
+  strings: "Normal"
+  strings: "Output"
+  strings: "Percent"
+  strings: "Sheet1"
+  strings: "Sheet2"
+  strings: "Sheet2#"
+  strings: "TableStyleMedium2PivotStyleLight16"
+  strings: "WORLD:"
+  strings: "Warning Text"
+  strings: "[Content_Types].xml"
+  strings: "[Content_Types].xmlPK"
+  strings: "_rels/.relsPK"
+  strings: "external_doc.xls"
+  strings: "ffffff"
+  strings: "theme/theme/_rels/themeManager.xml.rels"
+  strings: "theme/theme/_rels/themeManager.xml.relsPK"
+  strings: "theme/theme/theme1.xml"
+  strings: "theme/theme/theme1.xmlPK"
+  strings: "theme/theme/themeManager.xml"
+  strings: "theme/theme/themeManager.xmlPK"
+  xls_formula: true
+}
+ole_dirs {
+  name: " DocumentSummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "p$\037\375N.\2558\366ru\322iD\235f\240`N\307"
+}
+ole_dirs {
+  name: " SummaryInformation"
+  entry_type: 2
+  clsid {
+    data: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+  }
+  user_flags: 0
+  creation_timestamp: 0
+  modification_timestamp: 0
+  stream_size: 4096
+  stream_hash: "-\305DE9`\247\037\002\021\016KvEJ\265k\001B0"
+}
+excel4_macros {
+  ast_str: "formulas { cell { row_idx: 0 col_idx: 0 } formula { expression { operand { ref { ref_3d { sheet_ref { doc { value: \"\\001external_doc.xls\" options { is_16bit: false } } sheet { name { value: \"Sheet1\" options { is_16bit: false } } idx: 1 } } } cell_address { row_idx: 0 col_idx: 0 is_relative_row: true is_relative_col: true } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 1 col_idx: 0 } formula { expression { operand { area { area_3d { sheet_ref { doc { value: \"\\001external_doc.xls\" options { is_16bit: false } } sheet { name { value: \"Sheet1\" options { is_16bit: false } } idx: 1 } } } cell_range { first_cell_address { row_idx: 0 col_idx: 0 is_relative_row: true is_relative_col: true } last_cell_address { row_idx: 4 col_idx: 0 is_relative_row: true is_relative_col: true } } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 2 col_idx: 0 } formula { expression { function { builtin: XL_SUM args { operand { ref { ref_3d { sheet_ref { doc { value: \"\\001external_doc.xls\" options { is_16bit: false } } range { first_sheet { name { value: \"Sheet1\" options { is_16bit: false } } idx: 1 } last_sheet { name { value: \"Sheet2\" options { is_16bit: false } } idx: 2 } } } } cell_address { row_idx: 0 col_idx: 0 is_relative_row: true is_relative_col: true } } } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 3 col_idx: 0 } formula { expression { operand { name { external { id: 1 sheet_ref { doc { value: \"\\001external_doc.xls\" options { is_16bit: false } } is_global_reference: true } } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 4 col_idx: 0 } formula { expression { operand { name { external { id: 0 sheet_ref { doc { value: \"\\001external_doc.xls\" options { is_16bit: false } } is_global_reference: true } } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 5 col_idx: 0 } formula { expression { operand { ref { ref_3d { sheet_ref { doc { } is_internal_reference: true sheet { name { value: \"Sheet2\" options { is_16bit: false } } idx: 2 } } } cell_address { row_idx: 2 col_idx: 0 is_relative_row: true is_relative_col: true } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 6 col_idx: 0 } formula { expression { function { builtin: XL_SUM args { operand { area { area_3d { sheet_ref { doc { } is_internal_reference: true sheet { name { value: \"Sheet2\" options { is_16bit: false } } idx: 2 } } } cell_range { first_cell_address { row_idx: 2 col_idx: 0 is_relative_row: true is_relative_col: true } last_cell_address { row_idx: 3 col_idx: 0 is_relative_row: true is_relative_col: true } } } } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 7 col_idx: 0 } formula { expression { operand { name { external { id: 0 sheet_ref { doc { } is_internal_reference: true is_global_reference: true } } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } formulas { cell { row_idx: 8 col_idx: 0 } formula { expression { operand { name { internal { id: 1 } } } } } options { is_recalculated_always: false is_calculated_on_open: false } sheet_idx: 1 } definitions { name { user_defined { value: \"HELLO\" options { is_16bit: false } } } formula { expression { operand { ref { ref_3d { sheet_ref { doc { } is_internal_reference: true sheet { name { value: \"Sheet2\" options { is_16bit: false } } idx: 2 } } } cell_address { row_idx: 0 col_idx: 0 is_relative_row: false is_relative_col: false } } } } } sheet_idx: 0 id: 0 } definitions { name { user_defined { value: \"WORLD\" options { is_16bit: false } } } formula { expression { operand { ref { ref_3d { sheet_ref { doc { } is_internal_reference: true sheet { name { value: \"Sheet2\" options { is_16bit: false } } idx: 2 } } } cell_address { row_idx: 1 col_idx: 0 is_relative_row: false is_relative_col: false } } } } } sheet_idx: 0 id: 1 } external_definitions { name { user_defined { value: \"FIVE\" options { is_16bit: false } } } external_name { formula { ref { ref_3d { sheet_ref { doc { value: \"\\001external_doc.xls\" options { is_16bit: false } } sheet { name { value: \"Sheet1\" options { is_16bit: false } } idx: 1 } } } cell_address { row_idx: 4 col_idx: 0 is_relative_row: false is_relative_col: false } } } } id: 0 } external_definitions { name { user_defined { value: \"SIX\" options { is_16bit: false } } } external_name { formula { ref { ref_3d { sheet_ref { doc { value: \"\\001external_doc.xls\" options { is_16bit: false } } sheet { name { value: \"Sheet1\" options { is_16bit: false } } idx: 1 } } } cell_address { row_idx: 5 col_idx: 0 is_relative_row: false is_relative_col: false } } } } id: 1 } sheets { idx: 1 state: XL_SHEET_STATE_VISIBLE type: XL_SHEET_TYPE_WORKSHEET name { value: \"Sheet1\" options { is_16bit: false } } } sheets { idx: 2 state: XL_SHEET_STATE_VISIBLE type: XL_SHEET_TYPE_WORKSHEET name { value: \"Sheet2\" options { is_16bit: false } } } "
+  max_ast_recursion_depth: 14
+}
