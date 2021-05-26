@@ -6,6 +6,7 @@ The project's goal is to analyze potentially malicious documents to improve user
 
 ## CHECKOUT
 git clone --recurse-submodules https://github.com/google/maldoca.git
+cd maldoca
 
 ## BUILD
 bazel build --copt=-DMALDOCA_CHROME=1 --define MALDOCA_CHROME=1 maldoca/...
