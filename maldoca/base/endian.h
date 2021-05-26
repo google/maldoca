@@ -15,11 +15,11 @@
 #ifndef MALDOCA_BASE_ENDIAN_H_
 #define MALDOCA_BASE_ENDIAN_H_
 
-#include "zetasql/base/endian.h"
+#include "absl/base/internal/endian.h"
 
 namespace maldoca {
 
-using little_endian = ::zetasql_base::LittleEndian;
+namespace little_endian = ::absl::little_endian;
 
 }  // namespace maldoca
 
