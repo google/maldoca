@@ -52,7 +52,7 @@ cc_library(
     ],
     copts = DEFAULT_COPTS,
     deps = [
-        "@com_google_zetasql//:endian",
+        "@com_google_absl//absl/base:endian",
     ],
 )
 
@@ -60,9 +60,12 @@ cc_library(
     name = "enum_utils",
     hdrs = ["enum_utils.h"],
     copts = DEFAULT_COPTS,
-    deps = [
-        "@com_google_zetasql//:enum_utils",
-    ],
+    deps = select({
+        "//conditions:default": [
+            "@com_google_zetasql//:enum_utils",
+        ],
+        "//:chrome_build": [],
+    }),
 )
 
 cc_test(

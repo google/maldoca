@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef MALDOCA_CHROME
+
 #include "maldoca/base/enum_utils.h"
 
 #include "gmock/gmock.h"
@@ -43,3 +45,5 @@ TEST(EnumUtilsTest, EnumerateProtoEnum) {
 }
 
 }  // namespace maldoca
+
+#endif  // MALDOCA_CHROME
