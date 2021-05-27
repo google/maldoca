@@ -197,7 +197,8 @@ class LittleEndianUInt16 {
   uint16_t little_endian_;
 } ABSL_ATTRIBUTE_PACKED;
 
-static_assert(sizeof(LittleEndianUInt16) == sizeof(uint16_t));
+static_assert(sizeof(LittleEndianUInt16) == sizeof(uint16_t), 
+              "LittleEndianUInt16 and uint16_t must be the same size");
 
 // Stores a uint32_t in little endian order.
 // Only allows retrieval in host endianness.
@@ -212,7 +213,8 @@ class LittleEndianUInt32 {
   uint32_t little_endian_;
 } ABSL_ATTRIBUTE_PACKED;
 
-static_assert(sizeof(LittleEndianUInt32) == sizeof(uint32_t));
+static_assert(sizeof(LittleEndianUInt32) == sizeof(uint32_t), 
+              "LittleEndianUInt32 and uint32_t must be the same size");
 
 // Stores a uint64_t in little endian order.
 // Only allows retrieval in host endianness.
@@ -227,7 +229,8 @@ class LittleEndianUInt64 {
   uint64_t little_endian_;
 } ABSL_ATTRIBUTE_PACKED;
 
-static_assert(sizeof(LittleEndianUInt64) == sizeof(uint64_t));
+static_assert(sizeof(LittleEndianUInt64) == sizeof(uint64_t),
+              "LittleEndianUInt64 and uint64_t must be the same size");
 
 // Stores a double in little endian order.
 // Only allows retrieval in host endianness.
@@ -245,7 +248,8 @@ class LittleEndianDouble {
   LittleEndianUInt64 data_;
 } ABSL_ATTRIBUTE_PACKED;
 
-static_assert(sizeof(double) == sizeof(uint64_t));
+static_assert(sizeof(double) == sizeof(uint64_t),
+              "double and uint64_t must be the same size");
 
 // Decode a UTF-16 string into a UTF-8 string.
 void DecodeUTF16(absl::string_view input, std::string *output);
