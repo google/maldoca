@@ -501,8 +501,7 @@ message JsFeatures {
   // The number of times the same JS script appears in the document.
   optional int32 frequency = 18;
   // The type of extraction of the JS by pdfium.
-  optional maldoca.pdf.ExtractedJavaScript.ExtractionType
-      extraction_type = 19;
+  optional maldoca.pdf.ExtractedJavaScript.ExtractionType extraction_type = 19;
   // The normalized JS source; the string literals and numerical values are
   // replaced with fixed tokens.
   optional string cleaned_js_code = 21;

@@ -27,7 +27,7 @@ enum ExtractionQuota {
   MAX_EMBEDDED_FILE_BYTES = 10485760;  // 10 MB
   MAX_URL_BYTES = 1048576;             // 1 MB
   MAX_JS_BYTES = 1048576;              // 1 MB
-  MAX_XFA_BYTES = 1048576;              // 1 MB
+  MAX_XFA_BYTES = 1048576;             // 1 MB
   MAX_XFA_NAME_BUFFER_LENGTH = 20;
   MAX_XFA_PACKETS = 50;
 }

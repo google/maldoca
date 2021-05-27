@@ -24,10 +24,10 @@
 namespace {
 
 using absl::OkStatus;
-using testing::_;
-using testing::Not;
 using maldoca::testing::IsOkAndHolds;
 using maldoca::testing::StatusIs;
+using testing::_;
+using testing::Not;
 
 absl::Status AbortedStatus() {
   return absl::Status(absl::StatusCode::kAborted, "aborted");

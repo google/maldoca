@@ -18,9 +18,9 @@
 
 #include <memory>
 
+#include "absl/memory/memory.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "absl/memory/memory.h"
 #include "maldoca/base/digest.h"
 #include "maldoca/base/file.h"
 #include "maldoca/base/get_runfiles_dir.h"
@@ -83,7 +83,7 @@ class ProcesDocTest : public Test {
   }
 
   void ValidateProcessedProto(absl::string_view file_base,
-                               absl::string_view ext) {
+                              absl::string_view ext) {
     std::string input_file_name = absl::StrCat(file_base, ".", ext);
     std::string input;
     MALDOCA_ASSERT_OK(file::GetContents(TestFilename(input_file_name), &input));

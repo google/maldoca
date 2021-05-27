@@ -76,10 +76,10 @@
 //   IgnoringFields(fields, m)
 //                     The same as m, except the specified fields will be
 //                     ignored when matching (using
-//                     google::protobuf::util::MessageDifferencer::IgnoreField). fields is
-//                     represented as a container or an initializer list of
-//                     strings and each element is specified by their fully
-//                     qualified names, i.e., the names corresponding to
+//                     google::protobuf::util::MessageDifferencer::IgnoreField).
+//                     fields is represented as a container or an initializer
+//                     list of strings and each element is specified by their
+//                     fully qualified names, i.e., the names corresponding to
 //                     FieldDescriptor.full_name().  m can be
 //                     any of the Equals* and EquivTo* protobuf matchers above.
 //                     It can also be any of the transformer matchers listed
@@ -114,8 +114,9 @@
 //   IgnoringRepeatedFieldOrdering(m)
 //                     The same as m, except that it ignores the relative
 //                     ordering of elements within each repeated field in m.
-//                     See google::protobuf::util::MessageDifferencer::TreatAsSet() for
-//                     more details.
+//                     See
+//                     google::protobuf::util::MessageDifferencer::TreatAsSet()
+//                     for more details.
 //   Partially(m)
 //                     The same as m, except that only fields present in
 //                     the expected protobuf are considered (using
@@ -186,15 +187,15 @@
 #include <iostream>  // NOLINT
 #include <memory>
 #include <sstream>  // NOLINT
-#include <string>  // NOLINT
-#include <vector>  // NOLINT
+#include <string>   // NOLINT
+#include <vector>   // NOLINT
 
 #include "absl/strings/string_view.h"
 #include "gmock/gmock.h"
+#include "google/protobuf/descriptor.h"
 #include "google/protobuf/io/zero_copy_stream.h"
 #include "google/protobuf/io/zero_copy_stream_impl.h"
 #include "google/protobuf/io/zero_copy_stream_impl_lite.h"
-#include "google/protobuf/descriptor.h"
 #include "google/protobuf/message.h"
 #include "google/protobuf/text_format.h"
 #include "google/protobuf/util/field_comparator.h"
@@ -235,7 +236,8 @@ const RepeatedFieldComparison kProtoCompareRepeatedFieldsRespectOrdering =
     google::protobuf::util::MessageDifferencer::AS_LIST;
 const RepeatedFieldComparison kProtoCompareRepeatedFieldsIgnoringOrdering =
     google::protobuf::util::MessageDifferencer::AS_SET;
-const ProtoComparisonScope kProtoFull = google::protobuf::util::MessageDifferencer::FULL;
+const ProtoComparisonScope kProtoFull =
+    google::protobuf::util::MessageDifferencer::FULL;
 const ProtoComparisonScope kProtoPartial =
     google::protobuf::util::MessageDifferencer::PARTIAL;
 
@@ -259,8 +261,8 @@ struct ProtoComparison {
   bool has_custom_fraction;  // only used when float_comp = APPROXIMATE
   RepeatedFieldComparison repeated_field_comp;
   ProtoComparisonScope scope;
-  double float_margin;       // only used when has_custom_margin is set.
-  double float_fraction;     // only used when has_custom_fraction is set.
+  double float_margin;    // only used when has_custom_margin is set.
+  double float_fraction;  // only used when has_custom_fraction is set.
   std::vector<std::string> ignore_fields;
   std::vector<std::string> ignore_field_paths;
 };
@@ -271,7 +273,8 @@ const bool kMayBeUninitialized = false;
 
 // Parses the TextFormat representation of a protobuf, allowing required fields
 // to be missing.  Returns true iff successful.
-bool ParsePartialFromAscii(const std::string& pb_ascii, google::protobuf::Message* proto,
+bool ParsePartialFromAscii(const std::string& pb_ascii,
+                           google::protobuf::Message* proto,
                            std::string* error_text);
 
 // Returns a protobuf of type Proto by parsing the given TextFormat
@@ -283,12 +286,14 @@ Proto MakePartialProtoFromAscii(const std::string& str) {
   std::string error_text;
   CHECK(ParsePartialFromAscii(str, &proto, &error_text))
       << "Failed to parse \"" << str << "\" as a "
-      << proto.GetDescriptor()->full_name() << ":\n" << error_text;
+      << proto.GetDescriptor()->full_name() << ":\n"
+      << error_text;
   return proto;
 }
 
 // Returns true iff p and q can be compared (i.e. have the same descriptor).
-bool ProtoComparable(const google::protobuf::Message& p, const google::protobuf::Message& q);
+bool ProtoComparable(const google::protobuf::Message& p,
+                     const google::protobuf::Message& q);
 
 // Returns true iff actual and expected are comparable and match.  The
 // comp argument specifies how the two are compared.
@@ -301,8 +306,7 @@ bool ProtoCompare(const ProtoComparison& comp,
 // actual message, a CHECK failure will cause the test to fail and no subsequent
 // tests will be run.
 template <typename Proto>
-inline bool ProtoCompare(const ProtoComparison& comp,
-                         const Proto& actual,
+inline bool ProtoCompare(const ProtoComparison& comp, const Proto& actual,
                          const std::string& expected) {
   return ProtoCompare(comp, actual, MakePartialProtoFromAscii<Proto>(expected));
 }
@@ -326,8 +330,7 @@ class ProtoMatcherBase {
   ProtoMatcherBase(
       bool must_be_initialized,     // Must the argument be fully initialized?
       const ProtoComparison& comp)  // How to compare the two protobufs.
-      : must_be_initialized_(must_be_initialized),
-        comp_(new auto(comp)) {}
+      : must_be_initialized_(must_be_initialized), comp_(new auto(comp)) {}
 
   ProtoMatcherBase(const ProtoMatcherBase& other)
       : must_be_initialized_(other.must_be_initialized_),
@@ -346,12 +349,13 @@ class ProtoMatcherBase {
   // DeleteExpectedProto() on the returned value later.
   virtual const google::protobuf::Message* CreateExpectedProto(
       const google::protobuf::Message& arg,  // For determining the type of the
-                                   // expected protobuf.
+                                             // expected protobuf.
       ::testing::MatchResultListener* listener) const = 0;
 
   // Deletes the given expected protobuf, which must be obtained from
   // a call to CreateExpectedProto() earlier.
-  virtual void DeleteExpectedProto(const google::protobuf::Message* expected) const = 0;
+  virtual void DeleteExpectedProto(
+      const google::protobuf::Message* expected) const = 0;
 
   // Makes this matcher compare floating-points approximately.
   void SetCompareApproximately() { comp_->float_comp = kProtoApproximate; }
@@ -389,8 +393,8 @@ class ProtoMatcherBase {
   // Sets the relative fraction of error for approximate floating point
   // comparison.
   void SetFraction(double fraction) {
-    CHECK(0.0 <= fraction && fraction < 1.0) <<
-        "Fraction for Approximately must be >= 0.0 and < 1.0";
+    CHECK(0.0 <= fraction && fraction < 1.0)
+        << "Fraction for Approximately must be >= 0.0 and < 1.0";
     comp_->has_custom_fraction = true;
     comp_->float_fraction = fraction;
   }
@@ -417,7 +421,7 @@ class ProtoMatcherBase {
     }
     if (!comp_->ignore_fields.empty()) {
       *os << "(ignoring fields: ";
-      const char *sep = "";
+      const char* sep = "";
       for (size_t i = 0; i < comp_->ignore_fields.size(); ++i, sep = ", ")
         *os << sep << comp_->ignore_fields[i];
       *os << ") ";
@@ -468,7 +472,8 @@ class ProtoMatcherBase {
   const ProtoComparison& comp() const { return *comp_; }
 
  private:
-  bool MatchAndExplain(const google::protobuf::Message& arg, bool is_matcher_for_pointer,
+  bool MatchAndExplain(const google::protobuf::Message& arg,
+                       bool is_matcher_for_pointer,
                        ::testing::MatchResultListener* listener) const;
 
   const bool must_be_initialized_;
@@ -476,7 +481,8 @@ class ProtoMatcherBase {
 };
 
 // Returns a copy of the given proto2 message.
-inline google::protobuf::Message* CloneProto2(const google::protobuf::Message& src) {
+inline google::protobuf::Message* CloneProto2(
+    const google::protobuf::Message& src) {
   google::protobuf::Message* clone = src.New();
   clone->CopyFrom(src);
   return clone;
@@ -511,10 +517,10 @@ class ProtoMatcher : public ProtoMatcherBase {
     return expected_.get();
   }
 
-  virtual void DeleteExpectedProto(const google::protobuf::Message* expected) const {}
+  virtual void DeleteExpectedProto(
+      const google::protobuf::Message* expected) const {}
 
-  const std::shared_ptr<const google::protobuf::Message>& expected()
-      const {
+  const std::shared_ptr<const google::protobuf::Message>& expected() const {
     return expected_;
   }
 
@@ -527,11 +533,11 @@ class ProtoMatcher : public ProtoMatcherBase {
 class ProtoStringMatcher : public ProtoMatcherBase {
  public:
   ProtoStringMatcher(
-      const std::string& expected,  // The text representing the expected protobuf.
-      bool must_be_initialized,    // Must the argument be fully initialized?
+      const std::string&
+          expected,              // The text representing the expected protobuf.
+      bool must_be_initialized,  // Must the argument be fully initialized?
       const ProtoComparison comp)  // How to compare the two protobufs.
-      : ProtoMatcherBase(must_be_initialized, comp),
-        expected_(expected) {}
+      : ProtoMatcherBase(must_be_initialized, comp), expected_(expected) {}
 
   // Parses the expected string as a protobuf of the same type as arg,
   // and returns the parsed protobuf (or NULL when the parse fails).
@@ -558,13 +564,15 @@ class ProtoStringMatcher : public ProtoMatcherBase {
         *listener << "where ";
         PrintExpectedTo(listener->stream());
         *listener << " doesn't parse as a " << arg.GetDescriptor()->full_name()
-                  << ":\n" << error_text;
+                  << ":\n"
+                  << error_text;
       }
       return NULL;
     }
   }
 
-  virtual void DeleteExpectedProto(const google::protobuf::Message* expected) const {
+  virtual void DeleteExpectedProto(
+      const google::protobuf::Message* expected) const {
     delete expected;
   }
 
@@ -636,7 +644,7 @@ class WhenDeserializedMatcherBase {
     if (!listener->IsInterested()) {
       // No need to explain the match result.
       return (deserialized_arg != NULL) &&
-          proto_matcher_.Matches(*deserialized_arg);
+             proto_matcher_.Matches(*deserialized_arg);
     }
 
     ::std::ostream* const os = listener->stream();
@@ -828,8 +836,8 @@ class TupleProtoMatcher {
   // Sets the relative fraction of error for approximate floating point
   // comparison.
   void SetFraction(double fraction) {
-    CHECK(0.0 <= fraction && fraction <= 1.0) <<
-        "Fraction for Relatively must be >= 0.0 and < 1.0";
+    CHECK(0.0 <= fraction && fraction <= 1.0)
+        << "Fraction for Relatively must be >= 0.0 and < 1.0";
     comp_->has_custom_fraction = true;
     comp_->float_fraction = fraction;
   }
@@ -848,12 +856,11 @@ class TupleProtoMatcher {
       return ProtoCompare(comp_, get<0>(args), get<1>(args));
     }
     virtual void DescribeTo(::std::ostream* os) const {
-      *os << (comp_.field_comp == kProtoEqual ? "are equal"
-                                               : "are equivalent");
+      *os << (comp_.field_comp == kProtoEqual ? "are equal" : "are equivalent");
     }
     virtual void DescribeNegationTo(::std::ostream* os) const {
       *os << (comp_.field_comp == kProtoEqual ? "are not equal"
-                                               : "are not equivalent");
+                                              : "are not equivalent");
     }
 
    private:
@@ -883,7 +890,8 @@ inline internal::TupleProtoMatcher EquivToProto() {
 
 // Constructs a matcher that matches the argument if
 // argument.Equals(x) or argument->Equals(x) returns true.
-inline internal::PolymorphicProtoMatcher EqualsProto(const google::protobuf::Message& x) {
+inline internal::PolymorphicProtoMatcher EqualsProto(
+    const google::protobuf::Message& x) {
   internal::ProtoComparison comp;
   comp.field_comp = internal::kProtoEqual;
   return ::testing::MakePolymorphicMatcher(
@@ -903,8 +911,8 @@ inline internal::PolymorphicProtoMatcher EqualsProto(const std::string& str) {
 
 // Constructs a matcher that matches the argument if
 // argument.Equivalent(x) or argument->Equivalent(x) returns true.
-inline internal::PolymorphicProtoMatcher
-EquivToProto(const google::protobuf::Message& x) {
+inline internal::PolymorphicProtoMatcher EquivToProto(
+    const google::protobuf::Message& x) {
   internal::ProtoComparison comp;
   comp.field_comp = internal::kProtoEquiv;
   return ::testing::MakePolymorphicMatcher(
@@ -933,8 +941,8 @@ IsInitializedProto() {
 // Constructs a matcher that matches an argument whose IsInitialized()
 // and Equals(x) methods both return true.  The argument can be either
 // a protocol buffer or a pointer to it.
-inline internal::PolymorphicProtoMatcher
-EqualsInitializedProto(const google::protobuf::Message& x) {
+inline internal::PolymorphicProtoMatcher EqualsInitializedProto(
+    const google::protobuf::Message& x) {
   internal::ProtoComparison comp;
   comp.field_comp = internal::kProtoEqual;
   return ::testing::MakePolymorphicMatcher(
@@ -957,8 +965,8 @@ inline internal::PolymorphicProtoMatcher EqualsInitializedProto(
 // Constructs a matcher that matches an argument whose IsInitialized()
 // and Equivalent(x) methods both return true.  The argument can be
 // either a protocol buffer or a pointer to it.
-inline internal::PolymorphicProtoMatcher
-EquivToInitializedProto(const google::protobuf::Message& x) {
+inline internal::PolymorphicProtoMatcher EquivToInitializedProto(
+    const google::protobuf::Message& x) {
   internal::ProtoComparison comp;
   comp.field_comp = internal::kProtoEquiv;
   return ::testing::MakePolymorphicMatcher(
@@ -1024,16 +1032,16 @@ inline InnerProtoMatcher TreatingNaNsAsEqual(
 
 // IgnoringFields(fields, m) returns a matcher that is the same as m, except the
 // specified fields will be ignored when matching
-// (using google::protobuf::util::MessageDifferencer::IgnoreField). Each element in fields
-// are specified by their fully qualified names, i.e., the names corresponding
-// to FieldDescriptor.full_name(). (e.g. testing.internal.FooProto2.member).
-// m can be any of the Equals* and EquivTo* protobuf matchers above.
-// It can also be any of the transformer matchers listed here (e.g.
-// Approximately, TreatingNaNsAsEqual) as long as the intent of the each
-// concatenated matcher is mutually exclusive (e.g. using IgnoringFields in
-// conjunction with Partially can have different results depending on whether
-// the fields specified in IgnoringFields is part of the fields covered by
-// Partially).
+// (using google::protobuf::util::MessageDifferencer::IgnoreField). Each element
+// in fields are specified by their fully qualified names, i.e., the names
+// corresponding to FieldDescriptor.full_name(). (e.g.
+// testing.internal.FooProto2.member). m can be any of the Equals* and EquivTo*
+// protobuf matchers above. It can also be any of the transformer matchers
+// listed here (e.g. Approximately, TreatingNaNsAsEqual) as long as the intent
+// of the each concatenated matcher is mutually exclusive (e.g. using
+// IgnoringFields in conjunction with Partially can have different results
+// depending on whether the fields specified in IgnoringFields is part of the
+// fields covered by Partially).
 template <class InnerProtoMatcher, class Container>
 inline InnerProtoMatcher IgnoringFields(const Container& ignore_fields,
                                         InnerProtoMatcher inner_proto_matcher) {
@@ -1056,8 +1064,8 @@ inline InnerProtoMatcher IgnoringFieldPaths(
 template <class InnerProtoMatcher, class T>
 inline InnerProtoMatcher IgnoringFields(std::initializer_list<T> il,
                                         InnerProtoMatcher inner_proto_matcher) {
-  inner_proto_matcher.mutable_impl().AddCompareIgnoringFields(
-      il.begin(), il.end());
+  inner_proto_matcher.mutable_impl().AddCompareIgnoringFields(il.begin(),
+                                                              il.end());
   return inner_proto_matcher;
 }
 
@@ -1072,7 +1080,8 @@ inline InnerProtoMatcher IgnoringFieldPaths(
 
 // IgnoringRepeatedFieldOrdering(m) returns a matcher that is the same as m,
 // except that it ignores the relative ordering of elements within each repeated
-// field in m. See google::protobuf::MessageDifferencer::TreatAsSet() for more details.
+// field in m. See google::protobuf::MessageDifferencer::TreatAsSet() for more
+// details.
 template <class InnerProtoMatcher>
 inline InnerProtoMatcher IgnoringRepeatedFieldOrdering(
     InnerProtoMatcher inner_proto_matcher) {

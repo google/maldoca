@@ -137,7 +137,7 @@ absl::Status ExtractOfficeFeatureFromVBA(
     }
   }
 #endif
-// non-MALDOCA_CHROME-end
+  // non-MALDOCA_CHROME-end
   return absl::OkStatus();
 }
 

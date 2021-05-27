@@ -14,12 +14,12 @@
 
 #include "maldoca/service/common/process_doc.h"
 
-#include "google/protobuf/message.h"
 #include "absl/container/flat_hash_map.h"
 #include "absl/container/flat_hash_set.h"
 #include "absl/memory/memory.h"
 #include "absl/status/statusor.h"
 #include "absl/strings/str_cat.h"
+#include "google/protobuf/message.h"
 #include "maldoca/base/digest.h"
 #include "maldoca/base/status.h"
 #include "maldoca/base/status_macros.h"

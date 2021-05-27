@@ -16,12 +16,12 @@
 
 #include <memory>
 
-#include "maldoca/base/parse_text_proto.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "maldoca/base/file.h"
 #include "maldoca/base/get_runfiles_dir.h"
 #include "maldoca/base/logging.h"
+#include "maldoca/base/parse_text_proto.h"
 #include "maldoca/base/testing/protocol-buffer-matchers.h"
 #include "maldoca/base/testing/status_matchers.h"
 #include "maldoca/service/common/utils.h"
