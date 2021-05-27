@@ -453,26 +453,28 @@ TEST(StatusOr, OperatorStar) {
   EXPECT_EQ("hello", *std::move(rvalue));
 }
 
+// clang-format off
 TEST(StatusOr, OperatorArrowQualifiers) {
   static_assert(
-      std::is_same<
-          const int*,
-          decltype(std::declval<const StatusOr<int>&>().operator->())>(),
+       std::is_same<const int*,
+                    decltype(
+                        std::declval<const StatusOr<int>&>().operator->())>(),
       "Unexpected qualifiers");
   static_assert(
       std::is_same<int*,
                    decltype(std::declval<StatusOr<int>&>().operator->())>(),
       "Unexpected qualifiers");
   static_assert(
-      std::is_same<
-          const int*,
-          decltype(std::declval<const StatusOr<int>&&>().operator->())>(),
+      std::is_same<const int*,
+                    decltype(
+                        std::declval<const StatusOr<int>&&>().operator->())>(),
       "Unexpected qualifiers");
   static_assert(
       std::is_same<int*,
                    decltype(std::declval<StatusOr<int>&&>().operator->())>(),
       "Unexpected qualifiers");
 }
+// clang-format on
 
 TEST(StatusOr, OperatorArrow) {
   const StatusOr<std::string> const_lvalue("hello");
