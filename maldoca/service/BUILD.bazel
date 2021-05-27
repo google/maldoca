@@ -13,18 +13,13 @@
 # limitations under the License.
 
 load("@//third_party/iree/build_tools/embed_data:build_defs.bzl", "cc_embed_data")
+load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_COPTS")
 
 package(
     default_visibility = ["//visibility:public"],
 )
 
 licenses(["notice"])
-
-DEFAULT_COPTS = [
-    "-Wno-sign-compare",
-    "-Wno-strict-aliasing",
-    "-fno-exceptions",
-]
 
 cc_library(
     name = "common_utils",

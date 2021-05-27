@@ -13,18 +13,13 @@
 # limitations under the License.
 
 load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_COPTS")
 
-licenses(["notice"])  # Apache v2.0
+licenses(["notice"])
 
 package(
     default_visibility = ["//:__subpackages__"],
 )
-
-DEFAULT_COPTS = [
-    "-Wno-sign-compare",
-    "-Wno-strict-aliasing",
-    "-fno-exceptions",
-]
 
 cc_library(
     name = "cleanup",

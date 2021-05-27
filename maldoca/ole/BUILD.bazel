@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_COPTS")
+
 licenses(["notice"])
 
 package(
@@ -21,12 +23,6 @@ package(
         "layering_check",
     ],
 )
-
-DEFAULT_COPTS = [
-    "-Wno-sign-compare",
-    "-Wno-strict-aliasing",
-    "-fno-exceptions",
-]
 
 cc_library(
     name = "endian_reader",
@@ -151,6 +147,7 @@ cc_library(
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/strings:str_format",
+        "@com_google_protobuf//:protobuf",
         "@libxml",
     ],
 )
@@ -312,6 +309,7 @@ cc_test(
         "//maldoca/base:file",
         "//maldoca/base:get_runfiles_dir",
         "@com_google_benchmark//:benchmark",
+        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -330,6 +328,7 @@ cc_test(
         "@com_google_absl//absl/flags:parse",
         "@com_google_absl//absl/strings",
         "@com_google_benchmark//:benchmark",
+        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -348,6 +347,7 @@ cc_test(
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
         "@com_google_benchmark//:benchmark",
+        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -368,6 +368,7 @@ cc_test(
         "//maldoca/base/testing:status_matchers",
         "@com_google_absl//absl/strings",
         "@com_google_benchmark//:benchmark",
+        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -387,6 +388,7 @@ cc_test(
         "//maldoca/base/testing:status_matchers",
         "@com_google_absl//absl/container:node_hash_map",
         "@com_google_benchmark//:benchmark",
+        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -429,6 +431,7 @@ cc_test(
         "//maldoca/base:status",
         "//maldoca/base/testing:status_matchers",
         "@com_google_absl//absl/strings",
+        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -507,6 +510,7 @@ cc_test(
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/strings:str_format",
+        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
         "@com_google_protobuf//:protobuf",
     ] + select({
@@ -548,6 +552,7 @@ cc_test(
         "//maldoca/base/testing:status_matchers",
         "@com_google_absl//absl/container:flat_hash_set",
         "@com_google_absl//absl/strings",
+        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
         "@libxml",
     ],
@@ -608,6 +613,7 @@ cc_test(
         "//maldoca/ole/proto:ooxml_to_proto_settings_cc_proto",
         "//maldoca/service:common_utils",
         "@com_google_absl//absl/container:flat_hash_set",
+        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
         "@libxml",
     ],
@@ -624,6 +630,7 @@ cc_test(
         ":archive_handler",
         "//maldoca/base:file",
         "//maldoca/base:get_runfiles_dir",
+        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -632,6 +639,7 @@ cc_library(
     name = "archive_handler",
     srcs = ["archive_handler.cc"],
     hdrs = ["archive_handler.h"],
+    copts = DEFAULT_COPTS,
     deps = [
         "//maldoca/base:logging",
         "@com_google_absl//absl/strings",
