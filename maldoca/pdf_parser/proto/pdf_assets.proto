@@ -329,8 +329,8 @@ message PdfXfaInfo {
   repeated ExtractedXfa extracted_xfa = 2;
   // Extracted output truncated due to byte limit.
   optional bool output_truncated_byte_limit = 3;
-  // Extracted output truncated due to iteration limit on number of xfa packet to
-  // inspect.
+  // Extracted output truncated due to iteration limit on number of xfa packet
+  // to inspect.
   optional bool output_truncated_iteration_limit = 4;
 }
 
@@ -345,15 +345,15 @@ message PdfPageAAction {
   // The index of the page as in rendered PDF, but starting from 0.
   optional int32 page_index = 2;
 
-  // the sub action type under the additional action. 
+  // the sub action type under the additional action.
   optional int32 subaction_type = 3;
 
   // Extracted filename truncated to 0 length due to byte limit.
   optional bool output_truncated_byte_limit = 4;
 
-  // extra information about the filename associated to 
-  // the subaction. this field is only available if the 
-  // subaction is of type /GoToE (go to embedded) or 
+  // extra information about the filename associated to
+  // the subaction. this field is only available if the
+  // subaction is of type /GoToE (go to embedded) or
   // /GoToR (go to remote).
   optional string filename = 5;
 }
@@ -397,5 +397,5 @@ message PdfAssets {
   // JavaScript embedded in PDF.
   optional PdfJavaScriptInfo javascript = 13;
   // Xfa embedded in PDF.
-  optional PdfXfaInfo xfa = 14;  
+  optional PdfXfaInfo xfa = 14;
 }

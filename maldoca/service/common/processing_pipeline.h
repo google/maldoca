@@ -57,8 +57,8 @@
 #include <memory>
 #include <vector>
 
-#include "google/protobuf/message.h"
 #include "absl/container/flat_hash_set.h"
+#include "google/protobuf/message.h"
 #include "maldoca/service/common/processing_component.h"
 #include "maldoca/service/proto/document_features.pb.h"
 #include "maldoca/service/proto/exported_features.pb.h"

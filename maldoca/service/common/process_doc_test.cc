@@ -16,10 +16,9 @@
 
 #include <memory>
 
-#include "maldoca/base/parse_text_proto.h"
+#include "absl/memory/memory.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "absl/memory/memory.h"
 #include "maldoca/base/digest.h"
 #include "maldoca/base/file.h"
 #include "maldoca/base/get_runfiles_dir.h"
