@@ -12,17 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_COPTS")
+
 licenses(["notice"])
 
 package(
     default_visibility = ["//:__subpackages__"],
 )
-
-DEFAULT_COPTS = [
-    "-Wno-sign-compare",
-    "-Wno-strict-aliasing",
-    "-fno-exceptions",
-]
 
 cc_library(
     name = "protocol-buffer-matchers",

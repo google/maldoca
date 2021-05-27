@@ -128,12 +128,12 @@ ZipReader::~ZipReader() {
 
 bool ZipReader::OpenFromString(const std::string& data) {
   if (data.empty()) {
-    return NULL;
+    return false;
   }
 
   ZipBuffer* buffer = static_cast<ZipBuffer*>(malloc(sizeof(ZipBuffer)));
   if (!buffer) {
-    return NULL;
+    return false;
   }
   buffer->data = data.data();
   buffer->length = data.length();
