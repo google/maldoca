@@ -32,8 +32,14 @@ for FILE in maldoca/base/* \
             maldoca/vba/antivirus/*; do
   case $FILE in
     *.h|*.cc|*.proto)
-      # Run clang-format, then compare the output.
-      clang-format --verbose $FILE | diff --color $FILE -
+      if [ "$1" = "diff" ]
+      then
+            # Run clang-format, then compare the output.
+            clang-format --verbose $FILE | diff --color $FILE -
+      else
+            # Run clang-format to format code.
+            clang-format --verbose -i $FILE
+      fi
 
       # If diff found any difference, its exit code would be non-zero.
       # In such case, we set our exit code to 1.
