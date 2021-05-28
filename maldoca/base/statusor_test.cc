@@ -456,7 +456,7 @@ TEST(StatusOr, OperatorStar) {
 // clang-format off
 TEST(StatusOr, OperatorArrowQualifiers) {
   static_assert(
-       std::is_same<const int*,
+      std::is_same<const int*,
                     decltype(
                         std::declval<const StatusOr<int>&>().operator->())>(),
       "Unexpected qualifiers");
