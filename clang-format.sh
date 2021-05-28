@@ -14,8 +14,6 @@
 
 # Runs clang-format and show diff.
 
-alias clang-format=clang-format-9
-
 clang-format --version
 
 EXIT_CODE=0
