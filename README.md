@@ -4,6 +4,10 @@ MalDocA is a library to parse and extract features from Microsoft Office documen
 
 The project's goal is to analyze potentially malicious documents to improve user safety and security.
 
+## REQUIREMENTS
+- bazel
+- clang
+
 ## CHECKOUT
 git clone --recurse-submodules https://github.com/google/maldoca.git
 
