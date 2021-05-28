@@ -25,7 +25,6 @@ RUN apt-get update
 RUN apt-get install -y apt-utils apt-transport-https ca-certificates curl gnupg
 
 # Install Clang.
-RUN apt-get update
 RUN apt-get install -y clang
 
 # Install Bazel.
