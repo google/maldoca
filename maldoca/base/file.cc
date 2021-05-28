@@ -20,6 +20,7 @@
 
 #ifndef MALDOCA_CHROME
 #include <dirent.h>
+#endif  // MALDOCA_CHROME
 #include <ftw.h>
 #include <sys/stat.h>
 #include <sys/types.h>
