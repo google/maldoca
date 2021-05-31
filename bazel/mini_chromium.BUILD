@@ -12,11 +12,131 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-licenses(["notice"])  # Apache v2.0
+licenses(["notice"])
 
 package(
     default_visibility = ["//visibility:public"],
 )
+
+DEFAULT_MINI_CHROMIUM_BASE_COPTS = [
+    "-Wimplicit-fallthrough",
+    "-Wunreachable-code",
+    "-Wthread-safety",
+    "-Wextra-semi",
+    "-Wno-missing-field-initializers",
+    "-Wno-unused-parameter",
+    "-Wno-c++11-narrowing",
+    "-Wno-unneeded-internal-declaration",
+    "-Wno-undefined-var-template",
+    "-Wno-psabi",
+    "-Wno-ignored-pragma-optimize",
+    "-Wno-implicit-int-float-conversion",
+    "-Wno-final-dtor-non-final-class",
+    "-Wno-builtin-assume-aligned-alignment",
+    "-Wno-deprecated-copy",
+    "-Wno-non-c-typedef-for-linkage",
+    "-Wmax-tokens",
+    "-Wheader-hygiene",
+    "-Wstring-conversion",
+    "-Wtautological-overlap-compare",
+    "-Wno-shorten-64-to-32",
+    "-DCOMPONENT_BUILD",
+    "-D_LIBCPP_ABI_UNSTABLE",
+    "-D_LIBCPP_ENABLE_NODISCARD",
+    "-D_LIBCPP_HAS_NO_VENDOR_AVAILABILITY_ANNOTATIONS",
+    "-D_DEBUG",
+    "-DDYNAMIC_ANNOTATIONS_ENABLED=1",
+    "-DUSE_EGL",
+    "-D_WTL_NO_AUTOMATIC_NAMESPACE",
+    "-DGOOGLE_PROTOBUF_NO_RTTI",
+    "-DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER",
+    "-DPROTOBUF_USE_DLLS",
+    "-DABSL_CONSUME_DLL",
+    "-DBORINGSSL_SHARED_LIBRARY",
+    "-D__DATE__=",
+    "-D__TIME__=",
+    "-D__TIMESTAMP__=",
+    "-DPROTOBUF_ALLOW_DEPRECATED=1",
+]
+
+DEFAULT_MINI_CHROMIUM_WIN_COPTS = DEFAULT_MINI_CHROMIUM_BASE_COPTS + [
+    "-Wno-builtin-macro-redefined",
+    "-Wno-nonportable-include-path",
+    "-Wno-undefined-bool-conversion",
+    "-Wno-tautological-undefined-compare",
+    "-Wno-trigraphs",
+    "-Wno-deprecated-declarations",
+    "-DUSE_AURA=1",
+    "-DCR_CLANG_REVISION=\"llvmorg-13-init-7296-ga749bd76-2\"",
+    "-D_HAS_NODISCARD",
+    "-D_LIBCPP_NO_AUTO_LINK",
+    "-D_LIBCPP_HIDE_FROM_ABI=_LIBCPP_HIDDEN",
+    "-D__STD_C",
+    "-D_CRT_RAND_S",
+    "-D_CRT_SECURE_NO_DEPRECATE",
+    "-D_SCL_SECURE_NO_DEPRECATE",
+    "-D_ATL_NO_OPENGL",
+    "-D_WINDOWS",
+    "-DCERT_CHAIN_PARA_HAS_EXTRA_FIELDS",
+    "-DPSAPI_VERSION=2",
+    "-DWIN32",
+    "-D_SECURE_ATL",
+    "-DWINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP",
+    "-DWIN32_LEAN_AND_MEAN",
+    "-DNOMINMAX",
+    "-D_UNICODE",
+    "-DUNICODE",
+    "-DNTDDI_VERSION=NTDDI_WIN10_VB",
+    "-D_WIN32_WINNT=0x0A00",
+    "-DWINVER=0x0A00",
+    "-DWEBP_EXTERN=extern",
+    "-DVK_USE_PLATFORM_WIN32_KHR",
+]
+
+DEFAULT_MINI_CHROMIUM_LINUX_COPTS = DEFAULT_MINI_CHROMIUM_BASE_COPTS + [
+    "-Wno-strict-aliasing",
+    "-fno-exceptions",
+    "-Wall",
+    "-Werror",
+    "-Wextra",
+    "-Wno-sign-compare",
+    "-Wno-error=unreachable-code",
+    "-Wno-unused-private-field",
+    "-Wno-c++98-compat-pedantic",
+    "-Wno-comment",
+    "-Wno-ignored-qualifiers",
+    "-Wno-unused-const-variable",
+    "-Wno-unknown-warning-option",
+    "-DUSE_UDEV -DUSE_AURA=1",
+    "-DUSE_GLIB=1",
+    "-DUSE_NSS_CERTS=1",
+    "-DUSE_OZONE=1",
+    "-DUSE_X11=1",
+    "-D_FILE_OFFSET_BITS=64",
+    "-D_LARGEFILE_SOURCE",
+    "-D_LARGEFILE64_SOURCE",
+    "-D_GNU_SOURCE",
+    "-DCR_CLANG_REVISION=\"llvmorg-13-init-7296-ga749bd76-1\"",
+    "-D__STDC_CONSTANT_MACROS",
+    "-D__STDC_FORMAT_MACROS",
+    "-D_LIBCPP_ABI_VERSION=Cr",
+    "-D_LIBCPP_DEBUG=0",
+    "-DCR_LIBCXX_REVISION=8fa87946779682841e21e2da977eccfb6cb3bded",
+    "-DCR_SYSROOT_HASH=43a87bbebccad99325fdcf34166295b121ee15c7",
+    "-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_40",
+    "-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_40",
+    "-DWEBP_EXTERN=extern",
+    "-DVK_USE_PLATFORM_XCB_KHR",
+    "-DGL_GLEXT_PROTOTYPES",
+    "-DUSE_GLX",
+    "-DHAVE_PTHREAD",
+]
+
+# Build flags used to build mini_chromium.
+DEFAULT_MINI_CHROMIUM_COPTS = select({
+	"@platforms//os:linux": DEFAULT_MINI_CHROMIUM_LINUX_COPTS,
+	"@platforms//os:windows": DEFAULT_MINI_CHROMIUM_WIN_COPTS,
+})
 
 MINI_CHROMIUM_HDRS = [
     "base/atomicops.h",
@@ -100,15 +220,33 @@ MINI_CHROMIUM_LINUX_SRCS = [
     "base/threading/thread_local_storage_posix.cc",
 ]
 
-ALL_HDRS_SRCS = MINI_CHROMIUM_SRCS + MINI_CHROMIUM_LINUX_SRCS + \
+MINI_CHROMIUM_WINDOWS_SRCS = [
+    "base/process/process_metrics_win.cc",
+    "base/scoped_clear_last_error_win.cc",
+    "base/strings/string_util_win.cc",
+    "base/strings/string_util_win.h",
+    "base/synchronization/lock_impl_win.cc",
+    "base/threading/thread_local_storage_win.cc",
+]
+
+ALL_HDRS_SRCS_LINUX = MINI_CHROMIUM_SRCS + MINI_CHROMIUM_LINUX_SRCS + \
                 MINI_CHROMIUM_HDRS + MINI_CHROMIUM_LINUX_HDRS
 
-UNIQUE_HDRS_SRCS = dict(zip(ALL_HDRS_SRCS, ALL_HDRS_SRCS)).keys()
+ALL_HDRS_SRCS_WINDOWS = MINI_CHROMIUM_SRCS + MINI_CHROMIUM_WINDOWS_SRCS + \
+                MINI_CHROMIUM_HDRS
+
+UNIQUE_HDRS_SRCS_LINUX = dict(zip(ALL_HDRS_SRCS_LINUX, ALL_HDRS_SRCS_LINUX)).keys()
+
+UNIQUE_HDRS_SRCS_WINDOWS = dict(zip(ALL_HDRS_SRCS_WINDOWS, ALL_HDRS_SRCS_WINDOWS)).keys()
 
 # This is the actual code being built using base as the first dir in the include
 cc_library(
     name = "base_lib",
-    srcs = UNIQUE_HDRS_SRCS,
+    srcs = select({
+               "@platforms//os:linux": UNIQUE_HDRS_SRCS_LINUX,
+               "@platforms//os:windows": UNIQUE_HDRS_SRCS_WINDOWS,
+           }),
+    copts = DEFAULT_MINI_CHROMIUM_COPTS,
     textual_hdrs = [
         "base/atomicops_internals_atomicword_compat.h",
         "base/atomicops_internals_portable.h",
@@ -124,7 +262,11 @@ cc_library(
 cc_library(
     name = "base",
     hdrs = MINI_CHROMIUM_HDRS +
-           MINI_CHROMIUM_LINUX_HDRS,
+           select({
+               "@platforms//os:linux": MINI_CHROMIUM_LINUX_HDRS,
+               "@platforms//os:windows": [],
+           }),
+    copts = DEFAULT_MINI_CHROMIUM_COPTS,
     include_prefix = "mini_chromium",
     textual_hdrs = [
         "base/atomicops_internals_atomicword_compat.h",

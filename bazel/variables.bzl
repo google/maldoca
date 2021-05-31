@@ -1,4 +1,39 @@
-DEFAULT_COPTS = [
+# This file contains build flags used to build MalDocA (maldoca/*).
+# Those flags are not applied to build MalDocA's third party 
+# dependencies (third_party/*). For chromium-specific build flags,
+# see mini_chromium.BUILD.
+
+DEFAULT_MALDOCA_WIN_COPTS = [
+    "-Wno-builtin-macro-redefined",
+    "-Wimplicit-fallthrough",
+    "-Wunreachable-code",
+    "-Wthread-safety",
+    "-Wextra-semi",
+    "-Wno-missing-field-initializers",
+    "-Wno-unused-parameter",
+    "-Wno-c++11-narrowing",
+    "-Wno-unneeded-internal-declaration",
+    "-Wno-undefined-var-template",
+    "-Wno-nonportable-include-path",
+    "-Wno-psabi",
+    "-Wno-ignored-pragma-optimize",
+    "-Wno-implicit-int-float-conversion",
+    "-Wno-final-dtor-non-final-class",
+    "-Wno-builtin-assume-aligned-alignment",
+    "-Wno-deprecated-copy",
+    "-Wno-non-c-typedef-for-linkage",
+    "-Wmax-tokens",
+    "-Wheader-hygiene",
+    "-Wstring-conversion",
+    "-Wtautological-overlap-compare",
+    "-Wno-shorten-64-to-32",
+    "-Wno-undefined-bool-conversion",
+    "-Wno-tautological-undefined-compare",
+    "-Wno-trigraphs",
+    "-Wno-deprecated-declarations",
+]
+
+DEFAULT_MALDOCA_LINUX_COPTS = [
     "-Wno-strict-aliasing",
     "-fno-exceptions",
     "-Wall",
@@ -34,3 +69,8 @@ DEFAULT_COPTS = [
     "-Wno-shorten-64-to-32",
     "-Wno-unknown-warning-option",
 ]
+
+DEFAULT_MALDOCA_COPTS = select({
+	"@platforms//os:linux": DEFAULT_MALDOCA_LINUX_COPTS,
+	"@platforms//os:windows": DEFAULT_MALDOCA_WIN_COPTS,
+})

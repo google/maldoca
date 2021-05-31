@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_COPTS")
+load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_MALDOCA_COPTS")
 
 licenses(["notice"])
 
@@ -28,7 +28,7 @@ cc_library(
     name = "endian_reader",
     srcs = ["endian_reader.cc"],
     hdrs = ["endian_reader.h"],
-    copts = DEFAULT_COPTS + [
+    copts = DEFAULT_MALDOCA_COPTS + [
         "-Wno-strict-aliasing",
     ],
     visibility = [":__subpackages__"],
@@ -44,7 +44,7 @@ cc_library(
 cc_test(
     name = "endian_reader_test",
     srcs = ["endian_reader_test.cc"],
-    copts = DEFAULT_COPTS + [
+    copts = DEFAULT_MALDOCA_COPTS + [
         "-Wno-strict-aliasing",
     ],
     deps = [
@@ -60,7 +60,7 @@ cc_library(
     name = "data_structures",
     srcs = ["data_structures.cc"],
     hdrs = ["data_structures.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":endian_reader",
         "//maldoca/base:digest",
@@ -91,7 +91,7 @@ cc_library(
         "stream.h",
         "vba.h",
     ],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":endian_reader",
         ":oss_utils",
@@ -119,7 +119,7 @@ cc_library(
     hdrs = [
         "ole_helper.h",
     ],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":ole_lib",
         "//maldoca/base:status",
@@ -136,7 +136,7 @@ cc_library(
     hdrs = [
         "oss_utils.h",
     ],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         "//maldoca/base:file",
         "//maldoca/base:logging",
@@ -155,7 +155,7 @@ cc_library(
 cc_test(
     name = "oss_utils_test",
     srcs = ["oss_utils_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":oss_utils",
         "//maldoca/base:logging",
@@ -167,7 +167,7 @@ cc_library(
     name = "strings_extract",
     srcs = ["strings_extract.cc"],
     hdrs = ["strings_extract.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         "@com_google_absl//absl/container:flat_hash_set",
         "@com_google_absl//absl/strings",
@@ -177,7 +177,7 @@ cc_library(
 cc_test(
     name = "strings_extract_test",
     srcs = ["strings_extract_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":strings_extract",
         "@com_google_googletest//:gtest",
@@ -195,7 +195,7 @@ cc_library(
         "ole_to_proto.h",
         "property_set_stream.h",
     ],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":data_structures",
         ":endian_reader",
@@ -223,7 +223,7 @@ cc_library(
 cc_test(
     name = "ole_to_proto_test",
     srcs = ["ole_to_proto_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     data = [
         "testdata/ole/bogus_ole",
         # A .hwp file (https://en.wikipedia.org/wiki/Hangul_(word_processor)).
@@ -289,7 +289,7 @@ cc_test(
 cc_binary(
     name = "ole_to_proto_cli",
     srcs = ["ole_to_proto_cli.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":ole_to_proto",
         "//maldoca/base:file",
@@ -302,7 +302,7 @@ cc_binary(
 cc_test(
     name = "header_test",
     srcs = ["header_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     data = ["testdata/vba1.bin"],
     deps = [
         ":ole_lib",
@@ -317,7 +317,7 @@ cc_test(
 cc_test(
     name = "fat_test",
     srcs = ["fat_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     data = ["testdata/vba1.bin"],
     deps = [
         ":ole_lib",
@@ -336,7 +336,7 @@ cc_test(
 cc_test(
     name = "dir_test",
     srcs = ["dir_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     data = ["testdata/vba1.bin"],
     deps = [
         ":ole_lib",
@@ -355,7 +355,7 @@ cc_test(
 cc_test(
     name = "stream_test",
     srcs = ["stream_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     data = [
         "testdata/vba1.bin",
     ],
@@ -376,7 +376,7 @@ cc_test(
 cc_test(
     name = "vba_test",
     srcs = ["vba_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     data = [
         "testdata/vba1.bin",
     ],
@@ -399,7 +399,7 @@ cc_library(
     hdrs = [
         "ppt.h",
     ],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":endian_reader",
         ":ole_lib",
@@ -417,7 +417,7 @@ cc_library(
 cc_test(
     name = "ppt_test",
     srcs = ["ppt_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     data = [
         "testdata/ole/95dc7b31c9ba45a066f580e6e2c5c914",
     ],
@@ -444,7 +444,7 @@ cc_library(
     hdrs = [
         "vba_extract.h",
     ],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":archive_handler",
         ":ole_helper",
@@ -469,7 +469,7 @@ cc_library(
 cc_binary(
     name = "vba_extractor",
     srcs = ["vba_extractor.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":oss_utils",
         ":vba_extract_lib",
@@ -486,7 +486,7 @@ cc_binary(
 cc_test(
     name = "vba_extract_test",
     srcs = ["vba_extract_test.cc"],
-    copts = DEFAULT_COPTS + [
+    copts = DEFAULT_MALDOCA_COPTS + [
         "-Wno-comment",
     ],
     data = [
@@ -525,7 +525,7 @@ cc_library(
     name = "ooxml_properties_extract",
     srcs = ["ooxml_properties_extract.cc"],
     hdrs = ["ooxml_properties_extract.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":oss_utils",
         "//maldoca/base:digest",
@@ -544,7 +544,7 @@ cc_library(
 cc_test(
     name = "ooxml_properties_extract_test",
     srcs = ["ooxml_properties_extract_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":ooxml_properties_extract",
         ":oss_utils",
@@ -562,7 +562,7 @@ cc_library(
     name = "ooxml_to_proto",
     srcs = ["ooxml_to_proto.cc"],
     hdrs = ["ooxml_to_proto.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":archive_handler",
         ":ole_to_proto",
@@ -585,7 +585,7 @@ cc_library(
 cc_binary(
     name = "ooxml_to_proto_cli",
     srcs = ["ooxml_to_proto_cli.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":ooxml_to_proto",
         "//maldoca/base:file",
@@ -598,7 +598,7 @@ cc_binary(
 cc_test(
     name = "ooxml_to_proto_test",
     srcs = ["ooxml_to_proto_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     data = [
         "testdata/ooxml/hyperlink_relationship.docx",
         "testdata/ooxml/sample_document.docm",
@@ -622,7 +622,7 @@ cc_test(
 cc_test(
     name = "archive_handler_test",
     srcs = ["archive_handler_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     data = [
         "testdata/archive_zip.zip",
     ],
@@ -639,7 +639,7 @@ cc_library(
     name = "archive_handler",
     srcs = ["archive_handler.cc"],
     hdrs = ["archive_handler.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         "//maldoca/base:logging",
         "@com_google_absl//absl/strings",
