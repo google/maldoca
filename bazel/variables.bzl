@@ -1,3 +1,6 @@
+# Those are the build flags used to build MalDocA (maldoca/*).
+# The flags are not applied to build third party dependencies.
+
 DEFAULT_MALDOCA_WIN_COPTS = [
     "-Wno-builtin-macro-redefined",
     "-Wimplicit-fallthrough",

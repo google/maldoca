@@ -132,6 +132,7 @@ DEFAULT_MINI_CHROMIUM_LINUX_COPTS = DEFAULT_MINI_CHROMIUM_BASE_COPTS + [
     "-DHAVE_PTHREAD",
 ]
 
+# Build flags used to build mini_chromium.
 DEFAULT_MINI_CHROMIUM_COPTS = select({
 	"@platforms//os:linux": DEFAULT_MINI_CHROMIUM_LINUX_COPTS,
 	"@platforms//os:windows": DEFAULT_MINI_CHROMIUM_WIN_COPTS,
