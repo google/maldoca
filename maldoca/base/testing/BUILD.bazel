@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_COPTS")
+load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_MALDOCA_COPTS")
 
 licenses(["notice"])
 
@@ -25,7 +25,7 @@ cc_library(
     testonly = 1,
     srcs = ["protocol-buffer-matchers.cc"],
     hdrs = ["protocol-buffer-matchers.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         "//maldoca/base:logging",
         "@com_google_absl//absl/strings",
@@ -39,7 +39,7 @@ cc_library(
     name = "status_matchers",
     testonly = 1,
     hdrs = ["status_matchers.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = select({
         "//conditions:default": [
             "@com_google_zetasql//:status_matchers",
@@ -61,7 +61,7 @@ cc_test(
     name = "status_matchers_test",
     size = "small",
     srcs = ["status_matchers_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":status_matchers",
         "//maldoca/base:status",

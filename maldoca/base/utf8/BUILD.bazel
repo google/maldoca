@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_COPTS")
+load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_MALDOCA_COPTS")
 
 licenses(["notice"])
 
@@ -23,7 +23,7 @@ package(
 cc_library(
     name = "unicodetext",
     hdrs = ["unicodetext.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         "@mini_chromium//:base",
     ],

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 load("@rules_cc//cc:defs.bzl", "cc_proto_library")
-load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_COPTS")
+load("@com_google_maldoca//:bazel/variables.bzl", "DEFAULT_MALDOCA_COPTS")
 
 licenses(["notice"])
 
@@ -24,7 +24,7 @@ package(
 cc_library(
     name = "cleanup",
     hdrs = ["cleanup.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         "@com_google_absl//absl/cleanup",
     ],
@@ -33,7 +33,7 @@ cc_library(
 cc_test(
     name = "cleanup_test",
     srcs = ["cleanup_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":cleanup",
         "@com_google_googletest//:gtest_main",
@@ -45,7 +45,7 @@ cc_library(
     hdrs = [
         "endian.h",
     ],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         "@com_google_absl//absl/base:endian",
     ],
@@ -54,7 +54,7 @@ cc_library(
 cc_library(
     name = "enum_utils",
     hdrs = ["enum_utils.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = select({
         "//conditions:default": [
             "@com_google_zetasql//:enum_utils",
@@ -66,7 +66,7 @@ cc_library(
 cc_test(
     name = "enum_utils_test",
     srcs = ["enum_utils_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":enum_utils",
         ":test_payload_cc_proto",
@@ -79,7 +79,7 @@ cc_library(
     name = "get_runfiles_dir",
     srcs = ["get_runfiles_dir.cc"],
     hdrs = ["get_runfiles_dir.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":logging",
         ":status",
@@ -90,7 +90,7 @@ cc_library(
 cc_library(
     name = "logging",
     hdrs = ["logging.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     visibility = ["//visibility:public"],
     deps = select({
         "//conditions:default": [
@@ -108,7 +108,7 @@ cc_library(
     hdrs = [
         "map_util.h",
     ],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = select({
         "//conditions:default": [
             "@com_google_zetasql//:map_util",
@@ -121,7 +121,7 @@ cc_library(
 cc_library(
     name = "parse_text_proto",
     hdrs = ["parse_text_proto.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":logging",
         "@com_google_protobuf//:protobuf",
@@ -131,7 +131,7 @@ cc_library(
 cc_library(
     name = "source_location",
     hdrs = ["source_location.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = select({
         "//conditions:default": [
             "@com_google_zetasql//:source_location",
@@ -144,7 +144,7 @@ cc_library(
 cc_test(
     name = "source_location_test",
     srcs = ["source_location_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":source_location",
         "@com_google_googletest//:gtest_main",
@@ -154,7 +154,7 @@ cc_test(
 cc_library(
     name = "ret_check",
     hdrs = ["ret_check.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = select({
         "//conditions:default": [
             "@com_google_zetasql//:ret_check",
@@ -179,7 +179,7 @@ cc_library(
         "//:chrome_build": [
         ],
     }),
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":logging",
         ":status_cc_proto",
@@ -212,7 +212,7 @@ cc_proto_library(
 cc_test(
     name = "status_builder_test",
     srcs = ["status_builder_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = select({
         "//conditions:default": [
             ":source_location",
@@ -233,7 +233,7 @@ cc_test(
 cc_test(
     name = "status_macros_test",
     srcs = ["status_macros_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":source_location",
         ":status",
@@ -253,7 +253,7 @@ cc_proto_library(
 cc_test(
     name = "status_test",
     srcs = ["status_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":status",
         "@com_google_googletest//:gtest_main",
@@ -276,7 +276,7 @@ cc_test(
     name = "statusor_test",
     size = "small",
     srcs = ["statusor_test.cc"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":source_location",
         ":status",
@@ -294,7 +294,7 @@ cc_library(
         "file.cc",
     ],
     hdrs = ["file.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         ":logging",
         ":ret_check",
@@ -318,7 +318,7 @@ cc_test(
     name = "file_test",
     size = "small",
     srcs = ["file_test.cc"],
-    copts = DEFAULT_COPTS + [
+    copts = DEFAULT_MALDOCA_COPTS + [
         "-Wno-trigraphs",
     ],
     deps = [
@@ -335,7 +335,7 @@ cc_test(
 cc_library(
     name = "digest",
     hdrs = ["digest.h"],
-    copts = DEFAULT_COPTS,
+    copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         "@boringssl//:crypto",
         "@com_google_absl//absl/strings",
