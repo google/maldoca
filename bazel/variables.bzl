@@ -1,5 +1,7 @@
-# Those are the build flags used to build MalDocA (maldoca/*).
-# The flags are not applied to build third party dependencies.
+# This file contains build flags used to build MalDocA (maldoca/*).
+# Those flags are not applied to build MalDocA's third party 
+# dependencies (third_party/*). For chromium-specific build flags,
+# see mini_chromium.BUILD.
 
 DEFAULT_MALDOCA_WIN_COPTS = [
     "-Wno-builtin-macro-redefined",
