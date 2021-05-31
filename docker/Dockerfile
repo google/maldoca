@@ -16,21 +16,24 @@
 # cd to //maldoca
 # docker build -f /docker/Dockerfile -t <tag> .
 
-# Based on Ubuntu 18.04
-FROM ubuntu:bionic
+# Based on Ubuntu 20.04
+FROM ubuntu:focal
 
 RUN apt-get update
 
-# Install gcc, g++, make, etc..
-RUN apt-get install -y build-essential
+# Install some utils.
+RUN apt-get install -y apt-utils apt-transport-https ca-certificates curl gnupg
+
+# Install Clang.
+RUN apt-get install -y clang
 
 # Install Bazel.
-RUN apt-get install -y curl gnupg
 RUN curl https://bazel.build/bazel-release.pub.gpg | apt-key add -
-RUN apt-get install -y apt-transport-https ca-certificates
+RUN echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
 RUN apt-get update
 RUN apt-get install -y bazel
 
+# Install Git.
 RUN apt-get install -y git
 
 # Uncomment below for use for dev on your machine. You should sub DOCKER_USER
