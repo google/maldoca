@@ -1,4 +1,4 @@
-DEFAULT_WIN_COPTS = [
+DEFAULT_MALDOCA_WIN_COPTS = [
     "-Wno-builtin-macro-redefined",
     "-Wimplicit-fallthrough",
     "-Wunreachable-code",
@@ -28,7 +28,7 @@ DEFAULT_WIN_COPTS = [
     "-Wno-deprecated-declarations",
 ]
 
-DEFAULT_LINUX_COPTS = [
+DEFAULT_MALDOCA_LINUX_COPTS = [
     "-Wno-strict-aliasing",
     "-fno-exceptions",
     "-Wall",
@@ -65,7 +65,7 @@ DEFAULT_LINUX_COPTS = [
     "-Wno-unknown-warning-option",
 ]
 
-DEFAULT_COPTS = select({
-	"@platforms//os:linux": DEFAULT_LINUX_COPTS,
-	"@platforms//os:windows": DEFAULT_WIN_COPTS,
+DEFAULT_MALDOCA_COPTS = select({
+	"@platforms//os:linux": DEFAULT_MALDOCA_LINUX_COPTS,
+	"@platforms//os:windows": DEFAULT_MALDOCA_WIN_COPTS,
 })
