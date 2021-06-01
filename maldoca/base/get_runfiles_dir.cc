@@ -29,9 +29,10 @@
 #error "__FreeBSD__ not supported."
 #endif
 
-#if defined(PLATFORM_WINDOWS)
-// TODO(#110) Windows-specific headers.
-#error "PLATFORM_WINDOWS not supported."
+#if defined(_WIN32)
+#include <windows.h>
+#define PATH_MAX MAX_PATH
+#include "base/strings/utf_string_conversions.h"
 #else
 #include <fcntl.h>
 #include <string.h>
@@ -51,8 +52,12 @@ std::string GetExecutablePath() {
 #error "__APPLE__ not supported.";
 #elif defined(__FreeBSD__)
 #error "__FreeBSD__ not supported.";
-#elif defined(PLATFORM_WINDOWS)
-#error "PLATFORM_WINDOWS not supported.";
+#elif defined(_WIN32)
+  HMODULE hModule = GetModuleHandleW(NULL);
+  WCHAR wc_file_path[MAX_PATH] = {0};
+  GetModuleFileNameW(hModule, wc_file_path, MAX_PATH);
+  std::string file_path = base::WideToUTF8(wc_file_path);
+  std::copy(file_path.begin(), file_path.end(), exe_path);
 #else
   char buf[PATH_MAX] = {0};
   int path_length = readlink("/proc/self/exe", buf, sizeof(buf) - 1);
@@ -91,17 +96,20 @@ absl::Status IsDirectory(const std::string& name) {
 #error "__APPLE__ not supported.";
 #elif defined(__FreeBSD__)
 #error "__FreeBSD__ not supported.";
-#elif defined(PLATFORM_WINDOWS)
-#error "PLATFORM_WINDOWS not supported.";
 #else
   struct stat sbuf;
   if (stat(name.c_str(), &sbuf) != 0) {
     return absl::InternalError(
         absl::StrCat("stat failed with error: ", strerror(errno)));
   }
+#if defined(_WIN32)
+  if (!(sbuf.st_mode & S_IFDIR)) {
+#else
   if (!S_ISDIR(sbuf.st_mode)) {
+#endif  // _WIN32
     return absl::FailedPreconditionError("Not a directory.");
   }
+
   return absl::OkStatus();
 #endif
 }
