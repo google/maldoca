@@ -35,7 +35,7 @@ void CheckSplit(std::pair<absl::string_view, absl::string_view> actual,
                 absl::string_view prefix, absl::string_view postfix) {
   EXPECT_EQ(actual.first, prefix);
   EXPECT_EQ(actual.second, postfix);
-};
+}
 
 #ifndef MALDOCA_CHROME
 TEST(Match, FindFiles) {
@@ -76,9 +76,8 @@ TEST(SplitPath, SplitPath) {
   result = SplitPath("/home/");
   CheckSplit(result, "/home", "");
 }
-#endif  // MALDOCA_CHROME
 
-// TODO: add tests for Windows
+// TODO: add tests for Windows once it is used.
 TEST(JoinPath, JoinPath) {
   EXPECT_EQ("a", JoinPath("a", ""));
   EXPECT_EQ("a/b", JoinPath("a", "b"));
@@ -88,6 +87,7 @@ TEST(JoinPath, JoinPath) {
   EXPECT_EQ("a/b/", JoinPath("a//", "b/"));
   EXPECT_EQ("/a/b", JoinPath("/a", "b"));
 }
+#endif  // MALDOCA_CHROME
 
 // TODO: add tests for Windows
 TEST(SplitFilename, SplitFilename) {
