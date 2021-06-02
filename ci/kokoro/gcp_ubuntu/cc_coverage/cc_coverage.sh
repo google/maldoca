@@ -23,4 +23,4 @@ set -e
 set -x
 
 # Run MalDocA coverage.
-bazel coverage //maldoca/...:all --cxxopt='-std=c++14' --test_output=errors
+bazel coverage --config=linux maldoca/...:all --test_output=errors
