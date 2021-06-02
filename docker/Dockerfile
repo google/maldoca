@@ -27,6 +27,9 @@ RUN apt-get install -y apt-utils apt-transport-https ca-certificates curl gnupg
 # Install Clang.
 RUN apt-get install -y clang
 
+# Install Java. It is required for "bazel coverage".
+RUN apt-get install -y default-jdk
+
 # Install Bazel.
 RUN curl https://bazel.build/bazel-release.pub.gpg | apt-key add -
 RUN echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
