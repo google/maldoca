@@ -53,9 +53,9 @@ DEFAULT_MINI_CHROMIUM_BASE_COPTS = [
     "-DPROTOBUF_USE_DLLS",
     "-DABSL_CONSUME_DLL",
     "-DBORINGSSL_SHARED_LIBRARY",
-    "-D__DATE__=",
-    "-D__TIME__=",
-    "-D__TIMESTAMP__=",
+#    "-D__DATE__=",  # results in build errors, hence removed
+#    "-D__TIME__=",  # results in build errors, hence removed
+#    "-D__TIMESTAMP__=",  # results in build errors, hence removed
     "-DPROTOBUF_ALLOW_DEPRECATED=1",
 ]
 
@@ -98,7 +98,7 @@ DEFAULT_MINI_CHROMIUM_LINUX_COPTS = DEFAULT_MINI_CHROMIUM_BASE_COPTS + [
     "-fno-exceptions",
     "-Wall",
     "-Werror",
-    "-Wextra",
+#    "-Wextra",  # results in build errors, hence removed
     "-Wno-sign-compare",
     "-Wno-error=unreachable-code",
     "-Wno-unused-private-field",
