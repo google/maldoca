@@ -23,8 +23,12 @@
 
 // Displays the proto message outputted for the file `filename`.
 // Note that `filename` contains the full path of the file.
+#ifndef MALDOCA_CHROME
 void DisplayFileContent(std::string filename) {
-  auto status_or_content = maldoca::file::GetContents(base::FilePath(filename));
+#else
+void DisplayFileContent(base::FilePath filename) {
+#endif
+  auto status_or_content = maldoca::file::GetContents(filename);
 
   if (!status_or_content.ok()) {
     DLOG(INFO) << "Unable to open archive!\n";
@@ -46,7 +50,11 @@ void DisplayFileContent(std::string filename) {
 }
 
 // Set the `file` flag.
+#ifndef MALDOCA_CHROME
 ABSL_FLAG(std::string, file, "", "Path of the OOXML file");
+#else
+ABSL_FLAG(base::FilePath::StringType, file, "", "Path of the OOXML file");
+#endif
 
 // This is for building `ooxml_to_proto` as a Bazel binary.
 // Usage: ooxml_to_proto_cli -file=<filename>
@@ -54,7 +62,11 @@ ABSL_FLAG(std::string, file, "", "Path of the OOXML file");
 int main(int argc, char **argv) {
   absl::ParseCommandLine(argc, argv);
 
+#ifndef MALDOCA_CHROME
   std::string file_path = absl::GetFlag(FLAGS_file);
+#else
+  base::FilePath file_path = base::FilePath(absl::GetFlag(FLAGS_file));
+#endif
 
   if (file_path.empty()) {
     std::cerr << "Invalid arguments.\n";

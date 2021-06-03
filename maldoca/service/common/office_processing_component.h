@@ -135,9 +135,15 @@ class OfficeFeatureExportHandler : public FeatureExportHandler {
 };
 
 // Filling out information such as specific office document type
+#ifndef MALDOCA_CHROME
 void PrepParsedOfficeDocument(absl::string_view file_name,
                               absl::string_view doc, absl::string_view sha256,
                               DocType doc_type, ParsedDocument *pd);
+#else
+void PrepParsedOfficeDocument(base::FilePath file_name,
+                              absl::string_view doc, absl::string_view sha256,
+                              DocType doc_type, ParsedDocument *pd);
+#endif
 
 }  // namespace maldoca
 

@@ -22,6 +22,9 @@
 
 #include "absl/status/statusor.h"
 #include "absl/strings/string_view.h"
+#ifdef MALDOCA_CHROME
+#include "maldoca/base/file.h"
+#endif
 #include "maldoca/base/status.h"
 #include "maldoca/ole/proto/extract_vba_settings.pb.h"
 #include "maldoca/ole/proto/office.pb.h"
@@ -64,7 +67,11 @@ DocType InferDocTypeByContent(absl::string_view doc,
 #endif  // MALDOCA_CHROME
 
 // Infer the doc type by file name.
+#ifndef MALDOCA_CHROME
 DocType InferDocTypeByName(absl::string_view file_name);
+#else
+DocType InferDocTypeByName(base::FilePath file_name);
+#endif
 
 // Simple topological sort of a dependency graph. Here each entry in out_edges
 // represents a node with ID given by its vector index and has a vector of

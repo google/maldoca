@@ -25,6 +25,9 @@
 #include "absl/status/status.h"
 #include "absl/status/statusor.h"
 #include "absl/strings/string_view.h"
+#ifdef MALDOCA_CHROME
+#include "maldoca/base/file.h"
+#endif
 #include "maldoca/ole/proto/extract_vba_settings.pb.h"
 #include "maldoca/ole/proto/vba_extraction.pb.h"
 #include "maldoca/ole/vba.h"
@@ -64,8 +67,13 @@ void ExtractDirectoryAndVBAFromString(absl::string_view content,
                                       std::string *error);
 
 // Extract only VBA content from a file that will be read.
+#ifndef MALDOCA_CHROME
 void ExtractVBAFromFile(const std::string &filename, VBACodeChunks *code_chunks,
                         std::string *error);
+#else
+void ExtractVBAFromFile(const base::FilePath &filename, VBACodeChunks *code_chunks,
+                        std::string *error);
+#endif
 
 // Same as ExtractVBAFromFile, but the content is passed as a string.
 void ExtractVBAFromString(absl::string_view content, VBACodeChunks *code_chunks,

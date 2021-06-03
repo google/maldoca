@@ -294,15 +294,26 @@ absl::Status ExtractFromOLE2String(absl::string_view content,
 // Attempt to process the input as a straight OLE content, extracting
 // VBA code from it. Returns FailedPrecondition in case of not OLE2 content, or
 // absl::Status returned by ExtractFromOLE2String.
+#ifndef MALDOCA_CHROME
 static absl::Status ExtractFromOLEContentInternal(
     const std::string &original_filename, absl::string_view content,
     OLEDirectoryMessage *directory, VBACodeChunks *code_chunks) {
+#else
+static absl::Status ExtractFromOLEContentInternal(
+    const base::FilePath &original_filename, absl::string_view content,
+    OLEDirectoryMessage *directory, VBACodeChunks *code_chunks) {
+#endif
   if (!IsOLE2Content(content)) {
     return absl::FailedPreconditionError("Not an OLE2 content");
   }
 
+#ifndef MALDOCA_CHROME
   DLOG(INFO) << "Evaluating " << original_filename << " (" << content.length()
              << " bytes) as a plain OLE2 file";
+#else
+  DLOG(INFO) << "Evaluating " << original_filename.value() << " (" << content.length()
+             << " bytes) as a plain OLE2 file";
+#endif
   return ExtractFromOLE2String(content, directory, code_chunks);
 }
 
@@ -317,9 +328,15 @@ static absl::Status ExtractFromOLEContentInternal(
 //
 // The content is opened as a ZIP file, if that works, we try to find
 // OLE2 files in it and extract VBA code from them.
+#ifndef MALDOCA_CHROME
 static absl::Status ExtractFromOOXMLContentInternal(
     const std::string &original_filename, absl::string_view content,
     OLEDirectoryMessage *directory, VBACodeChunks *code_chunks) {
+#else
+static absl::Status ExtractFromOOXMLContentInternal(
+    const base::FilePath &original_filename, absl::string_view content,
+    OLEDirectoryMessage *directory, VBACodeChunks *code_chunks) {
+#endif
   maldoca::utils::ArchiveHandler handler(content, "zip");
 
   if (!handler.Initialized()) {
@@ -328,8 +345,13 @@ static absl::Status ExtractFromOOXMLContentInternal(
   }
   handler.SetIgnoreWarning(absl::GetFlag(FLAGS_ignore_archive_reader_warning));
 
+#ifndef MALDOCA_CHROME
   DLOG(INFO) << "Evaluating " << original_filename << " (" << content.length()
              << " bytes) as a OOXML file";
+#else
+  DLOG(INFO) << "Evaluating " << original_filename.value() << " (" << content.length()
+             << " bytes) as a OOXML file";
+#endif
 
   std::string archive_member;
   int64_t size;
@@ -381,15 +403,26 @@ static absl::Status ExtractFromOOXMLContentInternal(
 // - FailedPrecondition in case of not Office2003 content
 // - OkSuccess - in case of success
 // - InternalError - in case of errors in the embedded OLE2 object
+#ifndef MALDOCA_CHROME
 static absl::Status ExtractFromOffice2003ContentInternal(
     const std::string &original_filename, absl::string_view content,
     OLEDirectoryMessage *directory, VBACodeChunks *code_chunks) {
+#else
+static absl::Status ExtractFromOffice2003ContentInternal(
+    const base::FilePath &original_filename, absl::string_view content,
+    OLEDirectoryMessage *directory, VBACodeChunks *code_chunks) {
+#endif
   if (!IsOffice2003Content(content)) {
     return absl::FailedPreconditionError("Not an Office 2003 content");
   }
 
+#ifndef MALDOCA_CHROME
   DLOG(INFO) << "Evaluating " << original_filename << " (" << content.length()
              << " bytes) as an Office 2003 XML file";
+#else
+  DLOG(INFO) << "Evaluating " << original_filename.value() << " (" << content.length()
+             << " bytes) as an Office 2003 XML file";
+#endif
   std::string mso_filename, mso;
   // Attempt to find MSO content in the XML document.
   if (!MSOContent::GetBinDataFromXML(content, &mso_filename, &mso)) {
@@ -415,17 +448,29 @@ static absl::Status ExtractFromOffice2003ContentInternal(
 // Attempt to process the input as an MSO file, extracting an OLE directory
 // and VBA code from it. Returns FailedPrecondition in case of invalid MSO
 // content, or absl::Status returned by ExtractFromOLE2String.
+#ifndef MALDOCA_CHROME
 static absl::Status ExtractFromMSOFile(const std::string &original_filename,
                                        absl::string_view content,
                                        OLEDirectoryMessage *directory,
                                        VBACodeChunks *code_chunks) {
+#else
+static absl::Status ExtractFromMSOFile(const base::FilePath &original_filename,
+                                       absl::string_view content,
+                                       OLEDirectoryMessage *directory,
+                                       VBACodeChunks *code_chunks) {
+#endif
   std::string ole2_from_mso;
   if (!MSOContent::GetOLE2Data(content, &ole2_from_mso)) {
     return absl::FailedPreconditionError("Not an OLE2 file");
   }
 
+#ifndef MALDOCA_CHROME
   DLOG(INFO) << "Evaluating " << original_filename << " (" << content.length()
              << " bytes) as an MSO file with OLE2 content";
+#else
+  DLOG(INFO) << "Evaluating " << original_filename.value() << " (" << content.length()
+             << " bytes) as an MSO file with OLE2 content";
+#endif
   return ExtractFromOLE2String(ole2_from_mso, directory, code_chunks);
 }
 
@@ -464,10 +509,17 @@ absl::Status ExtractFromPPT(absl::string_view content, const OLEHeader &header,
 // OOXML, Office 2003 XML or MSO input from content; depending on the value
 // OR'ed in input_type. If content is related to a filename,
 // original_filename is to be set to a non empty value.
+#ifndef MALDOCA_CHROME
 static absl::Status ExtractFromStringInternal(
     uint32_t input_type, const std::string &original_filename,
     absl::string_view content, OLEDirectoryMessage *directory,
     VBACodeChunks *code_chunks) {
+#else
+static absl::Status ExtractFromStringInternal(
+    uint32_t input_type, const base::FilePath &original_filename,
+    absl::string_view content, OLEDirectoryMessage *directory,
+    VBACodeChunks *code_chunks) {
+#endif
   // We prefer code chunk to be passed empty here. error as this stage
   // should have been already cleared by the caller due to its
   // transient nature.
@@ -539,7 +591,7 @@ void ExtractVBAFromStringLightweight(absl::string_view content,
                                      VBACodeChunks *code_chunks,
                                      std::string *error) {
   error->clear();
-  auto status = ExtractFromStringInternal(kSupportAllButOOXMLInputType, "",
+  auto status = ExtractFromStringInternal(kSupportAllButOOXMLInputType, base::FilePath(""),
                                           content, nullptr, code_chunks);
   error->assign(std::string(status.message()));
 }
@@ -569,7 +621,7 @@ void ExtractDirectoryAndVBAFromString(absl::string_view content,
   uint32_t input_type =
       (absl::GetFlag(FLAGS_input_type) == -1 ? kSupportAllInputType
                                              : absl::GetFlag(FLAGS_input_type));
-  auto status = ExtractFromStringInternal(input_type, "", content, directory,
+  auto status = ExtractFromStringInternal(input_type, base::FilePath(""), content, directory,
                                           code_chunks);
   error->assign(std::string(status.message()));
 }
@@ -579,18 +631,23 @@ void ExtractVBAFromString(absl::string_view content, VBACodeChunks *code_chunks,
   ExtractDirectoryAndVBAFromString(content, nullptr, code_chunks, error);
 }
 
+#ifndef MALDOCA_CHROME
 void ExtractVBAFromFile(const std::string &filename, VBACodeChunks *code_chunks,
                         std::string *error) {
+#else
+void ExtractVBAFromFile(const base::FilePath &filename, VBACodeChunks *code_chunks,
+                        std::string *error) {
+#endif
   error->clear();
   // Fail nicely if the file can't be read. ReadFileToString will also log
   // some details about the error.
   std::string content;
-#ifndef MALDOCA_CHROME
   if (!utils::ReadFileToString(filename, &content, true)) {
-#else
-  if (!utils::ReadFileToString(base::FilePath(filename), &content, true)) {
-#endif
+#ifndef MALDOCA_CHROME
     *error = absl::StrFormat("Can not get content for '%s'", filename);
+#else
+    *error = absl::StrFormat("Can not get content for '%s'", filename.value());
+#endif
     return;
   }
   auto status = ExtractFromStringInternal(kSupportAllInputType, filename,
@@ -598,7 +655,11 @@ void ExtractVBAFromFile(const std::string &filename, VBACodeChunks *code_chunks,
   DLOG(INFO) << "ExtractFromStringInternal Status: " << status;
   // Prepend the filename to the error message if one was returned.
   if (!status.message().empty()) {
+#ifndef MALDOCA_CHROME
     error->assign(absl::StrCat(filename, ": ", status.message()));
+#else
+    error->assign(absl::StrCat(filename.value(), ": ", status.message()));
+#endif
   }
 }
 }  // namespace maldoca

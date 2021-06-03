@@ -243,10 +243,18 @@ absl::Status DocProcessor::CreateOfficePipeline() {
   return absl::OkStatus();
 }
 
+#ifndef MALDOCA_CHROME
 absl::Status DocProcessor::ProcessDoc(absl::string_view file_name,
                                       absl::string_view doc,
                                       const ProcessDocumentRequest *request,
                                       ProcessDocumentResponse *response) {
+#else
+absl::Status DocProcessor::ProcessDoc(base::FilePath file_name,
+                                      absl::string_view doc,
+                                      const ProcessDocumentRequest *request,
+                                      ProcessDocumentResponse *response) {
+#endif
+
 #ifndef MALDOCA_CHROME
   auto doc_type = (identifier_ == nullptr)
                       ? request->doc_type()

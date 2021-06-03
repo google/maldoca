@@ -153,10 +153,17 @@ absl::Status ExtractOfficeFeature(const ParsedOfficeDocument& parsed_office_doc,
 
 }  // namespace
 
+#ifndef MALDOCA_CHROME
 void PrepParsedOfficeDocument(absl::string_view file_name,
                               absl::string_view doc, absl::string_view sha256,
                               DocType doc_type, ParsedDocument* pd) {
   pd->set_file_name(file_name.data(), file_name.size());
+#else
+void PrepParsedOfficeDocument(base::FilePath file_name,
+                              absl::string_view doc, absl::string_view sha256,
+                              DocType doc_type, ParsedDocument* pd) {
+  pd->set_file_name(file_name.value());
+#endif
   pd->set_file_size(doc.size());
   if (sha256.empty()) {
     pd->set_sha256(Sha256HexString(doc));

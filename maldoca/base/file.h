@@ -55,10 +55,6 @@ inline absl::Status SetContents(absl::string_view path,
   return SetContents(std::string(path), contents);
 }
 
-inline std::string JoinPath(const std::string path1, const std::string path2) {
-  return base::FilePath(path1).Append(path2).value();
-}
-
 // split a file name into <base, extension>.  Note base will include any prefix.
 std::pair<absl::string_view, absl::string_view> SplitFilename(
     absl::string_view path);

@@ -26,8 +26,13 @@ namespace maldoca {
 ::grpc::Status MaldocaServiceImpl::SendProcessingRequest(
     ::grpc::ServerContext* context, const ProcessDocumentRequest* request,
     ProcessDocumentResponse* response) {
+#ifndef MALDOCA_CHROME
   auto status = processor_->ProcessDoc(
       request->file_name(), request->doc_content(), request, response);
+#else
+  auto status = processor_->ProcessDoc(
+      base::FilePath(request->file_name()), request->doc_content(), request, response);
+#endif
 
   if (!status.ok()) {
     LOG(ERROR) << "Document Processing Failed: " << status;

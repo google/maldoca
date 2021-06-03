@@ -163,14 +163,18 @@ DocType InferDocTypeByContent(absl::string_view doc,
 }
 #endif  // MALDOCA_CHROME
 
+#ifndef MALDOCA_CHROME
 DocType InferDocTypeByName(absl::string_view file_name) {
+#else
+DocType InferDocTypeByName(base::FilePath file_name) {
+#endif
   static const auto* kExtMap = new absl::flat_hash_map<std::string, DocType>{
       {"doc", DocType::DOC},   {"docx", DocType::DOCX}, {"docm", DocType::DOCM},
       {"xla", DocType::XLA},   {"xlsb", DocType::XLSB}, {"xlsm", DocType::XLSM},
       {"xlsx", DocType::XLSX}, {"xls", DocType::XLS},   {"ppt", DocType::PPT},
       {"pps", DocType::PPS},   {"ppsx", DocType::PPSX}, {"pptx", DocType::PPTX},
       {"pdf", DocType::PDF}};
-  auto ext = file::SplitFilename(base::FilePath(std::string(file_name))).second;
+  auto ext = file::SplitFilename(file_name).second;
   auto iter = kExtMap->find(absl::AsciiStrToLower(ext));
   if (iter != kExtMap->end()) {
     return iter->second;
