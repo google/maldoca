@@ -24,10 +24,18 @@
 namespace maldoca {
 namespace utils {
 namespace {
+
+#ifndef MALDOCA_CHROME
 std::string TestFilename(absl::string_view filename) {
   return file::JoinPath(GetRunfilesDir(),
                         absl::StrCat("maldoca/ole/testdata/", filename));
 }
+#else
+base::FilePath TestFilename(absl::string_view filename) {
+  return file::JoinPath(base::FilePath(GetRunfilesDir()),
+                        base::FilePath(absl::StrCat("maldoca/ole/testdata/", filename)));
+}
+#endif
 
 std::string GetTestContent(absl::string_view filename) {
   std::string content;

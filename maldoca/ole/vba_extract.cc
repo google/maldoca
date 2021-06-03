@@ -585,7 +585,11 @@ void ExtractVBAFromFile(const std::string &filename, VBACodeChunks *code_chunks,
   // Fail nicely if the file can't be read. ReadFileToString will also log
   // some details about the error.
   std::string content;
+#ifndef MALDOCA_CHROME
   if (!utils::ReadFileToString(filename, &content, true)) {
+#else
+  if (!utils::ReadFileToString(base::FilePath(filename), &content, true)) {
+#endif
     *error = absl::StrFormat("Can not get content for '%s'", filename);
     return;
   }

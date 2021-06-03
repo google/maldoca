@@ -23,8 +23,8 @@
 
 // Displays the proto message outputted for the file `filename`.
 // Note that `filename` contains the full path of the file.
-void DisplayFileContent(absl::string_view filename) {
-  auto status_or_content = maldoca::file::GetContents(filename);
+void DisplayFileContent(std::string filename) {
+  auto status_or_content = maldoca::file::GetContents(base::FilePath(filename));
 
   if (!status_or_content.ok()) {
     DLOG(INFO) << "Unable to open archive!\n";

@@ -492,13 +492,24 @@ int Log2Ceiling(uint32_t n) {
 
 // TODO(somebody): Fix me! Currently uses a minimum implementation but could
 // be better.
+#ifndef MALDOCA_CHROME
 bool ReadFileToString(absl::string_view filename, std::string* content,
                       bool log_error) {
   auto status_or = file::GetContents(filename);
+#else
+bool ReadFileToString(base::FilePath filename, std::string* content,
+                      bool log_error) {
+  auto status_or = file::GetContents(filename);
+#endif  // MALDOCA_CHROME
   if (!status_or.ok()) {
     if (log_error) {
+#ifndef MALDOCA_CHROME
       LOG(ERROR) << "Can not read " << filename
                  << ", error: " << status_or.status();
+#else
+      LOG(ERROR) << "Can not read " << filename.value()
+                 << ", error: " << status_or.status();
+#endif
     }
     return false;
   }

@@ -37,10 +37,17 @@ using ::maldoca::testing::EqualsProto;
 using ::maldoca::testing::proto::IgnoringRepeatedFieldOrdering;
 using ::testing::Test;
 
+#ifndef MALDOCA_CHROME
 std::string TestFilename(absl::string_view filename) {
   return file::JoinPath(GetRunfilesDir(),
                         absl::StrCat("maldoca/service/testdata/", filename));
 }
+#else
+base::FilePath TestFilename(absl::string_view filename) {
+  return file::JoinPath(base::FilePath(GetRunfilesDir()),
+                        base::FilePath(absl::StrCat("maldoca/service/testdata/", filename)));
+}
+#endif
 
 class ProcessDocTest : public Test {
  protected:
@@ -171,6 +178,7 @@ class ProcessDocTest : public Test {
     MALDOCA_ASSERT_OK(processor->ProcessDoc(&request, &response));
 
     ProcessDocumentResponse expected_response;
+
     MALDOCA_ASSERT_OK(file::GetTextProto(
         TestFilename(expected_response_file_name), &expected_response));
 

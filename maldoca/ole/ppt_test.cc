@@ -29,11 +29,17 @@ using maldoca::PPT97ExtractVBAStorage;
 using maldoca::RecordHeader;
 using maldoca::VBAProjectStorage;
 
+#ifndef MALDOCA_CHROME
 std::string TestFilename(absl::string_view filename) {
-  return maldoca::file::JoinPath(
-      maldoca::GetRunfilesDir(),
-      absl::StrCat("maldoca/ole/testdata/ole/", filename));
+  return maldoca::file::JoinPath(maldoca::GetRunfilesDir(),
+                        absl::StrCat("maldoca/ole/testdata/ole/", filename));
 }
+#else
+base::FilePath TestFilename(absl::string_view filename) {
+  return maldoca::file::JoinPath(base::FilePath(maldoca::GetRunfilesDir()),
+                        base::FilePath(absl::StrCat("maldoca/ole/testdata/ole/", filename)));
+}
+#endif
 
 std::string GetTestContent(absl::string_view filename) {
   std::string content;

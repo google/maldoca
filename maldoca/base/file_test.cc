@@ -77,27 +77,28 @@ TEST(SplitPath, SplitPath) {
   CheckSplit(result, "/home", "");
 }
 
+#endif  // MALDOCA_CHROME
+
 // TODO: add tests for Windows once it is used.
 TEST(JoinPath, JoinPath) {
-  EXPECT_EQ("a", JoinPath("a", ""));
-  EXPECT_EQ("a/b", JoinPath("a", "b"));
-  EXPECT_EQ("a/b", JoinPath("a/", "b"));
-  EXPECT_EQ("a/b/", JoinPath("a", "b/"));
-  EXPECT_EQ("a/b/", JoinPath("a/", "b/"));
-  EXPECT_EQ("a/b/", JoinPath("a//", "b/"));
-  EXPECT_EQ("/a/b", JoinPath("/a", "b"));
+  EXPECT_EQ(base::FilePath("a").value(), JoinPath(base::FilePath("a"), base::FilePath("")).value());
+  EXPECT_EQ(base::FilePath("a/b").value(), JoinPath(base::FilePath("a"), base::FilePath("b")).value());
+  EXPECT_EQ(base::FilePath("a/b").value(), JoinPath(base::FilePath("a/"), base::FilePath("b")).value());
+  EXPECT_EQ(base::FilePath("a/b/").value(), JoinPath(base::FilePath("a"), base::FilePath("b/")).value());
+  EXPECT_EQ(base::FilePath("a/b/").value(), JoinPath(base::FilePath("a/"), base::FilePath("b/")).value());
+  EXPECT_EQ(base::FilePath("a/b/").value(), JoinPath(base::FilePath("a//"), base::FilePath("b/")).value());
+  EXPECT_EQ(base::FilePath("/a/b").value(), JoinPath(base::FilePath("/a"), base::FilePath("b")).value());
 }
-#endif  // MALDOCA_CHROME
 
 // TODO: add tests for Windows
 TEST(SplitFilename, SplitFilename) {
-  auto result = SplitFilename("/file/a/fn.txt");
+  auto result = SplitFilename(base::FilePath("/file/a/fn.txt"));
   CheckSplit(result, "/file/a/fn", "txt");
-  result = SplitFilename("/");
+  result = SplitFilename(base::FilePath("/"));
   CheckSplit(result, "/", "");
-  result = SplitFilename("/home/");
+  result = SplitFilename(base::FilePath("/home/"));
   CheckSplit(result, "/home/", "");
-  result = SplitFilename("my.file.doc");
+  result = SplitFilename(base::FilePath("my.file.doc"));
   CheckSplit(result, "my.file", "doc");
 }
 }  // namespace

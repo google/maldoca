@@ -32,11 +32,17 @@ namespace {
 
 using maldoca::ooxml::OoxmlToProtoSettings;
 
+#ifndef MALDOCA_CHROME
 std::string TestFilename(absl::string_view filename) {
-  return maldoca::file::JoinPath(
-      maldoca::GetRunfilesDir(),
-      absl::StrCat("maldoca/ole/testdata/ooxml/", filename));
+  return maldoca::file::JoinPath(maldoca::GetRunfilesDir(),
+                        absl::StrCat("maldoca/ole/testdata/ooxml/", filename));
 }
+#else
+base::FilePath TestFilename(absl::string_view filename) {
+  return maldoca::file::JoinPath(base::FilePath(maldoca::GetRunfilesDir()),
+                        base::FilePath(absl::StrCat("maldoca/ole/testdata/ooxml/", filename)));
+}
+#endif
 
 std::string GetTestContent(absl::string_view filename) {
   std::string content;

@@ -179,8 +179,13 @@ int Log2Ceiling(uint32_t n);
 // Read the content of filename into content. If log_error is true, errors
 // are logged. Return true upon success.
 // This function MUST be able to run before InitGoogle.
+#ifndef MALDOCA_CHROME
 bool ReadFileToString(absl::string_view filename, std::string* content,
                       bool log_error);
+#else
+bool ReadFileToString(base::FilePath filename, std::string* content,
+                      bool log_error);
+#endif  // MALDOCA_CHROME
 
 // Simple collector just concat error into a string
 class StringErrorCollector : public ::google::protobuf::io::ErrorCollector {

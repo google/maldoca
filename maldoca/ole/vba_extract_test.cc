@@ -97,11 +97,18 @@ ABSL_FLAG(std::string, save_code_to, "",
               "to. The name of the extracted chunks is their MD5 checksums.");
 
 namespace {
+
+#ifndef MALDOCA_CHROME
 std::string TestFilename(absl::string_view filename) {
-  return maldoca::file::JoinPath(
-      maldoca::GetRunfilesDir(),
-      absl::StrCat("maldoca/ole/testdata/ole/", filename));
+  return maldoca::file::JoinPath(maldoca::GetRunfilesDir(),
+                        absl::StrCat("maldoca/ole/testdata/ole/", filename));
 }
+#else
+base::FilePath TestFilename(absl::string_view filename) {
+  return maldoca::file::JoinPath(base::FilePath(maldoca::GetRunfilesDir()),
+                        base::FilePath(absl::StrCat("maldoca/ole/testdata/ole/", filename)));
+}
+#endif
 
 std::string GetTestContent(absl::string_view filename) {
   std::string content;
@@ -184,7 +191,7 @@ TEST(BogusExtraction, BogusExtractionTest) {
   // error is reset prior to being set again. Test this assumption by
   // trying a successful extraction.
   ExtractVBAFromFile(TestFilename(
-    "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431"),
+    "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431").value(),
                      &code_chunks, &error);
   EXPECT_TRUE(error.empty());
   EXPECT_NE(code_chunks.chunk_size(), 0);
@@ -206,16 +213,16 @@ TEST(BogusExtraction, BogusExtractionTest) {
   EXPECT_EQ(error, "Unrecognized file format");
 
   // OLE header but bogus content
-  ExtractVBAFromFile(TestFilename("bogus_ole"), &code_chunks, &error);
-  EXPECT_EQ(error, absl::StrCat(TestFilename("bogus_ole"), ": FAT is empty"));
+  ExtractVBAFromFile(TestFilename("bogus_ole").value(), &code_chunks, &error);
+  EXPECT_EQ(error, absl::StrCat(TestFilename("bogus_ole").value(), ": FAT is empty"));
   content = GetTestContent("bogus_ole");
   ExtractVBAFromString(content, &code_chunks, &error);
   EXPECT_EQ(error, "FAT is empty");
 
   // Below are OOXML files.
   // Bogus OOXML content
-  ExtractVBAFromFile(TestFilename("bogus_ooxml"), &code_chunks, &error);
-  EXPECT_EQ(error, absl::StrCat(TestFilename("bogus_ooxml"), ": ",
+  ExtractVBAFromFile(TestFilename("bogus_ooxml").value(), &code_chunks, &error);
+  EXPECT_EQ(error, absl::StrCat(TestFilename("bogus_ooxml").value(), ": ",
                           "bogus_ole2.bin: FAT is empty, "
                           "bogus_ole.bin: FAT is empty"));
   content = GetTestContent("bogus_ooxml");
@@ -255,7 +262,7 @@ TEST(MultipleExtraction, MultipleExtractionTest) {
     VBACodeChunks chunks, chunks_string;
     std::string error, error_string, content;
     LOG(INFO) << "Processing testdata/ole/" << item.first;
-    std::string filename = TestFilename(item.first);
+    std::string filename = TestFilename(item.first).value();
     content = GetTestContent(item.first);
     // Both extraction methods, when successful, should return the
     // exact same thing.

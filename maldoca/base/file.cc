@@ -54,12 +54,21 @@ namespace {
 
 // Wrapper for making a FILE* using fopen so that it'll close on exit scope. Do
 // not call fclose on the included FILE*
+#ifndef MALDOCA_CHROME
 std::unique_ptr<FILE, void (*)(FILE*)> FileCloser(const std::string& path,
                                                   const char* mode) {
   return {std::fopen(path.c_str(), mode), +[](FILE* fp) {
             if (fp) fclose(fp);
           }};
 }
+#else
+std::unique_ptr<FILE, void (*)(FILE*)> FileCloser(const base::FilePath& path,
+                                                  const char* mode) {
+  return {std::fopen(path.value().c_str(), mode), +[](FILE* fp) {
+            if (fp) fclose(fp);
+          }};
+}
+#endif  // MALDOCA_CHROME
 
 #ifndef MALDOCA_CHROME
 // TODO(somebody): Fix this to work with windows
@@ -156,7 +165,6 @@ Status NextMatchingPaths(const RE2& re, bool match_dir,
   }
   return absl::OkStatus();
 }
-#endif  // MALDOCA_CHROME
 
 std::pair<absl::string_view, absl::string_view> SplitPathOn(
     absl::string_view path, absl::string_view separator) {
@@ -179,6 +187,34 @@ std::pair<absl::string_view, absl::string_view> SplitPathOn(
   }
   return std::make_pair(path.substr(0, pos), filename);
 }
+
+#else
+
+std::pair<FilePath::StringType, FilePath::StringType> SplitPathOn(
+    base::FilePath path, FilePath::StringType separator) {
+  FilePath::StringType path_temp = path.value();
+  auto pos = path_temp.find_last_of(separator);
+
+  // Handle the case with no '/' in 'path'.
+  if (pos == absl::string_view::npos)
+    return std::make_pair(path_temp.substr(0, 0), path_temp);
+
+  // Handle the case with a single leading '/' in 'path'.
+  if (pos == 0)
+    return std::make_pair(
+        path_temp.substr(0, 1),
+        path_temp.size() == 1 ? path_temp.substr(0, 0) : path_temp.substr(1, path_temp.size() - 1));
+
+  FilePath::StringType filename;
+  auto pos_1 = pos + 1;
+  if (path_temp.size() > pos_1) {
+    filename = path_temp.substr(pos_1, path_temp.size() - pos_1);
+  }
+  return std::make_pair(path_temp.substr(0, pos), filename);
+}
+
+#endif  // MALDOCA_CHROME
+
 }  // namespace
 
 #ifndef MALDOCA_CHROME
@@ -202,9 +238,7 @@ absl::Status Match(absl::string_view pattern,
   *filenames = std::move(prefixes);
   return absl::OkStatus();
 }
-#endif  // MALDOCA_CHROME
 
-// TODO(someone): Make this work with general file systems.
 absl::Status GetContents(const std::string& path, std::string* contents) {
   auto fc = FileCloser(path, "r");
   auto fp = fc.get();
@@ -226,6 +260,33 @@ absl::Status GetContents(const std::string& path, std::string* contents) {
   return absl::OkStatus();
 }
 
+#else
+
+absl::Status GetContents(const base::FilePath& path, std::string* contents) {
+  auto fc = FileCloser(path, "r");
+  auto fp = fc.get();
+  if (fp == nullptr) {
+    return absl::FailedPreconditionError(absl::StrCat(
+        "Can't open file ", path.value(), " with error: ", strerror(errno)));
+  }
+  contents->clear();
+  char buf[4096];
+  while (!feof(fp)) {
+    size_t ret = fread(buf, 1, 4096, fp);
+    auto error = ferror(fp);
+    if (ret == 0 && error) {
+      return absl::InternalError(absl::StrCat(
+          "Failed reading ", path.value(), " with error: ", strerror(errno)));
+    }
+    absl::StrAppend(contents, absl::string_view(buf, ret));
+  }
+  return absl::OkStatus();
+}
+
+#endif  // MALDOCA_CHROME
+
+
+#ifndef MALDOCA_CHROME
 std::pair<absl::string_view, absl::string_view> SplitFilename(
     absl::string_view path) {
   auto base_ext = SplitPathOn(path, ".");
@@ -246,6 +307,30 @@ StatusOr<std::string> GetContents(absl::string_view path) {
     return status;
   }
 }
+
+#else
+
+std::pair<FilePath::StringType, FilePath::StringType> SplitFilename(
+    base::FilePath path) {
+  auto base_ext = SplitPathOn(path, ".");
+  // check if no "." is found then swap the base ext due to the implemetation
+  // that puts data in the first half when no split happens.
+  if (base_ext.first.size() + base_ext.second.size() == path.value().size()) {
+    return {base_ext.second, base_ext.first};
+  }
+  return base_ext;
+}
+
+StatusOr<std::string> GetContents(base::FilePath path) {
+  std::string output;
+  auto status = GetContents(path, &output);
+  if (status.ok()) {
+    return output;
+  } else {
+    return status;
+  }
+}
+#endif
 
 #ifndef MALDOCA_CHROME
 absl::Status SetContents(const std::string& path, absl::string_view contents) {
@@ -287,7 +372,6 @@ std::string CreateTempFileAndCloseOrDie(absl::string_view directory,
   CHECK(SetContents(file_name, contents).ok());
   return file_name;
 }
-#endif  // MALDOCA_CHROME
 
 absl::Status GetTextProto(absl::string_view filename, Message* proto) {
   auto status_or = file::GetContents(filename);
@@ -301,5 +385,23 @@ absl::Status GetTextProto(absl::string_view filename, Message* proto) {
         absl::StrCat("Failed parse proto from file ", filename));
   }
 }
+
+#else
+
+absl::Status GetTextProto(base::FilePath filename, Message* proto) {
+  auto status_or = file::GetContents(filename);
+  if (!status_or.ok()) return status_or.status();
+  if (google::protobuf::TextFormat::ParseFromString(status_or.value(), proto)) {
+    return absl::OkStatus();
+  } else {
+    // TODO(somebody): return better status
+    return absl::Status(
+        absl::StatusCode::kUnknown,
+        absl::StrCat("Failed parse proto from file ", filename.value()));
+  }
+}
+
+#endif  // MALDOCA_CHROME
+
 }  // namespace file
 }  // namespace maldoca

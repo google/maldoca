@@ -35,11 +35,18 @@ using maldoca::OLEHeader;
 using maldoca::OLEStream;
 
 namespace {
+
+#ifndef MALDOCA_CHROME
 std::string TestFilename(absl::string_view filename) {
-  return maldoca::file::JoinPath(
-      maldoca::GetRunfilesDir(),
-      absl::StrCat("maldoca/ole/testdata/", filename));
+  return maldoca::file::JoinPath(maldoca::GetRunfilesDir(),
+                        absl::StrCat("maldoca/ole/testdata/", filename));
 }
+#else
+base::FilePath TestFilename(absl::string_view filename) {
+  return maldoca::file::JoinPath(base::FilePath(maldoca::GetRunfilesDir()),
+                        base::FilePath(absl::StrCat("maldoca/ole/testdata/", filename)));
+}
+#endif
 
 std::string GetTestContent(absl::string_view filename) {
   std::string content;

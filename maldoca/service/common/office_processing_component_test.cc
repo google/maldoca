@@ -69,10 +69,17 @@ constexpr char kConfgString[] = R"(
     }
 )";
 
+#ifndef MALDOCA_CHROME
 std::string TestFilename(absl::string_view filename) {
   return file::JoinPath(GetRunfilesDir(),
                         absl::StrCat("maldoca/service/testdata/", filename));
 }
+#else
+base::FilePath TestFilename(absl::string_view filename) {
+  return file::JoinPath(base::FilePath(GetRunfilesDir()),
+                        base::FilePath(absl::StrCat("maldoca/service/testdata/", filename)));
+}
+#endif
 
 void ProcessDocument(const std::string& input_file_name,
                      const std::string& input, const ProcessorConfig& config,
@@ -114,6 +121,7 @@ void ValidateParsedProto(absl::string_view file_base, absl::string_view ext,
       absl::StrCat(file_base, ".features.textproto");
 
   DocumentFeatures expected_doc_features;
+
   MALDOCA_ASSERT_OK(file::GetTextProto(
       TestFilename(expected_doc_features_file_name), &expected_doc_features));
 

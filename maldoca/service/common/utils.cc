@@ -170,7 +170,7 @@ DocType InferDocTypeByName(absl::string_view file_name) {
       {"xlsx", DocType::XLSX}, {"xls", DocType::XLS},   {"ppt", DocType::PPT},
       {"pps", DocType::PPS},   {"ppsx", DocType::PPSX}, {"pptx", DocType::PPTX},
       {"pdf", DocType::PDF}};
-  auto ext = file::SplitFilename(file_name).second;
+  auto ext = file::SplitFilename(base::FilePath(std::string(file_name))).second;
   auto iter = kExtMap->find(absl::AsciiStrToLower(ext));
   if (iter != kExtMap->end()) {
     return iter->second;

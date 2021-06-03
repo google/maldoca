@@ -32,16 +32,21 @@
 #include "google/protobuf/message.h"
 #include "maldoca/base/statusor.h"
 
+using ::base::FilePath;
+
 namespace maldoca {
 namespace file {
 
 #ifndef MALDOCA_CHROME
 absl::Status Match(absl::string_view pattern,
                    std::vector<std::string>* filenames);
-#endif  // MALDOCA_CHROME
 
 absl::Status GetContents(const std::string& path, std::string* content);
 StatusOr<std::string> GetContents(absl::string_view path);
+#else
+absl::Status GetContents(const base::FilePath& path, std::string* content);
+StatusOr<std::string> GetContents(base::FilePath path);
+#endif  // MALDOCA_CHROME
 
 #ifndef MALDOCA_CHROME
 absl::Status SetContents(const std::string& path, absl::string_view contents);
@@ -50,8 +55,6 @@ inline absl::Status SetContents(absl::string_view path,
   return SetContents(std::string(path), contents);
 }
 
-#endif  // MALDOCA_CHROME
-
 inline std::string JoinPath(const std::string path1, const std::string path2) {
   return base::FilePath(path1).Append(path2).value();
 }
@@ -59,6 +62,19 @@ inline std::string JoinPath(const std::string path1, const std::string path2) {
 // split a file name into <base, extension>.  Note base will include any prefix.
 std::pair<absl::string_view, absl::string_view> SplitFilename(
     absl::string_view path);
+
+#else
+
+inline base::FilePath JoinPath(const base::FilePath path1,
+                               const base::FilePath path2) {
+  return path1.Append(path2);
+}
+
+// split a file name into <base, extension>.  Note base will include any prefix.
+std::pair<FilePath::StringType, FilePath::StringType> SplitFilename(
+    base::FilePath path);
+
+#endif  // MALDOCA_CHROME
 
 #ifndef MALDOCA_CHROME
 absl::Status CreateDir(const std::string& path, int mode);
@@ -69,9 +85,12 @@ inline absl::Status CreateDir(absl::string_view path) {
 
 std::string CreateTempFileAndCloseOrDie(absl::string_view directory,
                                         const std::string& contents);
-#endif  // MALDOCA_CHROME
+
 absl::Status GetTextProto(absl::string_view filename,
                           ::google::protobuf::Message* proto);
+#endif  // MALDOCA_CHROME
+
+absl::Status GetTextProto(base::FilePath filename, ::google::protobuf::Message* proto);
 
 #ifndef MALDOCA_CHROME
 // Get a temp dir for testing
