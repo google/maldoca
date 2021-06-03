@@ -54,7 +54,8 @@ inline std::string JoinPath(const std::string path1, const std::string path2) {
   return base::FilePath(path1).Append(path2).value();
 }
 #else
-inline base::FilePath JoinPath(const base::FilePath path1, const base::FilePath path2) {
+inline base::FilePath JoinPath(const base::FilePath path1,
+                               const base::FilePath path2) {
   return path1.Append(path2);
 }
 #endif  // MALDOCA_CHROME
