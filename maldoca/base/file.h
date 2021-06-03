@@ -49,18 +49,12 @@ inline absl::Status SetContents(absl::string_view path,
                                 absl::string_view contents) {
   return SetContents(std::string(path), contents);
 }
+
 #endif  // MALDOCA_CHROME
 
-#if defined(_WIN32)
-inline base::FilePath JoinPath(const base::FilePath path1,
-                               const base::FilePath path2) {
-  return path1.Append(path2);
-}
-#else
 inline std::string JoinPath(const std::string path1, const std::string path2) {
   return base::FilePath(path1).Append(path2).value();
 }
-#endif  // _WIN32
 
 // split a file name into <base, extension>.  Note base will include any prefix.
 std::pair<absl::string_view, absl::string_view> SplitFilename(
