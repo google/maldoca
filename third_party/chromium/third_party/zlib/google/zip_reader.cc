@@ -4,10 +4,15 @@
 
 #include "third_party/zlib/google/zip_reader.h"
 
+#include <codecvt>
+#include <locale>
 #include <utility>
 
 #include "base/files/file_path.h"
 #include "base/strings/string_util.h"
+#if defined(_WIN32)
+#include "base/strings/utf_string_conversions.h"
+#endif
 
 #include "contrib/minizip/unzip.h"
 
@@ -18,9 +23,16 @@
 namespace zip {
 
 ZipReader::EntryInfo::EntryInfo(const std::string& file_name_in_zip,
-                                const unz_file_info& raw_file_info)
-    : file_path_(file_name_in_zip),
+                                const unz_file_info& raw_file_info) :
+#if defined(_WIN32)
+  //  file_path_(base::UTF8ToUTF16(base::StringPiece(file_name_in_zip))),
+#else
+      file_path_(file_name_in_zip),
+#endif  // _WIN32
       is_directory_(false) {
+
+  std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> utf16conv;
+  std::u16string utf16 = utf16conv.from_bytes(file_name_in_zip);
 
   original_size_ = raw_file_info.uncompressed_size;
 
