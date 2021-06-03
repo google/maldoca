@@ -40,13 +40,10 @@ namespace file {
 #ifndef MALDOCA_CHROME
 absl::Status Match(absl::string_view pattern,
                    std::vector<std::string>* filenames);
+#endif  // MALDOCA_CHROME
 
-absl::Status GetContents(const std::string& path, std::string* content);
-StatusOr<std::string> GetContents(absl::string_view path);
-#else
 absl::Status GetContents(const base::FilePath& path, std::string* content);
 StatusOr<std::string> GetContents(base::FilePath path);
-#endif  // MALDOCA_CHROME
 
 #ifndef MALDOCA_CHROME
 absl::Status SetContents(const std::string& path, absl::string_view contents);
@@ -54,12 +51,7 @@ inline absl::Status SetContents(absl::string_view path,
                                 absl::string_view contents) {
   return SetContents(std::string(path), contents);
 }
-
-// split a file name into <base, extension>.  Note base will include any prefix.
-std::pair<absl::string_view, absl::string_view> SplitFilename(
-    absl::string_view path);
-
-#else
+#endif  // MALDOCA_CHROME
 
 inline base::FilePath JoinPath(const base::FilePath path1,
                                const base::FilePath path2) {
@@ -69,8 +61,6 @@ inline base::FilePath JoinPath(const base::FilePath path1,
 // split a file name into <base, extension>.  Note base will include any prefix.
 std::pair<FilePath::StringType, FilePath::StringType> SplitFilename(
     base::FilePath path);
-
-#endif  // MALDOCA_CHROME
 
 #ifndef MALDOCA_CHROME
 absl::Status CreateDir(const std::string& path, int mode);
