@@ -30,8 +30,9 @@ namespace maldoca {
   auto status = processor_->ProcessDoc(
       request->file_name(), request->doc_content(), request, response);
 #else
-  auto status = processor_->ProcessDoc(
-      base::FilePath(request->file_name()), request->doc_content(), request, response);
+  auto status =
+      processor_->ProcessDoc(base::FilePath(request->file_name()),
+                             request->doc_content(), request, response);
 #endif
 
   if (!status.ok()) {

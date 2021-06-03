@@ -75,8 +75,9 @@ int main(int argc, char** argv) {
   ::maldoca::ProcessDocumentRequest req;
   req.set_file_name(input_file);
   ::maldoca::ProcessDocumentResponse resp;
-  CHECK(
-      ::maldoca::file::GetContents(base::FilePath(input_file), req.mutable_doc_content()).ok());
+  CHECK(::maldoca::file::GetContents(base::FilePath(input_file),
+                                     req.mutable_doc_content())
+            .ok());
   auto rpc_status = client.ProcessDocument(req, &resp);
   if (!rpc_status.ok()) {
     std::cerr << "**Failed** " << rpc_status.error_message() << "\n"

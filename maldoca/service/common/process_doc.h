@@ -53,17 +53,14 @@ class DocProcessor {
   // This function fills out the "ProcessDocumentResponse" which is sent
   // to the client - runs the whole pipeline for the current document ("doc")
 #ifndef MALDOCA_CHROME
-absl::Status ProcessDoc(absl::string_view file_name,
-                        absl::string_view doc,
-                        const ProcessDocumentRequest* request,
-                        ProcessDocumentResponse* response);
+  absl::Status ProcessDoc(absl::string_view file_name, absl::string_view doc,
+                          const ProcessDocumentRequest* request,
+                          ProcessDocumentResponse* response);
 #else
-absl::Status ProcessDoc(base::FilePath file_name,
-                        absl::string_view doc,
-                        const ProcessDocumentRequest* request,
-                        ProcessDocumentResponse* response);
-#endif  
-
+  absl::Status ProcessDoc(base::FilePath file_name, absl::string_view doc,
+                          const ProcessDocumentRequest* request,
+                          ProcessDocumentResponse* response);
+#endif
 
   // The same call as ProcessDoc above but assumes the file_name and
   // content are already in the request.
@@ -73,8 +70,8 @@ absl::Status ProcessDoc(base::FilePath file_name,
     return ProcessDoc(request->file_name(), request->doc_content(), request,
                       response);
 #else
-    return ProcessDoc(base::FilePath(request->file_name()), request->doc_content(), request,
-                      response);
+    return ProcessDoc(base::FilePath(request->file_name()),
+                      request->doc_content(), request, response);
 #endif
   }
 

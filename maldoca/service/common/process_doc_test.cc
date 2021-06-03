@@ -44,8 +44,9 @@ std::string TestFilename(absl::string_view filename) {
 }
 #else
 base::FilePath TestFilename(base::FilePath filename) {
-  return file::JoinPath(base::FilePath(GetRunfilesDir()),
-                        base::FilePath("maldoca/service/testdata/").Append(filename));
+  return file::JoinPath(
+      base::FilePath(GetRunfilesDir()),
+      base::FilePath("maldoca/service/testdata/").Append(filename));
 }
 #endif
 
@@ -217,14 +218,18 @@ class ProcessDocTest : public Test {
                            "image_and_link.pdf.response.textproto", &processor);
 #endif
     ValidateProcessedProto(
-        base::FilePath("ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431.doc"),
-        base::FilePath("ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431."
-        "response.textproto"),
+        base::FilePath("ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3d"
+                       "f2ffb2431.doc"),
+        base::FilePath(
+            "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431."
+            "response.textproto"),
         &processor);
     ValidateProcessedProto(
-        base::FilePath("c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d.docx"),
-        base::FilePath("c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d."
-        "response.textproto"),
+        base::FilePath("c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c7"
+                       "9d4619f3d.docx"),
+        base::FilePath(
+            "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d."
+            "response.textproto"),
         &processor);
   }
 

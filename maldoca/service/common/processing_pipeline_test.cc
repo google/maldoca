@@ -49,8 +49,9 @@ std::string TestFilename(absl::string_view filename) {
 }
 #else
 base::FilePath TestFilename(base::FilePath filename) {
-  return file::JoinPath(base::FilePath(GetRunfilesDir()),
-                        base::FilePath("maldoca/service/testdata/").Append(filename));
+  return file::JoinPath(
+      base::FilePath(GetRunfilesDir()),
+      base::FilePath("maldoca/service/testdata/").Append(filename));
 }
 #endif
 
@@ -96,7 +97,8 @@ class ProcesDocTest : public Test {
 #else
   void ValidateProcessedProto(base::FilePath file_base,
                               base::FilePath::StringType ext) {
-    base::FilePath input_file_name = base::FilePath(absl::StrCat(file_base.value(), ".", ext));
+    base::FilePath input_file_name =
+        base::FilePath(absl::StrCat(file_base.value(), ".", ext));
 #endif
     std::string input;
     MALDOCA_ASSERT_OK(file::GetContents(TestFilename(input_file_name), &input));
@@ -135,7 +137,8 @@ class ProcesDocTest : public Test {
     std::string expected_parsed_doc_file_name =
         absl::StrCat(file_base, ".parsed.textproto");
 #else
-    base::FilePath expected_parsed_doc_file_name = base::FilePath(absl::StrCat(file_base.value(), ".parsed.textproto"));
+    base::FilePath expected_parsed_doc_file_name =
+        base::FilePath(absl::StrCat(file_base.value(), ".parsed.textproto"));
 #endif
 
     ParsedDocument expected_parsed_doc;
@@ -146,7 +149,8 @@ class ProcesDocTest : public Test {
     std::string expected_doc_features_file_name =
         absl::StrCat(file_base, ".features.textproto");
 #else
-    base::FilePath expected_doc_features_file_name = base::FilePath(absl::StrCat(file_base.value(), ".features.textproto"));
+    base::FilePath expected_doc_features_file_name =
+        base::FilePath(absl::StrCat(file_base.value(), ".features.textproto"));
 #endif
 
     DocumentFeatures expected_doc_features;
@@ -227,11 +231,13 @@ TEST_F(ProcesDocTest, CorrectlyParse) {
       "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d",
       "docx");
 #else
-  ValidateProcessedProto(base::FilePath(
-      "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431"),
+  ValidateProcessedProto(
+      base::FilePath(
+          "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431"),
       "doc");
-  ValidateProcessedProto(base::FilePath(
-      "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d"),
+  ValidateProcessedProto(
+      base::FilePath(
+          "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d"),
       "docx");
 #endif
 #ifndef MALDOCA_CHROME
@@ -254,11 +260,13 @@ TEST_F(ProcesDocTest, CorrectlyParse_Sandbox) {
       "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d",
       "docx");
 #else
-  ValidateProcessedProto(base::FilePath(
-      "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431"),
+  ValidateProcessedProto(
+      base::FilePath(
+          "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431"),
       "doc");
-  ValidateProcessedProto(base::FilePath(
-      "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d"),
+  ValidateProcessedProto(
+      base::FilePath(
+          "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d"),
       "docx");
 #endif
   ValidateProcessedProto("image_and_text", "pdf");

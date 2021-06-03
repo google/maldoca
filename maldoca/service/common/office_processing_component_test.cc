@@ -76,8 +76,9 @@ std::string TestFilename(absl::string_view filename) {
 }
 #else
 base::FilePath TestFilename(base::FilePath filename) {
-  return file::JoinPath(base::FilePath(GetRunfilesDir()),
-                        base::FilePath("maldoca/service/testdata/").Append(filename));
+  return file::JoinPath(
+      base::FilePath(GetRunfilesDir()),
+      base::FilePath("maldoca/service/testdata/").Append(filename));
 }
 #endif
 
@@ -113,9 +114,11 @@ void ValidateParsedProto(absl::string_view file_base, absl::string_view ext,
                          const ProcessorConfig& config) {
   std::string input_file_name = absl::StrCat(file_base, ".", ext);
 #else
-void ValidateParsedProto(base::FilePath file_base, base::FilePath::StringType ext,
+void ValidateParsedProto(base::FilePath file_base,
+                         base::FilePath::StringType ext,
                          const ProcessorConfig& config) {
-  base::FilePath input_file_name = base::FilePath(absl::StrCat(file_base.value(), ".", ext));
+  base::FilePath input_file_name =
+      base::FilePath(absl::StrCat(file_base.value(), ".", ext));
 #endif
   std::string input;
   MALDOCA_ASSERT_OK(file::GetContents(TestFilename(input_file_name), &input));
@@ -127,7 +130,8 @@ void ValidateParsedProto(base::FilePath file_base, base::FilePath::StringType ex
   std::string expected_parsed_doc_file_name =
       absl::StrCat(file_base, ".parsed.textproto");
 #else
-  base::FilePath expected_parsed_doc_file_name = base::FilePath(absl::StrCat(file_base.value(), ".parsed.textproto"));
+  base::FilePath expected_parsed_doc_file_name =
+      base::FilePath(absl::StrCat(file_base.value(), ".parsed.textproto"));
 #endif
 
   ParsedDocument expected_parsed_doc;
@@ -138,7 +142,8 @@ void ValidateParsedProto(base::FilePath file_base, base::FilePath::StringType ex
   std::string expected_doc_features_file_name =
       absl::StrCat(file_base, ".features.textproto");
 #else
-  base::FilePath expected_doc_features_file_name = base::FilePath(absl::StrCat(file_base.value(), ".features.textproto"));
+  base::FilePath expected_doc_features_file_name =
+      base::FilePath(absl::StrCat(file_base.value(), ".features.textproto"));
 #endif
 
   DocumentFeatures expected_doc_features;
@@ -175,10 +180,10 @@ void CheckConfigIsUsed(ProcessorConfig config) {
                                      "877b5fdd512b3df2ffb2431.doc"),
                         &input));
 #else
-  MALDOCA_ASSERT_OK(
-      file::GetContents(TestFilename(base::FilePath("ffc835c9a950beda17fa79dd0acf28d1df3835232"
-                                     "877b5fdd512b3df2ffb2431.doc")),
-                        &input));
+  MALDOCA_ASSERT_OK(file::GetContents(
+      TestFilename(base::FilePath("ffc835c9a950beda17fa79dd0acf28d1df3835232"
+                                  "877b5fdd512b3df2ffb2431.doc")),
+      &input));
 #endif
   ParsedDocument parsed_doc;
   DocumentFeatures doc_features;
@@ -187,9 +192,9 @@ void CheckConfigIsUsed(ProcessorConfig config) {
       "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431.doc",
       input, config, &parsed_doc, &doc_features);
 #else
-  ProcessDocument(base::FilePath(
-      "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431.doc"),
-      input, config, &parsed_doc, &doc_features);
+  ProcessDocument(base::FilePath("ffc835c9a950beda17fa79dd0acf28d1df3835232877b"
+                                 "5fdd512b3df2ffb2431.doc"),
+                  input, config, &parsed_doc, &doc_features);
 #endif
   EXPECT_EQ(
       2, parsed_doc.office().parser_output().script_features().scripts_size());
@@ -219,11 +224,13 @@ TEST(ParseOfficeDoc, CorrectlyParse) {
       "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d",
       "docx", config);
 #else
-  ValidateParsedProto(base::FilePath(
-      "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431"), "doc",
-      config);
-  ValidateParsedProto(base::FilePath(
-      "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d"),
+  ValidateParsedProto(
+      base::FilePath(
+          "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431"),
+      "doc", config);
+  ValidateParsedProto(
+      base::FilePath(
+          "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d"),
       "docx", config);
 #endif
   // Test that config is used by turning off VBA

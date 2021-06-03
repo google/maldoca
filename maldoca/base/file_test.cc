@@ -81,13 +81,20 @@ TEST(SplitPath, SplitPath) {
 
 // TODO: add tests for Windows once it is used.
 TEST(JoinPath, JoinPath) {
-  EXPECT_EQ(base::FilePath("a").value(), JoinPath(base::FilePath("a"), base::FilePath("")).value());
-  EXPECT_EQ(base::FilePath("a/b").value(), JoinPath(base::FilePath("a"), base::FilePath("b")).value());
-  EXPECT_EQ(base::FilePath("a/b").value(), JoinPath(base::FilePath("a/"), base::FilePath("b")).value());
-  EXPECT_EQ(base::FilePath("a/b/").value(), JoinPath(base::FilePath("a"), base::FilePath("b/")).value());
-  EXPECT_EQ(base::FilePath("a/b/").value(), JoinPath(base::FilePath("a/"), base::FilePath("b/")).value());
-  EXPECT_EQ(base::FilePath("a/b/").value(), JoinPath(base::FilePath("a//"), base::FilePath("b/")).value());
-  EXPECT_EQ(base::FilePath("/a/b").value(), JoinPath(base::FilePath("/a"), base::FilePath("b")).value());
+  EXPECT_EQ(base::FilePath("a").value(),
+            JoinPath(base::FilePath("a"), base::FilePath("")).value());
+  EXPECT_EQ(base::FilePath("a/b").value(),
+            JoinPath(base::FilePath("a"), base::FilePath("b")).value());
+  EXPECT_EQ(base::FilePath("a/b").value(),
+            JoinPath(base::FilePath("a/"), base::FilePath("b")).value());
+  EXPECT_EQ(base::FilePath("a/b/").value(),
+            JoinPath(base::FilePath("a"), base::FilePath("b/")).value());
+  EXPECT_EQ(base::FilePath("a/b/").value(),
+            JoinPath(base::FilePath("a/"), base::FilePath("b/")).value());
+  EXPECT_EQ(base::FilePath("a/b/").value(),
+            JoinPath(base::FilePath("a//"), base::FilePath("b/")).value());
+  EXPECT_EQ(base::FilePath("/a/b").value(),
+            JoinPath(base::FilePath("/a"), base::FilePath("b")).value());
 }
 
 // TODO: add tests for Windows

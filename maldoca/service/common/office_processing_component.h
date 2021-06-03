@@ -140,9 +140,9 @@ void PrepParsedOfficeDocument(absl::string_view file_name,
                               absl::string_view doc, absl::string_view sha256,
                               DocType doc_type, ParsedDocument *pd);
 #else
-void PrepParsedOfficeDocument(base::FilePath file_name,
-                              absl::string_view doc, absl::string_view sha256,
-                              DocType doc_type, ParsedDocument *pd);
+void PrepParsedOfficeDocument(base::FilePath file_name, absl::string_view doc,
+                              absl::string_view sha256, DocType doc_type,
+                              ParsedDocument *pd);
 #endif
 
 }  // namespace maldoca

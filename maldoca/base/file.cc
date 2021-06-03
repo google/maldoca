@@ -201,9 +201,10 @@ std::pair<FilePath::StringType, FilePath::StringType> SplitPathOn(
 
   // Handle the case with a single leading '/' in 'path'.
   if (pos == 0)
-    return std::make_pair(
-        path_temp.substr(0, 1),
-        path_temp.size() == 1 ? path_temp.substr(0, 0) : path_temp.substr(1, path_temp.size() - 1));
+    return std::make_pair(path_temp.substr(0, 1),
+                          path_temp.size() == 1
+                              ? path_temp.substr(0, 0)
+                              : path_temp.substr(1, path_temp.size() - 1));
 
   FilePath::StringType filename;
   auto pos_1 = pos + 1;
@@ -284,7 +285,6 @@ absl::Status GetContents(const base::FilePath& path, std::string* contents) {
 }
 
 #endif  // MALDOCA_CHROME
-
 
 #ifndef MALDOCA_CHROME
 std::pair<absl::string_view, absl::string_view> SplitFilename(

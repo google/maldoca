@@ -86,7 +86,8 @@ absl::Status GetTextProto(absl::string_view filename,
                           ::google::protobuf::Message* proto);
 #endif  // MALDOCA_CHROME
 
-absl::Status GetTextProto(base::FilePath filename, ::google::protobuf::Message* proto);
+absl::Status GetTextProto(base::FilePath filename,
+                          ::google::protobuf::Message* proto);
 
 #ifndef MALDOCA_CHROME
 // Get a temp dir for testing
