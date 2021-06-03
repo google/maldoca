@@ -125,14 +125,14 @@ TEST(StatusOr, TestDefaultCtor) {
 
 TEST(StatusOrDeathTest, TestDefaultCtorValue) {
   StatusOr<int> thing;
-#if defined (_WIN32)
+#if defined(_WIN32)
   EXPECT_THROW(thing.value(), std::exception);
 #else
   EXPECT_DEATH(thing.value(), ::testing::_);
 #endif
 
   const StatusOr<int> thing2;
-#if defined (_WIN32)
+#if defined(_WIN32)
   EXPECT_THROW(thing.value(), std::exception);
 #else
   EXPECT_DEATH(thing.value(), ::testing::_);
@@ -688,7 +688,7 @@ TEST(StatusOr, MapToStatusOrUniquePtr) {
 
 TEST(StatusOrDeathTest, TestPointerValueNotOk) {
   StatusOr<int*> thing(absl::CancelledError(""));
-#if defined (_WIN32)
+#if defined(_WIN32)
   EXPECT_THROW(thing.value(), std::exception);
 #else
   EXPECT_DEATH(thing.value(), ::testing::_);
@@ -697,7 +697,7 @@ TEST(StatusOrDeathTest, TestPointerValueNotOk) {
 
 TEST(StatusOrDeathTest, TestPointerValueNotOkConst) {
   const StatusOr<int*> thing(absl::CancelledError(""));
-#if defined (_WIN32)
+#if defined(_WIN32)
   EXPECT_THROW(thing.value(), std::exception);
 #else
   EXPECT_DEATH(thing.value(), ::testing::_);
