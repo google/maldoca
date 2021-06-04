@@ -119,7 +119,8 @@ void ValidateParsedProto(absl::string_view file_base, absl::string_view ext,
 #ifndef MALDOCA_CHROME
   ProcessDocument(input_file_name, input, config, &parsed_doc, &doc_features);
 #else
-  ProcessDocument(base::FilePath(input_file_name), input, config, &parsed_doc, &doc_features);
+  ProcessDocument(base::FilePath(input_file_name), input, config, &parsed_doc,
+                  &doc_features);
 #endif
 
   std::string expected_parsed_doc_file_name =
