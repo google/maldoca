@@ -184,7 +184,6 @@ class ProcessDocTest : public Test {
     MALDOCA_ASSERT_OK(processor->ProcessDoc(&request, &response));
 
     ProcessDocumentResponse expected_response;
-
     MALDOCA_ASSERT_OK(file::GetTextProto(
         TestFilename(expected_response_file_name), &expected_response));
 
@@ -212,14 +211,12 @@ class ProcessDocTest : public Test {
                            "image_and_link.pdf.response.textproto", &processor);
 #endif
     ValidateProcessedProto(
-        "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3d"
-        "f2ffb2431.doc",
+        "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431.doc",
         "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431."
         "response.textproto",
         &processor);
     ValidateProcessedProto(
-        "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c7"
-        "9d4619f3d.docx",
+        "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d.docx",
         "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d."
         "response.textproto",
         &processor);

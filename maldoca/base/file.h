@@ -32,7 +32,7 @@
 #include "google/protobuf/message.h"
 #include "maldoca/base/statusor.h"
 
-using ::base::FilePath;
+using base::FilePath;
 
 namespace maldoca {
 namespace file {
@@ -72,8 +72,6 @@ inline absl::Status CreateDir(absl::string_view path) {
 std::string CreateTempFileAndCloseOrDie(absl::string_view directory,
                                         const std::string& contents);
 
-absl::Status GetTextProto(absl::string_view filename,
-                          ::google::protobuf::Message* proto);
 #endif  // MALDOCA_CHROME
 
 absl::Status GetTextProto(base::FilePath filename,

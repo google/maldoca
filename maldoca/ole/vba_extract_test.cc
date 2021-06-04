@@ -184,7 +184,11 @@ TEST(BogusExtraction, BogusExtractionTest) {
   VBACodeChunks code_chunks;
 
   // The file doesn't exist.
+#ifndef MALDOCA_CHROME
+  ExtractVBAFromFile("/does/not/exist", &code_chunks, &error);
+#else
   ExtractVBAFromFile(base::FilePath("/does/not/exist"), &code_chunks, &error);
+#endif
   EXPECT_EQ(code_chunks.chunk_size(), 0);
   EXPECT_EQ(error, "Can not get content for '/does/not/exist'");
 
@@ -214,7 +218,11 @@ TEST(BogusExtraction, BogusExtractionTest) {
 
   // OLE header but bogus content
   ExtractVBAFromFile(TestFilename("bogus_ole"), &code_chunks, &error);
+#ifndef MALDOCA_CHROME
+  EXPECT_EQ(error, absl::StrCat(TestFilename("bogus_ole"), ": FAT is empty"));
+#else
   EXPECT_EQ(error, absl::StrCat(TestFilename("bogus_ole").value(), ": FAT is empty"));
+#endif
   content = GetTestContent("bogus_ole");
   ExtractVBAFromString(content, &code_chunks, &error);
   EXPECT_EQ(error, "FAT is empty");
@@ -222,9 +230,15 @@ TEST(BogusExtraction, BogusExtractionTest) {
   // Below are OOXML files.
   // Bogus OOXML content
   ExtractVBAFromFile(TestFilename("bogus_ooxml"), &code_chunks, &error);
+#ifndef MALDOCA_CHROME
+  EXPECT_EQ(error, absl::StrCat(TestFilename("bogus_ooxml"), ": ",
+                          "bogus_ole2.bin: FAT is empty, "
+                          "bogus_ole.bin: FAT is empty"));
+#else
   EXPECT_EQ(error, absl::StrCat(TestFilename("bogus_ooxml").value(), ": ",
                           "bogus_ole2.bin: FAT is empty, "
                           "bogus_ole.bin: FAT is empty"));
+#endif
   content = GetTestContent("bogus_ooxml");
   ExtractVBAFromString(content, &code_chunks, &error);
   EXPECT_EQ(error, "bogus_ole2.bin: FAT is empty, bogus_ole.bin: FAT is empty");

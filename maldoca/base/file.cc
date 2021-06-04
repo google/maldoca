@@ -156,7 +156,6 @@ Status NextMatchingPaths(const RE2& re, bool match_dir,
   }
   return absl::OkStatus();
 }
-
 #endif  // MALDOCA_CHROME
 
 std::pair<FilePath::StringType, FilePath::StringType> SplitPathOn(
@@ -206,7 +205,6 @@ absl::Status Match(absl::string_view pattern,
   *filenames = std::move(prefixes);
   return absl::OkStatus();
 }
-
 #endif  // MALDOCA_CHROME
 
 absl::Status GetContents(const base::FilePath& path, std::string* contents) {
@@ -291,7 +289,6 @@ std::string CreateTempFileAndCloseOrDie(absl::string_view directory,
   CHECK(SetContents(file_name, contents).ok());
   return file_name;
 }
-
 #endif  // MALDOCA_CHROME
 
 absl::Status GetTextProto(base::FilePath filename, Message* proto) {
@@ -306,6 +303,5 @@ absl::Status GetTextProto(base::FilePath filename, Message* proto) {
         absl::StrCat("Failed parse proto from file ", filename.value()));
   }
 }
-
 }  // namespace file
 }  // namespace maldoca

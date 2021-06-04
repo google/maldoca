@@ -591,8 +591,13 @@ void ExtractVBAFromStringLightweight(absl::string_view content,
                                      VBACodeChunks *code_chunks,
                                      std::string *error) {
   error->clear();
+#ifndef MALDOCA_CHROME
+  auto status = ExtractFromStringInternal(kSupportAllButOOXMLInputType, "",
+                                          content, nullptr, code_chunks);
+#else
   auto status = ExtractFromStringInternal(kSupportAllButOOXMLInputType, base::FilePath(""),
                                           content, nullptr, code_chunks);
+#endif
   error->assign(std::string(status.message()));
 }
 
@@ -621,8 +626,13 @@ void ExtractDirectoryAndVBAFromString(absl::string_view content,
   uint32_t input_type =
       (absl::GetFlag(FLAGS_input_type) == -1 ? kSupportAllInputType
                                              : absl::GetFlag(FLAGS_input_type));
+#ifndef MALDOCA_CHROME
+  auto status = ExtractFromStringInternal(input_type, "", content, directory,
+                                          code_chunks);
+#else
   auto status = ExtractFromStringInternal(input_type, base::FilePath(""), content, directory,
                                           code_chunks);
+#endif
   error->assign(std::string(status.message()));
 }
 

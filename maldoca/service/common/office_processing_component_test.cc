@@ -111,8 +111,8 @@ void ProcessDocument(const base::FilePath& input_file_name,
 
 void ValidateParsedProto(absl::string_view file_base, absl::string_view ext,
                          const ProcessorConfig& config) {
-  std::string input;
   std::string input_file_name = absl::StrCat(file_base, ".", ext);
+  std::string input;
   MALDOCA_ASSERT_OK(file::GetContents(TestFilename(input_file_name), &input));
   ParsedDocument parsed_doc;
   DocumentFeatures doc_features;
@@ -128,11 +128,10 @@ void ValidateParsedProto(absl::string_view file_base, absl::string_view ext,
   ParsedDocument expected_parsed_doc;
   MALDOCA_ASSERT_OK(file::GetTextProto(
       TestFilename(expected_parsed_doc_file_name), &expected_parsed_doc));
-
   std::string expected_doc_features_file_name =
       absl::StrCat(file_base, ".features.textproto");
-  DocumentFeatures expected_doc_features;
 
+  DocumentFeatures expected_doc_features;
   MALDOCA_ASSERT_OK(file::GetTextProto(
       TestFilename(expected_doc_features_file_name), &expected_doc_features));
 

@@ -75,9 +75,15 @@ int main(int argc, char** argv) {
   ::maldoca::ProcessDocumentRequest req;
   req.set_file_name(input_file);
   ::maldoca::ProcessDocumentResponse resp;
+#ifndef MALDOCA_CHROME
+  CHECK(::maldoca::file::GetContents(input_file,
+                                     req.mutable_doc_content())
+            .ok());
+#else
   CHECK(::maldoca::file::GetContents(base::FilePath(input_file),
                                      req.mutable_doc_content())
             .ok());
+#endif
   auto rpc_status = client.ProcessDocument(req, &resp);
   if (!rpc_status.ok()) {
     std::cerr << "**Failed** " << rpc_status.error_message() << "\n"

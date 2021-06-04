@@ -29,7 +29,11 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
+#ifndef MALDOCA_CHROME
+  auto status_or_contents = maldoca::file::GetContents(argv[1]);
+#else
   auto status_or_contents = maldoca::file::GetContents(base::FilePath(argv[1]));
+#endif
   if (!status_or_contents.ok()) {
     absl::FPrintF(stderr, "While reading %s: %s\n", argv[1],
                   status_or_contents.status().ToString());
