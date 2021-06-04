@@ -75,10 +75,10 @@ std::string TestFilename(absl::string_view filename) {
                         absl::StrCat("maldoca/service/testdata/", filename));
 }
 #else
-base::FilePath TestFilename(base::FilePath filename) {
+base::FilePath TestFilename(absl::string_view filename) {
   return file::JoinPath(
       base::FilePath(GetRunfilesDir()),
-      base::FilePath("maldoca/service/testdata/").Append(filename));
+      base::FilePath(absl::StrCat("maldoca/service/testdata/", filename)));
 }
 #endif
 
@@ -109,43 +109,27 @@ void ProcessDocument(const base::FilePath& input_file_name,
   MALDOCA_ASSERT_OK(features_handler->Handle(*parsed_doc, doc_features));
 }
 
-#ifndef MALDOCA_CHROME
 void ValidateParsedProto(absl::string_view file_base, absl::string_view ext,
                          const ProcessorConfig& config) {
-  std::string input_file_name = absl::StrCat(file_base, ".", ext);
-#else
-void ValidateParsedProto(base::FilePath file_base,
-                         base::FilePath::StringType ext,
-                         const ProcessorConfig& config) {
-  base::FilePath input_file_name =
-      base::FilePath(absl::StrCat(file_base.value(), ".", ext));
-#endif
   std::string input;
+  std::string input_file_name = absl::StrCat(file_base, ".", ext);
   MALDOCA_ASSERT_OK(file::GetContents(TestFilename(input_file_name), &input));
   ParsedDocument parsed_doc;
   DocumentFeatures doc_features;
-  ProcessDocument(input_file_name, input, config, &parsed_doc, &doc_features);
-
 #ifndef MALDOCA_CHROME
-  std::string expected_parsed_doc_file_name =
-      absl::StrCat(file_base, ".parsed.textproto");
+  ProcessDocument(input_file_name, input, config, &parsed_doc, &doc_features);
 #else
-  base::FilePath expected_parsed_doc_file_name =
-      base::FilePath(absl::StrCat(file_base.value(), ".parsed.textproto"));
+  ProcessDocument(base::FilePath(input_file_name), input, config, &parsed_doc, &doc_features);
 #endif
 
+  std::string expected_parsed_doc_file_name =
+      absl::StrCat(file_base, ".parsed.textproto");
   ParsedDocument expected_parsed_doc;
   MALDOCA_ASSERT_OK(file::GetTextProto(
       TestFilename(expected_parsed_doc_file_name), &expected_parsed_doc));
 
-#ifndef MALDOCA_CHROME
   std::string expected_doc_features_file_name =
       absl::StrCat(file_base, ".features.textproto");
-#else
-  base::FilePath expected_doc_features_file_name =
-      base::FilePath(absl::StrCat(file_base.value(), ".features.textproto"));
-#endif
-
   DocumentFeatures expected_doc_features;
 
   MALDOCA_ASSERT_OK(file::GetTextProto(
@@ -174,17 +158,10 @@ void CheckConfigIsUsed(ProcessorConfig config) {
                       ->mutable_ole_to_proto_settings();
   settings->set_include_vba_code(false);  // turns off vba
   std::string input;
-#ifndef MALDOCA_CHROME
   MALDOCA_ASSERT_OK(
       file::GetContents(TestFilename("ffc835c9a950beda17fa79dd0acf28d1df3835232"
                                      "877b5fdd512b3df2ffb2431.doc"),
                         &input));
-#else
-  MALDOCA_ASSERT_OK(file::GetContents(
-      TestFilename(base::FilePath("ffc835c9a950beda17fa79dd0acf28d1df3835232"
-                                  "877b5fdd512b3df2ffb2431.doc")),
-      &input));
-#endif
   ParsedDocument parsed_doc;
   DocumentFeatures doc_features;
 #ifndef MALDOCA_CHROME
@@ -216,23 +193,12 @@ void CheckConfigIsUsed(ProcessorConfig config) {
 //  Just couple simple tests for now; basically copied from ole_to_proto_test.
 TEST(ParseOfficeDoc, CorrectlyParse) {
   ProcessorConfig config = ParseTextOrDie<ProcessorConfig>(kConfgString);
-#ifndef MALDOCA_CHROME
   ValidateParsedProto(
       "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431", "doc",
       config);
   ValidateParsedProto(
       "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d",
       "docx", config);
-#else
-  ValidateParsedProto(
-      base::FilePath(
-          "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431"),
-      "doc", config);
-  ValidateParsedProto(
-      base::FilePath(
-          "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d"),
-      "docx", config);
-#endif
   // Test that config is used by turning off VBA
   CheckConfigIsUsed(config);
 }
