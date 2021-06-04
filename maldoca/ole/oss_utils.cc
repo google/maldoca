@@ -495,12 +495,11 @@ int Log2Ceiling(uint32_t n) {
 #ifndef MALDOCA_CHROME
 bool ReadFileToString(absl::string_view filename, std::string* content,
                       bool log_error) {
-  auto status_or = file::GetContents(filename);
 #else
 bool ReadFileToString(base::FilePath filename, std::string* content,
                       bool log_error) {
-  auto status_or = file::GetContents(filename);
 #endif  // MALDOCA_CHROME
+  auto status_or = file::GetContents(filename);
   if (!status_or.ok()) {
     if (log_error) {
 #ifndef MALDOCA_CHROME

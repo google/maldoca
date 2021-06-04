@@ -161,26 +161,26 @@ Status NextMatchingPaths(const RE2& re, bool match_dir,
 
 std::pair<FilePath::StringType, FilePath::StringType> SplitPathOn(
     base::FilePath path, FilePath::StringType separator) {
-  FilePath::StringType path_temp = path.value();
-  auto pos = path_temp.find_last_of(separator);
+  FilePath::StringType path_val = path.value();
+  auto pos = path_val.find_last_of(separator);
 
   // Handle the case with no '/' in 'path'.
   if (pos == absl::string_view::npos)
-    return std::make_pair(path_temp.substr(0, 0), path_temp);
+    return std::make_pair(path_val.substr(0, 0), path_val);
 
   // Handle the case with a single leading '/' in 'path'.
   if (pos == 0)
-    return std::make_pair(path_temp.substr(0, 1),
-                          path_temp.size() == 1
-                              ? path_temp.substr(0, 0)
-                              : path_temp.substr(1, path_temp.size() - 1));
+    return std::make_pair(path_val.substr(0, 1),
+                          path_val.size() == 1
+                              ? path_val.substr(0, 0)
+                              : path_val.substr(1, path_val.size() - 1));
 
   FilePath::StringType filename;
   auto pos_1 = pos + 1;
-  if (path_temp.size() > pos_1) {
-    filename = path_temp.substr(pos_1, path_temp.size() - pos_1);
+  if (path_val.size() > pos_1) {
+    filename = path_val.substr(pos_1, path_val.size() - pos_1);
   }
-  return std::make_pair(path_temp.substr(0, pos), filename);
+  return std::make_pair(path_val.substr(0, pos), filename);
 }
 
 }  // namespace
@@ -230,30 +230,6 @@ absl::Status GetContents(const base::FilePath& path, std::string* contents) {
   return absl::OkStatus();
 }
 
-#ifndef MALDOCA_CHROME
-std::pair<absl::string_view, absl::string_view> SplitFilename(
-    absl::string_view path) {
-  auto base_ext = SplitPathOn(path, ".");
-  // check if no "." is found then swap the base ext due to the implemetation
-  // that puts data in the first half when no split happens.
-  if (base_ext.first.size() + base_ext.second.size() == path.size()) {
-    return {base_ext.second, base_ext.first};
-  }
-  return base_ext;
-}
-
-StatusOr<std::string> GetContents(absl::string_view path) {
-  std::string output;
-  auto status = GetContents(std::string(path), &output);
-  if (status.ok()) {
-    return output;
-  } else {
-    return status;
-  }
-}
-
-#else
-
 std::pair<FilePath::StringType, FilePath::StringType> SplitFilename(
     base::FilePath path) {
   auto base_ext = SplitPathOn(path, ".");
@@ -274,7 +250,6 @@ StatusOr<std::string> GetContents(base::FilePath path) {
     return status;
   }
 }
-#endif
 
 #ifndef MALDOCA_CHROME
 absl::Status SetContents(const std::string& path, absl::string_view contents) {
