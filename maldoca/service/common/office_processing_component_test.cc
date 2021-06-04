@@ -125,9 +125,11 @@ void ValidateParsedProto(absl::string_view file_base, absl::string_view ext,
 
   std::string expected_parsed_doc_file_name =
       absl::StrCat(file_base, ".parsed.textproto");
+
   ParsedDocument expected_parsed_doc;
   MALDOCA_ASSERT_OK(file::GetTextProto(
       TestFilename(expected_parsed_doc_file_name), &expected_parsed_doc));
+
   std::string expected_doc_features_file_name =
       absl::StrCat(file_base, ".features.textproto");
 

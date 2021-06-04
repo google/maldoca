@@ -76,9 +76,8 @@ int main(int argc, char** argv) {
   req.set_file_name(input_file);
   ::maldoca::ProcessDocumentResponse resp;
 #ifndef MALDOCA_CHROME
-  CHECK(::maldoca::file::GetContents(input_file,
-                                     req.mutable_doc_content())
-            .ok());
+  CHECK(
+      ::maldoca::file::GetContents(input_file, req.mutable_doc_content()).ok());
 #else
   CHECK(::maldoca::file::GetContents(base::FilePath(input_file),
                                      req.mutable_doc_content())
