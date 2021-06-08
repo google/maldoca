@@ -26,12 +26,13 @@
 #include <unistd.h>
 #endif  // MALDOCA_CHROME
 
+#include <stdio.h>
+
 #include <cerrno>
 #include <codecvt>
 #include <cstdlib>
 #include <ctime>
 #include <locale>
-#include <stdio.h>
 
 #include "absl/memory/memory.h"
 #include "absl/strings/str_cat.h"
@@ -307,7 +308,7 @@ absl::Status GetTextProto(absl::string_view filename, Message* proto) {
 
 std::wstring Utf8ToUtf16(const std::string str) {
   std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> utf16conv;
-  return utf16conv.from_bytes(str);    
+  return utf16conv.from_bytes(str);
 }
 
 std::string Utf16ToUtf8(const std::wstring str) {

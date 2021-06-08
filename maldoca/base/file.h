@@ -57,7 +57,8 @@ std::string Utf16ToUtf8(const std::wstring str);
 
 inline std::string JoinPath(const std::string path1, const std::string path2) {
 #if defined(_WIN32)
-  base::FilePath path = base::FilePath(Utf8ToUtf16(path1)).Append(Utf8ToUtf16(path2));
+  base::FilePath path =
+      base::FilePath(Utf8ToUtf16(path1)).Append(Utf8ToUtf16(path2));
   return Utf16ToUtf8(path.value());
 #else
   return base::FilePath(path1).Append(path2).value();
