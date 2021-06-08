@@ -83,7 +83,7 @@ TEST(JoinPath, JoinPath) {
   std::string sep =
       Utf16ToUtf8(std::wstring(1, base::FilePath::kSeparators[0]));
 #else
-  std::string sep = base::FilePath::kSeparators[0];
+  std::string sep = std::string(1, base::FilePath::kSeparators[0]);
 #endif  // _WIN32
   EXPECT_EQ("a", JoinPath("a", ""));
   EXPECT_EQ("a" + sep + "b", JoinPath("a", "b"));
