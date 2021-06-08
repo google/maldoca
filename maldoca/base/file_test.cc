@@ -80,7 +80,8 @@ TEST(SplitPath, SplitPath) {
 
 TEST(JoinPath, JoinPath) {
 #if defined(_WIN32)
-  std::string sep = Utf16ToUtf8(std::wstring(1, base::FilePath::kSeparators[0]));
+  std::string sep =
+      Utf16ToUtf8(std::wstring(1, base::FilePath::kSeparators[0]));
 #else
   std::string sep = base::FilePath::kSeparators[0];
 #endif  // _WIN32
