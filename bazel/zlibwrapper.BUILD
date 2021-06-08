@@ -15,17 +15,18 @@
 cc_library(
     name = "zlibwrapper",
     srcs = [
-        "zlibwrapper/zlibwrapper.cc",
-        "zlibwrapper/gzipheader.cc",
+        "zlibwrapper.cc",
+        "gzipheader.cc",
     ],
     hdrs = glob([
-        "zlibwrapper/zlibwrapper.h",
-        "zlibwrapper/gzipheader.h",
+        "zlibwrapper.h",
+        "gzipheader.h",
     ]),
     copts = ["-Wno-sign-compare"],
     includes = [
         "@zlib//zlib/include",
     ],
+    include_prefix = "zlibwrapper",
     visibility = ["//visibility:public"],
     deps = [
         "@com_google_maldoca//maldoca/base:logging",

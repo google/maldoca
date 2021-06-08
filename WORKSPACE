@@ -135,7 +135,7 @@ maybe(
     new_local_repository,
     name = "zlibwrapper",
     build_file = "@//:bazel/zlibwrapper.BUILD",
-    path = "third_party",
+    path = "./third_party/zlibwrapper",
 )
 
 # Libxml
@@ -184,5 +184,5 @@ maybe(
     new_local_repository,
     name = "mini_chromium",
     build_file = "@//:bazel/mini_chromium.BUILD",
-    path = "third_party/mini_chromium",
+    path = "./third_party/mini_chromium",
 )
