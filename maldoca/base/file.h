@@ -49,11 +49,19 @@ inline absl::Status SetContents(absl::string_view path,
                                 absl::string_view contents) {
   return SetContents(std::string(path), contents);
 }
-
 #endif  // MALDOCA_CHROME
 
+// Converts to/from wchar_t to char.
+std::wstring Utf8ToUtf16(const std::string str);
+std::string Utf16ToUtf8(const std::wstring str);
+
 inline std::string JoinPath(const std::string path1, const std::string path2) {
+#if defined(_WIN32)
+  base::FilePath path = base::FilePath(Utf8ToUtf16(path1)).Append(Utf8ToUtf16(path2));
+  return Utf16ToUtf8(path.value());
+#else
   return base::FilePath(path1).Append(path2).value();
+#endif  // _WIN32
 }
 
 // split a file name into <base, extension>.  Note base will include any prefix.
