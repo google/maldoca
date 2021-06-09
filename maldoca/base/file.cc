@@ -26,13 +26,9 @@
 #include <unistd.h>
 #endif  // MALDOCA_CHROME
 
-#include <stdio.h>
-
 #include <cerrno>
-#include <codecvt>
 #include <cstdlib>
 #include <ctime>
-#include <locale>
 
 #include "absl/memory/memory.h"
 #include "absl/strings/str_cat.h"
