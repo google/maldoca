@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #if defined(_WIN32)
-#include "maldoca/base/file.h"
 #include "maldoca/base/utf8/unicodetext.h"
 #endif
 #include "maldoca/ole/archive_handler.h"
