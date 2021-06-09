@@ -31,6 +31,9 @@
 #include "base/files/file_path.h"
 #include "google/protobuf/message.h"
 #include "maldoca/base/statusor.h"
+#if defined(_WIN32)
+#include "maldoca/base/utf8/unicodetext.h"
+#endif  // _WIN32
 
 namespace maldoca {
 namespace file {
@@ -51,15 +54,11 @@ inline absl::Status SetContents(absl::string_view path,
 }
 #endif  // MALDOCA_CHROME
 
-// Converts to/from wchar_t to char.
-std::wstring Utf8ToUtf16(const std::string str);
-std::string Utf16ToUtf8(const std::wstring str);
-
 inline std::string JoinPath(const std::string path1, const std::string path2) {
 #if defined(_WIN32)
   base::FilePath path =
-      base::FilePath(Utf8ToUtf16(path1)).Append(Utf8ToUtf16(path2));
-  return Utf16ToUtf8(path.value());
+      base::FilePath(base::UTF8ToWide(path1)).Append(base::UTF8ToWide(path2));
+  return base::WideToUTF8(path.value());
 #else
   return base::FilePath(path1).Append(path2).value();
 #endif  // _WIN32

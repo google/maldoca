@@ -25,6 +25,9 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "maldoca/base/testing/status_matchers.h"
+#if defined(_WIN32)
+#include "maldoca/base/utf8/unicodetext.h"
+#endif  // _WIN32
 
 namespace maldoca {
 namespace file {
@@ -81,7 +84,7 @@ TEST(SplitPath, SplitPath) {
 TEST(JoinPath, JoinPath) {
 #if defined(_WIN32)
   std::string sep =
-      Utf16ToUtf8(std::wstring(1, base::FilePath::kSeparators[0]));
+      base::WideToUTF8(std::wstring(1, base::FilePath::kSeparators[0]));
 #else
   std::string sep = std::string(1, base::FilePath::kSeparators[0]);
 #endif  // _WIN32

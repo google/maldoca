@@ -305,15 +305,5 @@ absl::Status GetTextProto(absl::string_view filename, Message* proto) {
         absl::StrCat("Failed parse proto from file ", filename));
   }
 }
-
-std::wstring Utf8ToUtf16(const std::string str) {
-  std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> utf16conv;
-  return utf16conv.from_bytes(str);
-}
-
-std::string Utf16ToUtf8(const std::wstring str) {
-  std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> utf16conv;
-  return utf16conv.to_bytes(str);
-}
 }  // namespace file
 }  // namespace maldoca

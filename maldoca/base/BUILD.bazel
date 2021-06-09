@@ -311,6 +311,12 @@ cc_library(
         "//:chrome_build": [
             "@mini_chromium//:base",
         ],
+    })
+    + select({
+        "//conditions:default": [],
+        "@platforms//os:windows": [
+            "//maldoca/base/utf8:unicodetext",
+        ],
     }),
 )
 
@@ -329,7 +335,12 @@ cc_test(
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
-    ],
+    ] + select({
+        "//conditions:default": [],
+        "@platforms//os:windows": [
+            "//maldoca/base/utf8:unicodetext",
+        ],
+    }),
 )
 
 cc_library(

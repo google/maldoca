@@ -14,6 +14,7 @@
 
 #if defined(_WIN32)
 #include "maldoca/base/file.h"
+#include "maldoca/base/utf8/unicodetext.h"
 #endif
 #include "maldoca/ole/archive_handler.h"
 
@@ -70,7 +71,7 @@ bool ArchiveHandler::GetNextEntry(std::string *filename, int64_t *size,
   *size = current_entry_info->original_size();
   *isdir = current_entry_info->is_directory();
 #if defined(_WIN32)
-  *filename = ::maldoca::file::Utf16ToUtf8(current_entry_info->file_path().value());
+  *filename = base::WideToUTF8(current_entry_info->file_path().value());
 #else
   *filename = current_entry_info->file_path().value();
 #endif  // _WIN32
