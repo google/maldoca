@@ -25,9 +25,6 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "maldoca/base/testing/status_matchers.h"
-#if defined(_WIN32)
-#include "maldoca/base/utf8/unicodetext.h"
-#endif  // _WIN32
 
 namespace maldoca {
 namespace file {
@@ -94,7 +91,7 @@ TEST(JoinPath, JoinPath) {
   EXPECT_EQ("a" + sep + "b" + sep, JoinPath("a", "b" + sep));
   EXPECT_EQ("a" + sep + "b" + sep, JoinPath("a" + sep, "b" + sep));
   EXPECT_EQ("a" + sep + "b" + sep, JoinPath("a" + sep + sep, "b" + sep));
-  EXPECT_EQ(sep + "a" + sep + "b", JoinPath(sep + "a", "b"));
+  EXPECT_EQ(absl::StrJoin({"", "a", "b"}, sep), JoinPath(sep + "a", "b"));
 }
 
 TEST(SplitFilename, SplitFilename) {
