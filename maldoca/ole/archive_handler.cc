@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#if defined(_WIN32)
+#include "maldoca/base/utf8/unicodetext.h"
+#endif
 #include "maldoca/ole/archive_handler.h"
 
 namespace maldoca {
@@ -66,7 +69,11 @@ bool ArchiveHandler::GetNextEntry(std::string *filename, int64_t *size,
   ::zip::ZipReader::EntryInfo* current_entry_info = zip_reader_.current_entry_info();
   *size = current_entry_info->original_size();
   *isdir = current_entry_info->is_directory();
+#if defined(_WIN32)
+  *filename = base::WideToUTF8(current_entry_info->file_path().value());
+#else
   *filename = current_entry_info->file_path().value();
+#endif  // _WIN32
 
   return true;
 }

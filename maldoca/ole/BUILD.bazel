@@ -644,5 +644,10 @@ cc_library(
         "//maldoca/base:logging",
         "@com_google_absl//absl/strings",
         "@zip_reader",
-    ],
+    ] + select({
+        "//conditions:default": [],
+        "@platforms//os:windows": [
+            "//maldoca/base/utf8:unicodetext",
+        ],
+    }),
 )

@@ -76,29 +76,42 @@ TEST(SplitPath, SplitPath) {
   result = SplitPath("/home/");
   CheckSplit(result, "/home", "");
 }
-
-// TODO: add tests for Windows once it is used.
-TEST(JoinPath, JoinPath) {
-  EXPECT_EQ("a", JoinPath("a", ""));
-  EXPECT_EQ("a/b", JoinPath("a", "b"));
-  EXPECT_EQ("a/b", JoinPath("a/", "b"));
-  EXPECT_EQ("a/b/", JoinPath("a", "b/"));
-  EXPECT_EQ("a/b/", JoinPath("a/", "b/"));
-  EXPECT_EQ("a/b/", JoinPath("a//", "b/"));
-  EXPECT_EQ("/a/b", JoinPath("/a", "b"));
-}
 #endif  // MALDOCA_CHROME
 
-// TODO: add tests for Windows
+TEST(JoinPath, JoinPath) {
+#if defined(_WIN32)
+  std::string sep =
+      base::WideToUTF8(std::wstring(1, base::FilePath::kSeparators[0]));
+#else
+  std::string sep = std::string(1, base::FilePath::kSeparators[0]);
+#endif  // _WIN32
+  EXPECT_EQ("a", JoinPath("a", ""));
+  EXPECT_EQ("a" + sep + "b", JoinPath("a", "b"));
+  EXPECT_EQ("a" + sep + "b", JoinPath("a" + sep, "b"));
+  EXPECT_EQ("a" + sep + "b" + sep, JoinPath("a", "b" + sep));
+  EXPECT_EQ("a" + sep + "b" + sep, JoinPath("a" + sep, "b" + sep));
+  EXPECT_EQ("a" + sep + "b" + sep, JoinPath("a" + sep + sep, "b" + sep));
+  EXPECT_EQ(absl::StrJoin({"", "a", "b"}, sep), JoinPath(sep + "a", "b"));
+}
+
 TEST(SplitFilename, SplitFilename) {
-  auto result = SplitFilename("/file/a/fn.txt");
-  CheckSplit(result, "/file/a/fn", "txt");
+  auto result = SplitFilename("my.file.doc");
+  CheckSplit(result, "my.file", "doc");
+#if defined(_WIN32)
+  result = SplitFilename("C:\\");
+  CheckSplit(result, "C:\\", "");
+  result = SplitFilename("C:\\bla\\");
+  CheckSplit(result, "C:\\bla\\", "");
+  result = SplitFilename("C:\\file\\a\\fn.txt");
+  CheckSplit(result, "C:\\file\\a\\fn", "txt");
+#else
   result = SplitFilename("/");
   CheckSplit(result, "/", "");
   result = SplitFilename("/home/");
   CheckSplit(result, "/home/", "");
-  result = SplitFilename("my.file.doc");
-  CheckSplit(result, "my.file", "doc");
+  result = SplitFilename("/file/a/fn.txt");
+  CheckSplit(result, "/file/a/fn", "txt");
+#endif  // _WIN32
 }
 }  // namespace
 }  // namespace file
