@@ -12,42 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-genrule(
-    name = "gen_configure",
-    srcs = [
-        "Makefile.in",
-        "config.guess",
-        "config.h.in",
-        "config.sub",
-        "configure",
-        "entities.c",
-        "install-sh",
-        "libxml-2.0.pc.in",
-        "libxml-2.0-uninstalled.pc.in",
-        "libxml2-config.cmake.in",
-        "libxml.spec.in",
-        "ltmain.sh",
-        "missing",
-        "xml2-config.in",
-        "doc/Makefile.in",
-        "doc/devhelp/Makefile.in",
-        "doc/examples/Makefile.in",
-        "example/Makefile.in",
-        "include/Makefile.in",
-        "include/libxml/Makefile.in",
-        "include/libxml/xmlversion.h.in",
-        "python/Makefile.in",
-        "python/setup.py.in",
-        "python/tests/Makefile.in",
-        "xstc/Makefile.in",
-    ],
-    outs = [
-        "config.h",
-        "include/libxml/xmlversion.h",
-    ],
-    cmd = "./$(location configure) --silent --without-lzma " +
-          "&& cp --verbose -- config.h $(location config.h) " +
-          "&& cp --verbose -- include/libxml/xmlversion.h $(location include/libxml/xmlversion.h)",
+package(
+    default_visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -98,33 +64,35 @@ cc_library(
         "xpointer.c",
         "xzlib.c",
     ],
-    hdrs = [
-        "config.h",
-        "include/libxml/xmlversion.h",
-    ] + glob(
-        [
-            "*.h",
-            "include/libxml/*.h",
-        ],
-        exclude = [
-            # Exclude the pre-made version that ships with the tarball,
-            # use the genrule output from ./configure instead.
-            "include/libxml/xmlversion.h",
-        ],
-    ),
+    hdrs = glob(["include/libxml/*.h"]) + glob(["*.h"]),
     copts = [
         "-D_REENTRANT",
         "-DHAVE_CONFIG_H",
         "-w",
     ],
+    # Otherwise Windows builds a DLL.
+    defines = [
+       "LIBXML_STATIC",
+    ],
+    # Required to make angled includes work, e.g.: "#include <libxml/SAX2.h>".
     includes = [
         ".",
         "include",
     ],
-    linkopts = [
-        "-pthread",
-        "-ldl",
-    ],
-    textual_hdrs = ["trionan.c"],
-    visibility = ["//visibility:public"],
+    deps = [
+        "@libxml_config//:xmlversion",
+    ] + select({
+        "@platforms//os:linux": [
+            "@libxml_config//:linux_config",
+        ],
+        "//conditions:default": [],
+    }),
+    linkopts = select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [
+            "-lm",
+            "-pthread",
+            "-ldl",
+        ],
+    }),
 )
