@@ -8,6 +8,7 @@
 
 #include "base/files/file_path.h"
 #include "base/strings/string_util.h"
+#include "base/strings/utf_string_conversions.h"
 
 #include "contrib/minizip/unzip.h"
 
@@ -19,7 +20,11 @@ namespace zip {
 
 ZipReader::EntryInfo::EntryInfo(const std::string& file_name_in_zip,
                                 const unz_file_info& raw_file_info)
+#if defined(_WIN32)
+    : file_path_(base::UTF8ToWide(file_name_in_zip)),
+#else
     : file_path_(file_name_in_zip),
+#endif  // _WIN32
       is_directory_(false) {
 
   original_size_ = raw_file_info.uncompressed_size;
