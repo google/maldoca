@@ -70,7 +70,11 @@ cc_library(
         "-DHAVE_CONFIG_H",
         "-w",
     ],
-    # required to make angled includes work, e.g.: "#include <libxml/SAX2.h>"
+    # Otherwise Windows builds a DLL.
+    defines = [
+       "LIBXML_STATIC",
+    ],
+    # Required to make angled includes work, e.g.: "#include <libxml/SAX2.h>".
     includes = [
         ".",
         "include",

@@ -10,9 +10,6 @@
 #ifndef __XML_VERSION_H__
 #define __XML_VERSION_H__
 
-// manually added; has to be added before "#include <libxml/xmlexports.h>"
-#define LIBXML_STATIC
-
 #include <libxml/xmlexports.h>
 
 #ifdef __cplusplus

@@ -24,7 +24,7 @@ cc_library(
 cc_library(
     name = "xmlversion",
     srcs = ["libxml/xmlversion.h"],
-    # required to make angled includes work: "#include <libxml/xmlversion.h>"
+    # Required to make angled includes work: "#include <libxml/xmlversion.h>".
     includes = [
         ".",
     ],
