@@ -140,14 +140,19 @@ maybe(
 
 # Libxml
 maybe(
-    http_archive,
+    new_local_repository,
     name = "libxml",
     build_file = "@//:bazel/libxml.BUILD",
-    sha256 = "94fb70890143e3c6549f265cee93ec064c80a84c42ad0f23e85ee1fd6540a871",
-    strip_prefix = "libxml2-2.9.9",
-    urls = [
-        "http://xmlsoft.org/sources/libxml2-2.9.9.tar.gz",
-    ],
+    path = "./third_party/libxml2",
+)
+
+
+# Libxml configs
+maybe(
+    new_local_repository,
+    name = "libxml_config",
+    build_file = "@//:third_party/libxml2_config/BUILD.bazel",
+    path = "./third_party/libxml2_config",
 )
 
 # BoringSSL
@@ -185,4 +190,13 @@ maybe(
     name = "mini_chromium",
     build_file = "@//:bazel/mini_chromium.BUILD",
     path = "./third_party/mini_chromium",
+)
+
+
+# Libxml headers
+maybe(
+    new_local_repository,
+    name = "libxml_headers",
+	build_file = "@//:third_party/libxml/BUILD.bazel",
+    path = "./third_party/libxml",
 )
