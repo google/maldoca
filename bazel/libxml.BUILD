@@ -74,13 +74,13 @@ cc_library(
         ".",
         "include",
     ],
-    deps = select({
-        "@platforms//os:windows": [
-            "@libxml_config//:windows_config",
-        ],
-        "//conditions:default": [
+    deps = [
+        "@libxml_config//:xmlversion",
+    ] + select({
+        "@platforms//os:linux": [
             "@libxml_config//:linux_config",
         ],
+        "//conditions:default": [],
     }),
     linkopts = select({
         "@platforms//os:windows": [],

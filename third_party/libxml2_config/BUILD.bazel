@@ -22,6 +22,6 @@ cc_library(
 )
 
 cc_library(
-    name = "windows_config",
+    name = "xmlversion",
     srcs = ["libxml/xmlversion.h"],
 )
