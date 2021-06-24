@@ -152,6 +152,7 @@ MINI_CHROMIUM_HDRS = [
     "base/logging.h",
     "base/macros.h",
     "base/memory/free_deleter.h",
+    "base/memory/page_size.h",
     "base/metrics/histogram_functions.h",
     "base/metrics/histogram_macros.h",
     "base/metrics/persistent_histogram_allocator.h",
@@ -161,7 +162,6 @@ MINI_CHROMIUM_HDRS = [
     "base/numerics/safe_conversions.h",
     "base/numerics/safe_math.h",
     "base/posix/eintr_wrapper.h",
-    "base/process/process_metrics.h",
     "base/rand_util.h",
     "base/scoped_generic.h",
     "base/strings/string_number_conversions.h",
@@ -212,8 +212,8 @@ MINI_CHROMIUM_LINUX_HDRS = [
 
 MINI_CHROMIUM_LINUX_SRCS = [
     "base/files/file_util_posix.cc",
+    "base/memory/page_size_posix.cc",
     "base/posix/safe_strerror.cc",
-    "base/process/process_metrics_posix.cc",
     "base/strings/string_util_posix.h",
     "base/synchronization/condition_variable_posix.cc",
     "base/synchronization/lock_impl_posix.cc",
@@ -221,7 +221,7 @@ MINI_CHROMIUM_LINUX_SRCS = [
 ]
 
 MINI_CHROMIUM_WINDOWS_SRCS = [
-    "base/process/process_metrics_win.cc",
+    "base/memory/page_size_win.cc",
     "base/scoped_clear_last_error_win.cc",
     "base/strings/string_util_win.cc",
     "base/strings/string_util_win.h",
