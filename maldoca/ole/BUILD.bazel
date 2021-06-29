@@ -142,7 +142,6 @@ cc_library(
         "//maldoca/base:logging",
         "//maldoca/base:status",
         "@com_google_absl//absl/base",
-        "@com_google_absl//absl/base:endian",
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
