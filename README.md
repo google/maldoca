@@ -23,5 +23,8 @@ Linux: bazel test --config=linux maldoca/...
 
 Windows: bazel test --config=windows maldoca/...
 
+## CONTACT
+maldoca-community@google.com
+
 ## DISCLAIMER
 This is not an official Google product.
