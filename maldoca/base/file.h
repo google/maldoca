@@ -28,9 +28,9 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
 #include "absl/strings/string_view.h"
-#include "base/files/file_path.h"
 #include "google/protobuf/message.h"
 #include "maldoca/base/statusor.h"
+#include "mini_chromium/base/files/file_path.h"
 #if defined(_WIN32)
 #include "maldoca/base/utf8/unicodetext.h"
 #endif  // _WIN32
