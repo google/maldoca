@@ -364,7 +364,7 @@ bool OLEStream::DecompressStream(absl::string_view input_string,
           return false;
         }
         current += sizeof(flag);
-        for (uint bit_index = 0; bit_index < 8 * sizeof(uint8_t); bit_index++) {
+        for (uint32_t bit_index = 0; bit_index < 8 * sizeof(uint8_t); bit_index++) {
           if (current >= compressed_end) {
             break;
           }
