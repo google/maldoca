@@ -24,7 +24,6 @@
 
 #include <string>
 
-#include "absl/base/internal/endian.h"
 #include "absl/status/status.h"
 #include "absl/status/statusor.h"
 #include "absl/strings/escaping.h"
@@ -36,51 +35,6 @@
 
 namespace maldoca {
 namespace utils {
-// Wrap absl::big_endium namespace static function as a class.
-class BigEndian {
- public:
-  static inline uint64_t Load16(const void* p) {
-    return absl::big_endian::Load16(p);
-  }
-  static inline void Store16(void* p, uint16_t v) {
-    absl::big_endian::Store16(p, v);
-  }
-  static inline uint32_t Load32(const void* p) {
-    return absl::big_endian::Load32(p);
-  }
-  static inline void Store32(void* p, uint32_t v) {
-    absl::big_endian::Store32(p, v);
-  }
-  static inline uint64_t Load64(const void* p) {
-    return absl::big_endian::Load64(p);
-  }
-  static inline void Store64(void* p, uint64_t v) {
-    absl::big_endian::Store64(p, v);
-  }
-};
-
-// Wrap absl::little_endium namespace static function as a class.
-class LittleEndian {
- public:
-  static inline uint64_t Load16(const void* p) {
-    return absl::little_endian::Load16(p);
-  }
-  static inline void Store16(void* p, uint16_t v) {
-    absl::little_endian::Store16(p, v);
-  }
-  static inline uint32_t Load32(const void* p) {
-    return absl::little_endian::Load32(p);
-  }
-  static inline void Store32(void* p, uint32_t v) {
-    absl::little_endian::Store32(p, v);
-  }
-  static inline uint64_t Load64(const void* p) {
-    return absl::little_endian::Load64(p);
-  }
-  static inline void Store64(void* p, uint64_t v) {
-    absl::little_endian::Store64(p, v);
-  }
-};
 
 // Custom libXML deleters so that we can wrap xml object or z_stream object
 // pointers to std::unique_ptr.

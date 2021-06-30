@@ -47,7 +47,17 @@ cc_library(
     ],
     copts = DEFAULT_MALDOCA_COPTS,
     deps = [
-        "@com_google_absl//absl/base:endian",
+        "@com_google_absl//absl/base:config",
+    ],
+)
+
+cc_test(
+    name = "endian_test",
+    srcs = ["endian_test.cc"],
+    copts = DEFAULT_MALDOCA_COPTS,
+    deps = [
+        ":endian",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -311,8 +321,8 @@ cc_library(
         "//:chrome_build": [
             "@mini_chromium//:base",
         ],
-    })
-    + select({
+    }) +
+    select({
         "//conditions:default": [],
         "@platforms//os:windows": [
             "//maldoca/base/utf8:unicodetext",
