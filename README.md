@@ -14,9 +14,9 @@ git clone --recurse-submodules https://github.com/google/maldoca.git
 cd maldoca
 
 ## DOCKER
-We proivde a docker file for in docker/Dockerfile. This is the reference
+We proivde a docker file in "docker/Dockerfile". This is the reference
 platform we use for continous integration and optionally (argubly recommended)
-for development as well. Please see documentaion in docker/Dockerfile on how to
+for development as well. Please see documentaion in "docker/Dockerfile" on how to
 build and use for development.
 
 ## BUILD
