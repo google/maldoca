@@ -97,8 +97,8 @@ bool BufferToUtf8::Init(const char* encode_name) {
     encode_name = "MAC";
     DLOG(INFO) << "Replaced cp10000 with MAC";
   }
-if defined(_WIN32)
-#else  UErrorCode err_to_unicode;
+#if defined(_WIN32) 
+  UErrorCode err_to_unicode;
   UErrorCode err_to_utf8;
   converter_to_unicode_ = ucnv_open(encode_name, &err_to_unicode);
   converter_to_utf8_ = ucnv_open("UTF-8", &err_to_utf8);
