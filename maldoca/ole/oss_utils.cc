@@ -90,7 +90,8 @@ bool BufferToUtf8::Init(const char* encode_name) {
   converter_ = iconv_open("UTF-8", encode_name);
   if (converter_ == reinterpret_cast<iconv_t>(-1)) {
     converter_ = nullptr;
-    LOG(ERROR) << "Fail to open iconv for " << encode_name << ": " << errno;
+    LOG(ERROR) << "Fail to open iconv for '" << encode_name
+               << "', error code: " << errno;
 #else
   UErrorCode err_to_unicode;
   UErrorCode err_to_utf8;
@@ -100,14 +101,15 @@ bool BufferToUtf8::Init(const char* encode_name) {
   if (U_FAILURE(err_to_unicode) || U_FAILURE(err_to_utf8)) {
     if (U_FAILURE(err_to_unicode)) {
       converter_to_unicode_ = nullptr;
-      LOG(ERROR) << "Fail to open icu converter for " << encode_name << ": "
-                 << err_to_unicode;
+      LOG(ERROR) << "Fail to open icu converter for '" << encode_name
+                 << "', error code: " << err_to_unicode;
     } else {
       ucnv_close(converter_to_unicode_);
     }
     if (U_FAILURE(err_to_utf8)) {
       converter_to_utf8_ = nullptr;
-      LOG(ERROR) << "Fail to open icu converter for UTF-8: " << err_to_utf8;
+      LOG(ERROR) << "Fail to open icu converter for UTF-8, error code : "
+                 << err_to_utf8;
     } else {
       ucnv_close(converter_to_utf8_);
     }
