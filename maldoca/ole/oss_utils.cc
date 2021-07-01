@@ -97,19 +97,17 @@ bool BufferToUtf8::Init(const char* encode_name) {
     encode_name = "MAC";
     DLOG(INFO) << "Replaced cp10000 with MAC";
   }
-#if defined(_WIN32)
-  UErrorCode err_to_unicode;
+if defined(_WIN32)
+#else  UErrorCode err_to_unicode;
   UErrorCode err_to_utf8;
   converter_to_unicode_ = ucnv_open(encode_name, &err_to_unicode);
   converter_to_utf8_ = ucnv_open("UTF-8", &err_to_utf8);
 
   if (U_FAILURE(err_to_unicode) || U_FAILURE(err_to_utf8)) {
     if (U_FAILURE(err_to_unicode)) {
-      HandleConverterError(converter_to_unicode_, encode_name, err_to_utf8);
-    }
+      HandleConverterError(converter_to_unicode_, encode_name, err_to_utf8);    }
     if (U_FAILURE(err_to_utf8)) {
-      HandleConverterError(converter_to_utf8_, "UTF-8", err_to_utf8);
-    }
+      HandleConverterError(converter_to_utf8_, "UTF-8", err_to_utf8);    }
 #else
   converter_ = iconv_open("UTF-8", encode_name);
   if (converter_ == reinterpret_cast<iconv_t>(-1)) {
