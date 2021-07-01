@@ -149,7 +149,7 @@ cc_library(
         "@com_google_protobuf//:protobuf",
         "@libxml",
     ] + select({
-        "//:chrome_build": [
+        "@platforms//os:windows": [
             "@icu//:icuuc",
         ],
         "//conditions:default": [],
