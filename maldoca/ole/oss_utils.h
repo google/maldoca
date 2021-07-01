@@ -78,7 +78,7 @@ class BufferToUtf8 {
     if (converter_to_utf8_ != nullptr) {
       ucnv_close(converter_to_utf8_);
     }
-#endif
+#endif  // MALDOCA_CHROME
   }
   BufferToUtf8& operator=(const BufferToUtf8&) = delete;
   BufferToUtf8(const BufferToUtf8&) = delete;
@@ -91,7 +91,7 @@ class BufferToUtf8 {
 #else
     return (converter_to_unicode_ != nullptr &&
             converter_to_utf8_ != nullptr) ||
-#endif
+#endif  // MALDOCA_CHROME
            internal_converter_ != InternalConverter::kNone;
   }
   // Max number of character error before giving up while converting input
@@ -128,7 +128,7 @@ class BufferToUtf8 {
 #else
   UConverter* converter_to_unicode_ = nullptr;
   UConverter* converter_to_utf8_ = nullptr;
-#endif
+#endif  // MALDOCA_CHROME
   int max_error_ = 0;  // defaults to give up on any error.
   InternalConverter internal_converter_ = InternalConverter::kNone;
 };

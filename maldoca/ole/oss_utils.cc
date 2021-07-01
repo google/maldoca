@@ -55,6 +55,7 @@ void InitSAXHandler() {
   xmlInitParser();
 }
 
+#ifndef MALDOCA_CHROME
 inline void StripNullChar(std::string* str) {
   auto is_not_null = [](char c) { return c != '\0'; };
   auto r_it = std::find_if(str->rbegin(), str->rend(), is_not_null);
@@ -62,6 +63,7 @@ inline void StripNullChar(std::string* str) {
   auto it = std::find_if(str->begin(), str->end(), is_not_null);
   str->erase(str->begin(), it);
 }
+#endif  // MALDOCA_CHROME
 }  // namespace
 
 bool BufferToUtf8::Init(const char* encode_name) {
@@ -76,7 +78,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
   if (converter_to_utf8_ != nullptr) {
     ucnv_close(converter_to_utf8_);
   }
-#endif
+#endif  // MALDOCA_CHROME
   internal_converter_ = InternalConverter::kNone;
   // Fixing missing encoding;
   // cp10000 is calld MAC in iconv
@@ -109,14 +111,14 @@ bool BufferToUtf8::Init(const char* encode_name) {
     } else {
       ucnv_close(converter_to_utf8_);
     }
-#endif
+#endif  // MALDOCA_CHROME
     // Windows encoding, we really want to make sure this works so we'll use our
     // own
 #if defined(_WIN32)
     if (_stricmp(encode_name, "cp1251") == 0) {
 #else
     if (strcasecmp(encode_name, "cp1251") == 0) {
-#endif
+#endif  // _WIN32
       internal_converter_ = InternalConverter::kCp1251;
       DLOG(INFO) << "Use internal cp1251 encoder";
       return true;
@@ -125,7 +127,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
     if (_stricmp(encode_name, "cp1252") == 0) {
 #else
     if (strcasecmp(encode_name, "cp1252") == 0) {
-#endif
+#endif  // _WIN32
       internal_converter_ = InternalConverter::kCp1252;
       DLOG(INFO) << "Use internal cp1252 encoder";
       return true;
@@ -134,7 +136,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
     if (_stricmp(encode_name, "LATIN1") == 0) {
 #else
     if (strcasecmp(encode_name, "LATIN1") == 0) {
-#endif
+#endif  // _WIN32
       internal_converter_ = InternalConverter::kLatin1;
       DLOG(INFO) << "Use internal LATIN1 encoder";
       return true;
