@@ -433,12 +433,13 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   // TODO(somebody): make a better guess here.
   size_t out_bytes_left = in_bytes_left;
   size_t old_output_size = out_str->size();
-  out_str->resize(old_output_size + out_bytes_left);
+  size_t new_output_size = old_output_size + out_bytes_left;
+  out_str->resize(new_output_size);
   char* out_ptr = const_cast<char*>(out_str->data() + old_output_size);
 
 #if defined(_WIN32)
   UErrorCode err;
-  ucnv_convert("UTF-8", "UTF-16", out_ptr, old_output_size + out_bytes_left,
+  ucnv_convert("UTF-8", "UTF-16", out_ptr, new_output_size,
                input_ptr, in_bytes_left, &err);
   return U_SUCCESS(err);
 #else
