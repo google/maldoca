@@ -34,3 +34,6 @@
 [submodule "third_party/libxml2"]
 	path = third_party/libxml2
 	url = https://github.com/GNOME/libxml2
+[submodule "third_party/icu"]
+	path = third_party/icu
+	url = https://github.com/unicode-org/icu

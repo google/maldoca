@@ -19,7 +19,6 @@
 #include <algorithm>
 #include <cstring>
 
-// Use third_party/protobuf/text_format.h for oss
 #include "absl/base/call_once.h"
 #include "absl/flags/flag.h"
 #include "absl/strings/str_cat.h"
@@ -66,9 +65,18 @@ inline void StripNullChar(std::string* str) {
 }  // namespace
 
 bool BufferToUtf8::Init(const char* encode_name) {
+#ifndef MALDOCA_CHROME
   if (converter_ != nullptr) {
     iconv_close(converter_);
   }
+#else
+  if (converter_to_unicode_ != nullptr) {
+    ucnv_close(converter_to_unicode_);
+  }
+  if (converter_to_utf8_ != nullptr) {
+    ucnv_close(converter_to_utf8_);
+  }
+#endif
   internal_converter_ = InternalConverter::kNone;
   // Fixing missing encoding;
   // cp10000 is calld MAC in iconv
@@ -76,23 +84,57 @@ bool BufferToUtf8::Init(const char* encode_name) {
     encode_name = "MAC";
     DLOG(INFO) << "Replaced cp10000 with MAC";
   }
+#ifndef MALDOCA_CHROME
   converter_ = iconv_open("UTF-8", encode_name);
   if (converter_ == reinterpret_cast<iconv_t>(-1)) {
     converter_ = nullptr;
     LOG(ERROR) << "Fail to open iconv for " << encode_name << ": " << errno;
+#else
+  UErrorCode err_to_unicode;
+  UErrorCode err_to_utf8;
+  converter_to_unicode_ = ucnv_open(encode_name, &err_to_unicode);
+  converter_to_utf8_ = ucnv_open("UTF-8", &err_to_utf8);
+
+  if (U_FAILURE(err_to_unicode) || U_FAILURE(err_to_utf8)) {
+    if (U_FAILURE(err_to_unicode)) {
+      converter_to_unicode_ = nullptr;
+      LOG(ERROR) << "Fail to open icu converter for " << encode_name << ": "
+                 << err_to_unicode;
+    } else {
+      ucnv_close(converter_to_unicode_);
+    }
+    if (U_FAILURE(err_to_utf8)) {
+      converter_to_utf8_ = nullptr;
+      LOG(ERROR) << "Fail to open icu converter for UTF-8: " << err_to_utf8;
+    } else {
+      ucnv_close(converter_to_utf8_);
+    }
+#endif
     // Windows encoding, we really want to make sure this works so we'll use our
     // own
+#if defined(_WIN32)
+    if (_stricmp(encode_name, "cp1251") == 0) {
+#else
     if (strcasecmp(encode_name, "cp1251") == 0) {
+#endif
       internal_converter_ = InternalConverter::kCp1251;
       DLOG(INFO) << "Use internal cp1251 encoder";
       return true;
     }
+#if defined(_WIN32)
+    if (_stricmp(encode_name, "cp1252") == 0) {
+#else
     if (strcasecmp(encode_name, "cp1252") == 0) {
+#endif
       internal_converter_ = InternalConverter::kCp1252;
       DLOG(INFO) << "Use internal cp1252 encoder";
       return true;
     }
+#if defined(_WIN32)
+    if (_stricmp(encode_name, "LATIN1") == 0) {
+#else
     if (strcasecmp(encode_name, "LATIN1") == 0) {
+#endif
       internal_converter_ = InternalConverter::kLatin1;
       DLOG(INFO) << "Use internal LATIN1 encoder";
       return true;
@@ -388,6 +430,13 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   size_t old_output_size = out_str->size();
   out_str->resize(old_output_size + out_bytes_left);
   char* out_ptr = const_cast<char*>(out_str->data() + old_output_size);
+
+#ifdef MALDOCA_CHROME
+  UErrorCode err;
+  ucnv_convert("UTF-8", "UTF-16", out_ptr, old_output_size + out_bytes_left,
+               input_ptr, in_bytes_left, &err);
+  return U_SUCCESS(err);
+#else
   while (in_bytes_left > 0) {
     size_t done = iconv(converter_, const_cast<char**>(&input_ptr),
                         &in_bytes_left, &out_ptr, &out_bytes_left);
@@ -440,6 +489,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   *bytes_consumed = input.size() - in_bytes_left;
   *bytes_filled = out_str->size() - old_output_size;
   return *error_char_count <= max_error_;
+#endif  // MALDOCA_CHROME
 }
 
 xmlDocPtr XmlParseMemory(const char* buffer, int size) {
