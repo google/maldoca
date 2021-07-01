@@ -15,7 +15,7 @@ cd maldoca
 
 ## DOCKER
 We proivde a docker file in "docker/Dockerfile". This is the reference
-platform we use for continous integration and optionally (argubly recommended)
+platform we use for continous integration and optionally (arguably recommended)
 for development as well. Please see documentaion in "docker/Dockerfile" on how to
 build and use for development.
 
