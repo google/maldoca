@@ -55,7 +55,18 @@ void InitSAXHandler() {
   xmlInitParser();
 }
 
-#ifndef MALDOCA_CHROME
+#if defined(_WIN32)
+void HandleConverterError(UConverter* conv, const char* encode_name,
+                          const UErrorCode& err) {
+  if (U_FAILURE(err)) {
+    conv = nullptr;
+    LOG(ERROR) << "Fail to open icu converter for '" << encode_name
+               << "', error code: " << err;
+  } else {
+    ucnv_close(conv);
+  }
+}
+#else
 inline void StripNullChar(std::string* str) {
   auto is_not_null = [](char c) { return c != '\0'; };
   auto r_it = std::find_if(str->rbegin(), str->rend(), is_not_null);
@@ -63,22 +74,22 @@ inline void StripNullChar(std::string* str) {
   auto it = std::find_if(str->begin(), str->end(), is_not_null);
   str->erase(str->begin(), it);
 }
-#endif  // MALDOCA_CHROME
+#endif  // _WIN32
 }  // namespace
 
 bool BufferToUtf8::Init(const char* encode_name) {
-#ifndef MALDOCA_CHROME
-  if (converter_ != nullptr) {
-    iconv_close(converter_);
-  }
-#else
+#if defined(_WIN32)
   if (converter_to_unicode_ != nullptr) {
     ucnv_close(converter_to_unicode_);
   }
   if (converter_to_utf8_ != nullptr) {
     ucnv_close(converter_to_utf8_);
   }
-#endif  // MALDOCA_CHROME
+#else
+  if (converter_ != nullptr) {
+    iconv_close(converter_);
+  }
+#endif  // _WIN32
   internal_converter_ = InternalConverter::kNone;
   // Fixing missing encoding;
   // cp10000 is calld MAC in iconv
@@ -86,13 +97,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
     encode_name = "MAC";
     DLOG(INFO) << "Replaced cp10000 with MAC";
   }
-#ifndef MALDOCA_CHROME
-  converter_ = iconv_open("UTF-8", encode_name);
-  if (converter_ == reinterpret_cast<iconv_t>(-1)) {
-    converter_ = nullptr;
-    LOG(ERROR) << "Fail to open iconv for '" << encode_name
-               << "', error code: " << errno;
-#else
+#if defined(_WIN32)
   UErrorCode err_to_unicode;
   UErrorCode err_to_utf8;
   converter_to_unicode_ = ucnv_open(encode_name, &err_to_unicode);
@@ -100,20 +105,18 @@ bool BufferToUtf8::Init(const char* encode_name) {
 
   if (U_FAILURE(err_to_unicode) || U_FAILURE(err_to_utf8)) {
     if (U_FAILURE(err_to_unicode)) {
-      converter_to_unicode_ = nullptr;
-      LOG(ERROR) << "Fail to open icu converter for '" << encode_name
-                 << "', error code: " << err_to_unicode;
-    } else {
-      ucnv_close(converter_to_unicode_);
+      HandleConverterError(converter_to_unicode_, encode_name, err_to_utf8);
     }
     if (U_FAILURE(err_to_utf8)) {
-      converter_to_utf8_ = nullptr;
-      LOG(ERROR) << "Fail to open icu converter for UTF-8, error code : "
-                 << err_to_utf8;
-    } else {
-      ucnv_close(converter_to_utf8_);
+      HandleConverterError(converter_to_utf8_, "UTF-8", err_to_utf8);
     }
-#endif  // MALDOCA_CHROME
+#else
+  converter_ = iconv_open("UTF-8", encode_name);
+  if (converter_ == reinterpret_cast<iconv_t>(-1)) {
+    converter_ = nullptr;
+    LOG(ERROR) << "Fail to open iconv for '" << encode_name
+               << "', error code: " << errno;
+#endif  // _WIN32
     // Windows encoding, we really want to make sure this works so we'll use our
     // own
 #if defined(_WIN32)
@@ -435,7 +438,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   out_str->resize(old_output_size + out_bytes_left);
   char* out_ptr = const_cast<char*>(out_str->data() + old_output_size);
 
-#ifdef MALDOCA_CHROME
+#if defined(_WIN32)
   UErrorCode err;
   ucnv_convert("UTF-8", "UTF-16", out_ptr, old_output_size + out_bytes_left,
                input_ptr, in_bytes_left, &err);
@@ -493,7 +496,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   *bytes_consumed = input.size() - in_bytes_left;
   *bytes_filled = out_str->size() - old_output_size;
   return *error_char_count <= max_error_;
-#endif  // MALDOCA_CHROME
+#endif  // _WIN32
 }
 
 xmlDocPtr XmlParseMemory(const char* buffer, int size) {

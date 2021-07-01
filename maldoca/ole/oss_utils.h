@@ -20,11 +20,11 @@
 #ifndef MALDOCA_OLE_OSS_UTILS_H_
 #define MALDOCA_OLE_OSS_UTILS_H_
 
-#ifndef MALDOCA_CHROME
-#include <iconv.h>
-#else
+#if defined(_WIN32)
 #include "icu4c/source/common/unicode/ucnv.h"
-#endif  // MALDOCA_CHROME
+#else
+#include <iconv.h>
+#endif  // _WIN32
 
 #include <string>
 
@@ -67,18 +67,18 @@ class BufferToUtf8 {
  public:
   explicit BufferToUtf8(const char* encode_name) { Init(encode_name); }
   virtual ~BufferToUtf8() {
-#ifndef MALDOCA_CHROME
-    if (converter_ != nullptr) {
-      iconv_close(converter_);
-    }
-#else
+#if defined(_WIN32)
     if (converter_to_unicode_ != nullptr) {
       ucnv_close(converter_to_unicode_);
     }
     if (converter_to_utf8_ != nullptr) {
       ucnv_close(converter_to_utf8_);
     }
-#endif  // MALDOCA_CHROME
+#else
+    if (converter_ != nullptr) {
+      iconv_close(converter_);
+    }
+#endif  // _WIN32
   }
   BufferToUtf8& operator=(const BufferToUtf8&) = delete;
   BufferToUtf8(const BufferToUtf8&) = delete;
@@ -86,12 +86,12 @@ class BufferToUtf8 {
   virtual bool Init(const char* encode_name);
   // Check if the encoder is valid.
   virtual bool IsValid() {
-#ifndef MALDOCA_CHROME
-    return converter_ != nullptr ||
-#else
+#if defined(_WIN32)
     return (converter_to_unicode_ != nullptr &&
             converter_to_utf8_ != nullptr) ||
-#endif  // MALDOCA_CHROME
+#else
+    return converter_ != nullptr ||
+#endif  // _WIN32
            internal_converter_ != InternalConverter::kNone;
   }
   // Max number of character error before giving up while converting input
@@ -123,12 +123,12 @@ class BufferToUtf8 {
                                        std::string* out_str,
                                        int* bytes_consumed, int* bytes_filled,
                                        int* error_char_count);
-#ifndef MALDOCA_CHROME
-  iconv_t converter_ = nullptr;
-#else
+#if defined(_WIN32)
   UConverter* converter_to_unicode_ = nullptr;
   UConverter* converter_to_utf8_ = nullptr;
-#endif  // MALDOCA_CHROME
+#else
+  iconv_t converter_ = nullptr;
+#endif  // _WIN32
   int max_error_ = 0;  // defaults to give up on any error.
   InternalConverter internal_converter_ = InternalConverter::kNone;
 };
