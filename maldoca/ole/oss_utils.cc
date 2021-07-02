@@ -56,14 +56,19 @@ void InitSAXHandler() {
 }
 
 #if defined(_WIN32)
-void HandleConverterError(UConverter* conv, const char* encode_name,
+void CloseUConverter(UConverter* conv) {
+  ucnv_close(conv);
+  conv = nullptr;
+}
+
+void HandleUConverterError(UConverter* conv, const char* encode_name,
                           const UErrorCode& err) {
   if (U_FAILURE(err)) {
     conv = nullptr;
     LOG(ERROR) << "Fail to open icu converter for '" << encode_name
                << "', error code: " << err;
   } else {
-    ucnv_close(conv);
+    CloseUConverter(conv);
   }
 }
 #else
@@ -80,14 +85,15 @@ inline void StripNullChar(std::string* str) {
 bool BufferToUtf8::Init(const char* encode_name) {
 #if defined(_WIN32)
   if (converter_to_unicode_ != nullptr) {
-    ucnv_close(converter_to_unicode_);
+    CloseUConverter(converter_to_unicode_);
   }
   if (converter_to_utf8_ != nullptr) {
-    ucnv_close(converter_to_utf8_);
+    CloseUConverter(converter_to_utf8_);
   }
 #else
   if (converter_ != nullptr) {
     iconv_close(converter_);
+    converter_ = nullptr;
   }
 #endif  // _WIN32
   internal_converter_ = InternalConverter::kNone;
@@ -97,7 +103,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
     encode_name = "MAC";
     DLOG(INFO) << "Replaced cp10000 with MAC";
   }
-#if defined(_WIN32) 
+#if defined(_WIN32)
   UErrorCode err_to_unicode;
   UErrorCode err_to_utf8;
   converter_to_unicode_ = ucnv_open(encode_name, &err_to_unicode);
@@ -105,9 +111,11 @@ bool BufferToUtf8::Init(const char* encode_name) {
 
   if (U_FAILURE(err_to_unicode) || U_FAILURE(err_to_utf8)) {
     if (U_FAILURE(err_to_unicode)) {
-      HandleConverterError(converter_to_unicode_, encode_name, err_to_utf8);    }
+      HandleUConverterError(converter_to_unicode_, encode_name, err_to_utf8);
+    }
     if (U_FAILURE(err_to_utf8)) {
-      HandleConverterError(converter_to_utf8_, "UTF-8", err_to_utf8);    }
+      HandleUConverterError(converter_to_utf8_, "UTF-8", err_to_utf8);
+    }
 #else
   converter_ = iconv_open("UTF-8", encode_name);
   if (converter_ == reinterpret_cast<iconv_t>(-1)) {
@@ -439,8 +447,8 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
 
 #if defined(_WIN32)
   UErrorCode err;
-  ucnv_convert("UTF-8", "UTF-16", out_ptr, new_output_size,
-               input_ptr, in_bytes_left, &err);
+  ucnv_convert("UTF-8", "UTF-16", out_ptr, new_output_size, input_ptr,
+               in_bytes_left, &err);
   return U_SUCCESS(err);
 #else
   while (in_bytes_left > 0) {
