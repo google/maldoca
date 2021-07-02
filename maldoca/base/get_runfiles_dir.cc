@@ -121,7 +121,8 @@ std::string GetRunfilesDir() {
   std::string bin_path = GetExecutablePath();
   std::string sep;
 #if defined(_WIN32)
-  sep = base::WideToUTF8(base::WStringPiece({base::FilePath::kSeparators[0], '\0'}));
+  sep = base::WideToUTF8(
+      base::WStringPiece({base::FilePath::kSeparators[0], '\0'}));
 #else
   sep = base::FilePath::kSeparators[0];
 #endif
