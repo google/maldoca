@@ -17,6 +17,7 @@
 #include "absl/status/status.h"
 #include "maldoca/base/logging.h"
 #include "maldoca/base/status_macros.h"
+#include "mini_chromium/base/files/file_path.h"
 
 // NOTE: Adopted from tensorflow/core/platform/env.cc.
 #if defined(__APPLE__)
@@ -118,7 +119,13 @@ absl::Status IsDirectory(const std::string& name) {
 
 std::string GetRunfilesDir() {
   std::string bin_path = GetExecutablePath();
-  std::string runfiles_suffix = ".runfiles/com_google_maldoca";
+  std::string sep;
+#if defined(_WIN32)
+  sep = base::WideToUTF8(base::WStringPiece({base::FilePath::kSeparators[0], '\0'}));
+#else
+  sep = base::FilePath::kSeparators[0];
+#endif
+  std::string runfiles_suffix = ".runfiles" + sep + "com_google_maldoca";
   std::size_t pos = bin_path.find(runfiles_suffix);
 
   // Sometimes (when executing under python) bin_path returns the full path to
