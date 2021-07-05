@@ -56,9 +56,9 @@ void InitSAXHandler() {
 }
 
 #if defined(_WIN32)
-void CloseUConverter(UConverter* conv) {
-  ucnv_close(conv);
-  conv = nullptr;
+void CloseUConverter(UConverter** conv) {
+  ucnv_close(*conv);
+  *conv = nullptr;
 }
 
 void HandleUConverterError(UConverter* conv, const char* encode_name,
@@ -68,7 +68,7 @@ void HandleUConverterError(UConverter* conv, const char* encode_name,
     LOG(ERROR) << "Fail to open icu converter for '" << encode_name
                << "', error code: " << err;
   } else {
-    CloseUConverter(conv);
+    CloseUConverter(&conv);
   }
 }
 #else
@@ -85,10 +85,10 @@ inline void StripNullChar(std::string* str) {
 bool BufferToUtf8::Init(const char* encode_name) {
 #if defined(_WIN32)
   if (converter_to_unicode_ != nullptr) {
-    CloseUConverter(converter_to_unicode_);
+    CloseUConverter(&converter_to_unicode_);
   }
   if (converter_to_utf8_ != nullptr) {
-    CloseUConverter(converter_to_utf8_);
+    CloseUConverter(&converter_to_utf8_);
   }
 #else
   if (converter_ != nullptr) {
@@ -109,6 +109,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
   converter_to_unicode_ = ucnv_open(encode_name, &err_to_unicode);
   converter_to_utf8_ = ucnv_open("UTF-8", &err_to_utf8);
 
+  // Both "ucnv_open" have to succeed, otherwise it is considered a fail.
   if (U_FAILURE(err_to_unicode) || U_FAILURE(err_to_utf8)) {
     if (U_FAILURE(err_to_unicode)) {
       HandleUConverterError(converter_to_unicode_, encode_name, err_to_utf8);
