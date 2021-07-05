@@ -29,8 +29,6 @@ jobs:
     steps:
     # Checks out the repository under ${GITHUB_WORKSPACE}.
     - uses: actions/checkout@v2
-      with:
-        submodules: recursive
 
     - name: Install clang-format-9
       run: |
