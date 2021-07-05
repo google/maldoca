@@ -64,8 +64,7 @@ jobs:
     #    uses a compiled language
 
     - run: |
-       make bootstrap
-       make release
+       bazel build --config=linux maldoca/...
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
