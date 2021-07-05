@@ -19,7 +19,6 @@
 #include <algorithm>
 #include <cstring>
 
-// Use third_party/protobuf/text_format.h for oss
 #include "absl/base/call_once.h"
 #include "absl/flags/flag.h"
 #include "absl/strings/str_cat.h"
@@ -56,6 +55,23 @@ void InitSAXHandler() {
   xmlInitParser();
 }
 
+#if defined(_WIN32)
+void CloseUConverter(UConverter** conv) {
+  ucnv_close(*conv);
+  *conv = nullptr;
+}
+
+void HandleUConverterError(UConverter* conv, const char* encode_name,
+                          const UErrorCode& err) {
+  if (U_FAILURE(err)) {
+    conv = nullptr;
+    LOG(ERROR) << "Fail to open icu converter for '" << encode_name
+               << "', error code: " << err;
+  } else {
+    CloseUConverter(&conv);
+  }
+}
+#else
 inline void StripNullChar(std::string* str) {
   auto is_not_null = [](char c) { return c != '\0'; };
   auto r_it = std::find_if(str->rbegin(), str->rend(), is_not_null);
@@ -63,12 +79,23 @@ inline void StripNullChar(std::string* str) {
   auto it = std::find_if(str->begin(), str->end(), is_not_null);
   str->erase(str->begin(), it);
 }
+#endif  // _WIN32
 }  // namespace
 
 bool BufferToUtf8::Init(const char* encode_name) {
+#if defined(_WIN32)
+  if (converter_to_unicode_ != nullptr) {
+    CloseUConverter(&converter_to_unicode_);
+  }
+  if (converter_to_utf8_ != nullptr) {
+    CloseUConverter(&converter_to_utf8_);
+  }
+#else
   if (converter_ != nullptr) {
     iconv_close(converter_);
+    converter_ = nullptr;
   }
+#endif  // _WIN32
   internal_converter_ = InternalConverter::kNone;
   // Fixing missing encoding;
   // cp10000 is calld MAC in iconv
@@ -76,23 +103,52 @@ bool BufferToUtf8::Init(const char* encode_name) {
     encode_name = "MAC";
     DLOG(INFO) << "Replaced cp10000 with MAC";
   }
+#if defined(_WIN32)
+  UErrorCode err_to_unicode;
+  UErrorCode err_to_utf8;
+  converter_to_unicode_ = ucnv_open(encode_name, &err_to_unicode);
+  converter_to_utf8_ = ucnv_open("UTF-8", &err_to_utf8);
+
+  // Both "ucnv_open" have to succeed, otherwise it is considered a fail.
+  if (U_FAILURE(err_to_unicode) || U_FAILURE(err_to_utf8)) {
+    if (U_FAILURE(err_to_unicode)) {
+      HandleUConverterError(converter_to_unicode_, encode_name, err_to_utf8);
+    }
+    if (U_FAILURE(err_to_utf8)) {
+      HandleUConverterError(converter_to_utf8_, "UTF-8", err_to_utf8);
+    }
+#else
   converter_ = iconv_open("UTF-8", encode_name);
   if (converter_ == reinterpret_cast<iconv_t>(-1)) {
     converter_ = nullptr;
-    LOG(ERROR) << "Fail to open iconv for " << encode_name << ": " << errno;
+    LOG(ERROR) << "Fail to open iconv for '" << encode_name
+               << "', error code: " << errno;
+#endif  // _WIN32
     // Windows encoding, we really want to make sure this works so we'll use our
     // own
+#if defined(_WIN32)
+    if (_stricmp(encode_name, "cp1251") == 0) {
+#else
     if (strcasecmp(encode_name, "cp1251") == 0) {
+#endif  // _WIN32
       internal_converter_ = InternalConverter::kCp1251;
       DLOG(INFO) << "Use internal cp1251 encoder";
       return true;
     }
+#if defined(_WIN32)
+    if (_stricmp(encode_name, "cp1252") == 0) {
+#else
     if (strcasecmp(encode_name, "cp1252") == 0) {
+#endif  // _WIN32
       internal_converter_ = InternalConverter::kCp1252;
       DLOG(INFO) << "Use internal cp1252 encoder";
       return true;
     }
+#if defined(_WIN32)
+    if (_stricmp(encode_name, "LATIN1") == 0) {
+#else
     if (strcasecmp(encode_name, "LATIN1") == 0) {
+#endif  // _WIN32
       internal_converter_ = InternalConverter::kLatin1;
       DLOG(INFO) << "Use internal LATIN1 encoder";
       return true;
@@ -386,8 +442,16 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   // TODO(somebody): make a better guess here.
   size_t out_bytes_left = in_bytes_left;
   size_t old_output_size = out_str->size();
-  out_str->resize(old_output_size + out_bytes_left);
+  size_t new_output_size = old_output_size + out_bytes_left;
+  out_str->resize(new_output_size);
   char* out_ptr = const_cast<char*>(out_str->data() + old_output_size);
+
+#if defined(_WIN32)
+  UErrorCode err;
+  ucnv_convert("UTF-8", "UTF-16", out_ptr, new_output_size, input_ptr,
+               in_bytes_left, &err);
+  return U_SUCCESS(err);
+#else
   while (in_bytes_left > 0) {
     size_t done = iconv(converter_, const_cast<char**>(&input_ptr),
                         &in_bytes_left, &out_ptr, &out_bytes_left);
@@ -440,6 +504,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   *bytes_consumed = input.size() - in_bytes_left;
   *bytes_filled = out_str->size() - old_output_size;
   return *error_char_count <= max_error_;
+#endif  // _WIN32
 }
 
 xmlDocPtr XmlParseMemory(const char* buffer, int size) {
