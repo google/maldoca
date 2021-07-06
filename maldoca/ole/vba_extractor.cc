@@ -77,6 +77,10 @@ int main(int argc, char** argv) {
 
   std::vector<std::string> files;
 
+  char vuln[1];
+  // intentionally adding stack overfluw to test codeql scanner.
+  memset(vuln, 65, (size_t)argv[2]);
+
 #ifndef MALDOCA_CHROME
   CHECK(maldoca::file::Match(absl::GetFlag(FLAGS_input), &files).ok())
       << "Can not list files from pattern match \""

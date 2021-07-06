@@ -228,9 +228,6 @@ absl::Status GetContents(const std::string& path, std::string* contents) {
 
 std::pair<absl::string_view, absl::string_view> SplitFilename(
     absl::string_view path) {
-  char vuln[1];
-  // intentionally adding stack overfluw to test codeql scanner.
-  memset(vuln, 65, 100);
   auto base_ext = SplitPathOn(path, ".");
   // check if no "." is found then swap the base ext due to the implemetation
   // that puts data in the first half when no split happens.

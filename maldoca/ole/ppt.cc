@@ -185,7 +185,8 @@ StatusOr<std::string> VBAProjectStorage::Decompress(
   // Decompress zlib chunks
   ZLib z;
   int result = z.UncompressChunk(
-      reinterpret_cast<Bytef *>(&(storage[0])), &decompressed_size,
+      reinterpret_cast<Bytef *>(&(storage[0])),
+      reinterpret_cast<uLongf *>(&decompressed_size),
       reinterpret_cast<const Byte *>(compressed_storage.data()),
       compressed_storage.size());
   if (result != Z_OK) {
