@@ -89,6 +89,8 @@ std::string GetExecutablePath() {
   // Make sure it's null-terminated:
   exe_path[sizeof(exe_path) - 1] = 0;
 
+  std::cout << "GetExecutablePath: " << exe_path  << std::flush;
+
   return exe_path;
 }
 
