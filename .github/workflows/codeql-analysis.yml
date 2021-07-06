@@ -66,7 +66,7 @@ jobs:
     #    uses a compiled language
 
     - run: |
-       bazel build --config=linux maldoca/...
+       bazel shutdown; bazel build --spawn_strategy=local --nouse_action_cache --config=linux maldoca/...
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
