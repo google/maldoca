@@ -190,7 +190,7 @@ StatusOr<std::string> VBAProjectStorage::Decompress(
       reinterpret_cast<Bytef *>(&(storage[0])), &decompressed_size_tmp,
       reinterpret_cast<const Byte *>(compressed_storage.data()),
       compressed_storage.size());
-  decompressed_size_tmp = decompressed_size;
+  decompressed_size = decompressed_size_tmp;
   if (result != Z_OK) {
     auto status = absl::FailedPreconditionError(absl::StrCat(
         "Could not decompress VBAProjectStorage, zlib error: ", result));
