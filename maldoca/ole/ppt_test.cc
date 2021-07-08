@@ -118,7 +118,8 @@ TEST(VBAProjectStorage, ExtractCompressedStorageInvalid) {
 
   // Frob reference data: length field
   std::string frob_length = content.substr(kCompressedPayloadOffset);
-  memfrob(&frob_length[4], 4);
+  // Intentionally destroying header
+  memset(&frob_length[4], 0x42, 4);
 
   // Expect to fail, the header is invalid
   EXPECT_FALSE(VBAProjectStorage::ExtractContent(frob_length).ok());
