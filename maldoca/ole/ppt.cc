@@ -184,10 +184,13 @@ StatusOr<std::string> VBAProjectStorage::Decompress(
 
   // Decompress zlib chunks
   ZLib z;
+  // Have to use a temp var due to different datatypes (size_t vs uLongf)
+  uLongf decompressed_size_tmp = decompressed_size;
   int result = z.UncompressChunk(
-      reinterpret_cast<Bytef *>(&(storage[0])), &decompressed_size,
+      reinterpret_cast<Bytef *>(&(storage[0])), &decompressed_size_tmp,
       reinterpret_cast<const Byte *>(compressed_storage.data()),
       compressed_storage.size());
+  decompressed_size_tmp = decompressed_size;
   if (result != Z_OK) {
     auto status = absl::FailedPreconditionError(absl::StrCat(
         "Could not decompress VBAProjectStorage, zlib error: ", result));
