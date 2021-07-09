@@ -5,8 +5,8 @@ MalDocA is a library to parse and extract features from Microsoft Office documen
 The project's goal is to analyze potentially malicious documents to improve user safety and security.
 
 ## REQUIREMENTS
-- bazel
-- clang
+- [Bazel](https://bazel.build)
+- [Clang](https://clang.llvm.org)
 - Windows: enable symlink support ([how-to](https://docs.bazel.build/versions/main/windows.html#enable-symlink-support))
 
 ## CHECKOUT
