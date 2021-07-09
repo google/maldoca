@@ -7,6 +7,7 @@ The project's goal is to analyze potentially malicious documents to improve user
 ## REQUIREMENTS
 - bazel
 - clang
+- Windows: enable symlink support ([how-to](https://docs.bazel.build/versions/main/windows.html#enable-symlink-support))
 
 ## CHECKOUT
 git clone --recurse-submodules https://github.com/google/maldoca.git
