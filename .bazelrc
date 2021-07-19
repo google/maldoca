@@ -12,5 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-build:windows --compiler=clang-cl --cxxopt=/std:c++14 --copt=-DMALDOCA_CHROME=1 --define MALDOCA_CHROME=1 --noincompatible_restrict_string_escapes
+startup --windows_enable_symlinks
+
+build:windows --compiler=clang-cl --enable_runfiles --cxxopt=/std:c++14 --copt=-DMALDOCA_CHROME=1 --define MALDOCA_CHROME=1 --noincompatible_restrict_string_escapes
 build:linux --repo_env=CC=clang --cxxopt=--std=c++14 --copt=-DMALDOCA_CHROME=1 --define MALDOCA_CHROME=1 --noincompatible_restrict_string_escapes
