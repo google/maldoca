@@ -22,6 +22,9 @@ namespace maldoca {
 
 inline bool InitLogging() {
   ::logging::LoggingSettings setting;
+#if defined(_WIN32)
+  setting.logging_dest = logging::LOG_DEFAULT | logging::LOG_TO_STDERR;
+#endif
   return ::logging::InitLogging(setting);
 }
 }  // namespace maldoca

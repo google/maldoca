@@ -19,8 +19,8 @@
 #include "gtest/gtest.h"
 #include "maldoca/base/digest.h"
 #include "maldoca/base/file.h"
-#include "maldoca/base/get_runfiles_dir.h"
 #include "maldoca/base/testing/status_matchers.h"
+#include "maldoca/base/testing/test_utils.h"
 #include "maldoca/ole/oss_utils.h"
 #include "maldoca/ole/vba_extract.h"
 
@@ -30,11 +30,8 @@ using maldoca::RecordHeader;
 using maldoca::VBAProjectStorage;
 
 std::string TestFilename(absl::string_view filename) {
-  return maldoca::file::JoinPath(
-      maldoca::GetRunfilesDir(),
-      absl::StrCat("maldoca/ole/testdata/ole/", filename));
+  return maldoca::testing::OleTestFilename(filename, "ole/");
 }
-
 std::string GetTestContent(absl::string_view filename) {
   std::string content;
   auto status = maldoca::file::GetContents(TestFilename(filename), &content);
