@@ -25,9 +25,9 @@
 #include "maldoca/base/get_runfiles_dir.h"
 #include "maldoca/ole/oss_utils.h"
 
-using maldoca::FAT;
-using maldoca::OLEHeader;
-using maldoca::SectorConstant;
+using ::maldoca::FAT;
+using ::maldoca::OLEHeader;
+using ::maldoca::SectorConstant;
 
 namespace {
 std::string TestFilename(absl::string_view filename) {

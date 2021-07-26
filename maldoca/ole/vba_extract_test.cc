@@ -75,11 +75,11 @@
 #include "maldoca/ole/oss_utils.h"
 #include "maldoca/ole/vba_extract.h"
 
-using maldoca::ExtractVBAFromFile;
-using maldoca::LikelyOLE2WithVBAContent;
-using maldoca::OLEDirectoryMessage;
-using maldoca::VBACodeChunks;
-using maldoca::ExtractVBAFromStringWithSettings;
+using ::maldoca::ExtractVBAFromFile;
+using ::maldoca::LikelyOLE2WithVBAContent;
+using ::maldoca::OLEDirectoryMessage;
+using ::maldoca::VBACodeChunks;
+using ::maldoca::ExtractVBAFromStringWithSettings;
 
 ABSL_FLAG(std::string, input_file, "",
               "A file to extract VBA code chunks from");

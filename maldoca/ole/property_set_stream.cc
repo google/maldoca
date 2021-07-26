@@ -20,15 +20,15 @@
 #include "maldoca/base/statusor.h"
 #include "maldoca/ole/dir.h"
 
-using maldoca::OLEPropertySetStream;
-using maldoca::StatusOr;
-using maldoca::ole::Dictionary;
-using maldoca::ole::DictionaryEntry;
-using maldoca::ole::Property;
-using maldoca::ole::PropertySet;
-using maldoca::ole::PropertySetStream;
-using maldoca::ole::VtValue;
-using maldoca::ole::VtVector;
+using ::maldoca::OLEPropertySetStream;
+using ::maldoca::StatusOr;
+using ::maldoca::ole::Dictionary;
+using ::maldoca::ole::DictionaryEntry;
+using ::maldoca::ole::Property;
+using ::maldoca::ole::PropertySet;
+using ::maldoca::ole::PropertySetStream;
+using ::maldoca::ole::VtValue;
+using ::maldoca::ole::VtVector;
 
 // use default Latin1 code page (1252) if nothing else is defined in the
 // PropertySetStream

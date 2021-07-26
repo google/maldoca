@@ -26,10 +26,10 @@
 #include "maldoca/base/testing/status_matchers.h"
 #include "maldoca/ole/fat.h"
 
-using maldoca::DirectoryStorageType;
-using maldoca::FAT;
-using maldoca::OLEDirectoryEntry;
-using maldoca::OLEHeader;
+using ::maldoca::DirectoryStorageType;
+using ::maldoca::FAT;
+using ::maldoca::OLEDirectoryEntry;
+using ::maldoca::OLEHeader;
 
 namespace {
 std::string TestFilename(absl::string_view filename) {

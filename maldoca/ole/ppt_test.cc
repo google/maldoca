@@ -25,9 +25,9 @@
 #include "maldoca/ole/vba_extract.h"
 
 namespace {
-using maldoca::PPT97ExtractVBAStorage;
-using maldoca::RecordHeader;
-using maldoca::VBAProjectStorage;
+using ::maldoca::PPT97ExtractVBAStorage;
+using ::maldoca::RecordHeader;
+using ::maldoca::VBAProjectStorage;
 
 std::string TestFilename(absl::string_view filename) {
   return maldoca::file::JoinPath(
