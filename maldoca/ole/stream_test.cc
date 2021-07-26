@@ -28,11 +28,11 @@
 #include "maldoca/ole/header.h"
 #include "maldoca/ole/oss_utils.h"
 
-using maldoca::DirectoryStorageType;
-using maldoca::FAT;
-using maldoca::OLEDirectoryEntry;
-using maldoca::OLEHeader;
-using maldoca::OLEStream;
+using ::maldoca::DirectoryStorageType;
+using ::maldoca::FAT;
+using ::maldoca::OLEDirectoryEntry;
+using ::maldoca::OLEHeader;
+using ::maldoca::OLEStream;
 
 namespace {
 std::string TestFilename(absl::string_view filename) {

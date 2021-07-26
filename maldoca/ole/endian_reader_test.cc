@@ -24,8 +24,8 @@
 #include "maldoca/base/endian.h"
 
 namespace {
-using maldoca::BigEndianReader;
-using maldoca::LittleEndianReader;
+using ::maldoca::BigEndianReader;
+using ::maldoca::LittleEndianReader;
 
 const int kMaxStrParseLength = 1024;
 

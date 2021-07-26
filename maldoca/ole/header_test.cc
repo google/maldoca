@@ -25,8 +25,8 @@
 
 namespace {
 
-using maldoca::OLEHeader;
-using maldoca::SectorConstant;
+using ::maldoca::OLEHeader;
+using ::maldoca::SectorConstant;
 
 std::string TestFilename(absl::string_view filename) {
   return maldoca::testing::OleTestFilename(filename);

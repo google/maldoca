@@ -30,7 +30,7 @@
 namespace maldoca {
 namespace {
 
-using maldoca::ooxml::OoxmlToProtoSettings;
+using ::maldoca::ooxml::OoxmlToProtoSettings;
 
 std::string TestFilename(absl::string_view filename) {
   return maldoca::testing::OleTestFilename(filename, "ooxml/");
