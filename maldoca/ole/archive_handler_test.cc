@@ -19,14 +19,14 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "maldoca/base/file.h"
-#include "maldoca/base/get_runfiles_dir.h"
+#include "maldoca/base/testing/test_utils.h"
 
 namespace maldoca {
 namespace utils {
 namespace {
+
 std::string TestFilename(absl::string_view filename) {
-  return file::JoinPath(GetRunfilesDir(),
-                        absl::StrCat("maldoca/ole/testdata/", filename));
+  return maldoca::testing::OleTestFilename(filename);
 }
 
 std::string GetTestContent(absl::string_view filename) {
