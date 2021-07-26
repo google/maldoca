@@ -31,15 +31,15 @@
 #include "maldoca/ole/header.h"
 #include "maldoca/ole/stream.h"
 
-using maldoca::DirectoryStorageType;
-using maldoca::FAT;
-using maldoca::OLEDirectoryEntry;
-using maldoca::OLEHeader;
-using maldoca::OLEStream;
-using maldoca::VBACodeChunks;
-using maldoca::vba_code::ExtractVBA2;
-using maldoca::vba_code::InsertPathPrefix;
-using maldoca::vba_code::ParseCodeModules;
+using ::maldoca::DirectoryStorageType;
+using ::maldoca::FAT;
+using ::maldoca::OLEDirectoryEntry;
+using ::maldoca::OLEHeader;
+using ::maldoca::OLEStream;
+using ::maldoca::VBACodeChunks;
+using ::maldoca::vba_code::ExtractVBA2;
+using ::maldoca::vba_code::InsertPathPrefix;
+using ::maldoca::vba_code::ParseCodeModules;
 
 namespace {
 std::string TestFilename(absl::string_view filename) {
