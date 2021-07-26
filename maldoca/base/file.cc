@@ -249,6 +249,7 @@ StatusOr<std::string> GetContents(absl::string_view path) {
 
 #ifndef MALDOCA_CHROME
 absl::Status SetContents(const std::string& path, absl::string_view contents) {
+  // "wb" is safer for windows than "w" as it may replace LF with CRLF in "w".
   auto fc = FileCloser(path, "wb");
   auto fp = fc.get();
   if (fp == nullptr) {

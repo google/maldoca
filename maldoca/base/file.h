@@ -30,7 +30,6 @@
 #include "absl/strings/str_join.h"
 #include "absl/strings/string_view.h"
 #include "google/protobuf/message.h"
-#include "maldoca/base/get_runfiles_dir.h"
 #include "maldoca/base/statusor.h"
 #include "mini_chromium/base/files/file_path.h"
 #if defined(_WIN32)

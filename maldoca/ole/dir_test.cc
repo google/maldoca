@@ -69,11 +69,9 @@ TEST(OLEDirectoryEntryTest, BasicTest) {
   EXPECT_TRUE(entry.IsInitialized());
 
   // Can't initialize twice.
-   ASSERT_DEATH(entry.Initialize("foo", DirectoryStorageType::Storage, 1, 2, 3,
+  ASSERT_DEATH(entry.Initialize("foo", DirectoryStorageType::Storage, 1, 2, 3,
                                 4, 5, 6, clsid, 8, 9, 10),
                "Check failed: !is_initialized_");
-  /*entry.Initialize("foo", DirectoryStorageType::Storage, 1, 2, 3, 4, 5, 6,
-                   clsid, 8, 9, 10);*/
 }
 
 TEST(OLEDirectoryEntryTest, TreeTest) {
@@ -348,6 +346,9 @@ TEST_F(OLEDirectoryEntryTestFull, ChildrenAccess) {
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
+#ifdef MALDOCA_CHROME
+  // mini_chromium needs InitLogging 
   maldoca::InitLogging();
+#endif
   return RUN_ALL_TESTS();
 }
