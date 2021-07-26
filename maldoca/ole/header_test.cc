@@ -19,7 +19,8 @@
 #include "benchmark/benchmark.h"
 #include "gtest/gtest.h"
 #include "maldoca/base/file.h"
-#include "maldoca/base/get_runfiles_dir.h"
+#include "maldoca/base/logging.h"
+#include "maldoca/base/testing/test_utils.h"
 #include "maldoca/ole/fat.h"
 
 namespace {
@@ -28,9 +29,7 @@ using ::maldoca::OLEHeader;
 using ::maldoca::SectorConstant;
 
 std::string TestFilename(absl::string_view filename) {
-  return maldoca::file::JoinPath(
-      maldoca::GetRunfilesDir(),
-      absl::StrCat("maldoca/ole/testdata/", filename));
+  return maldoca::testing::OleTestFilename(filename);
 }
 
 std::string GetTestContent(absl::string_view filename) {
@@ -90,8 +89,13 @@ TEST(OLEReaderTest, GoodInput) {
 }
 }  // namespace
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
+#ifdef MALDOCA_CHROME
+  // mini_chromium needs InitLogging
+  maldoca::InitLogging();
+#else
   ::benchmark::RunSpecifiedBenchmarks();
+#endif
   return RUN_ALL_TESTS();
 }

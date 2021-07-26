@@ -351,5 +351,9 @@ TEST(OOXMLPropertiesTest, DocumentSummaryInformationIsParsed) {
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
+#ifdef MALDOCA_CHROME
+  // mini_chromium needs InitLogging
+  maldoca::InitLogging();
+#endif
   return RUN_ALL_TESTS();
 }
