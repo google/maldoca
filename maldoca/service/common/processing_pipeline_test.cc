@@ -54,7 +54,7 @@ class ProcesDocTest : public Test {
   }
 #endif
 
-  void SetupPipeline(HandlerConfig config) {
+  void SetupPipeline(const HandlerConfig &config) {
 #ifndef MALDOCA_CHROME
     pdf_parser_vector_.push_back(
         std::make_unique<PdfParserHandler>("Parser", &processor_));
