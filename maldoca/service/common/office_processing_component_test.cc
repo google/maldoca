@@ -107,7 +107,6 @@ void ValidateParsedProto(absl::string_view file_base, absl::string_view ext,
   MALDOCA_ASSERT_OK(
       file::GetTextProto(ServiceTestFilename(expected_parsed_doc_file_name),
                          &expected_parsed_doc));
-
   std::string expected_doc_features_file_name =
       absl::StrCat(file_base, ".features.textproto");
 
@@ -143,6 +142,7 @@ void CheckConfigIsUsed(ProcessorConfig config) {
       ServiceTestFilename("ffc835c9a950beda17fa79dd0acf28d1df3835232"
                           "877b5fdd512b3df2ffb2431.doc"),
       &input));
+
   ParsedDocument parsed_doc;
   DocumentFeatures doc_features;
   ProcessDocument(
