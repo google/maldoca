@@ -12,7 +12,7 @@ The project's goal is to analyze potentially malicious documents to improve user
 ## WINDOWS
 - Some testdata files might trigger Windows Defender / AV systems. Please add an exclusion for your source directory to avoid potential issues.
 - Bazel has some Windows related problems, e.g. maximum path length limitations. Make sure to read the [best-practices](https://docs.bazel.build/versions/main/windows.html#best-practices) to avoid them.
-- Enable symlink support ([how-to](https://docs.bazel.build/versions/main/windows.html#enable-symlink-support))
+- Enable symlink support ([how-to](https://docs.bazel.build/versions/main/windows.html#enable-symlink-support)) as it is required by Bazel.
 
 ## CHECKOUT
 git clone --recurse-submodules https://github.com/google/maldoca.git
