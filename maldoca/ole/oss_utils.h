@@ -82,17 +82,16 @@ class BufferToUtf8 {
   }
   BufferToUtf8& operator=(const BufferToUtf8&) = delete;
   BufferToUtf8(const BufferToUtf8&) = delete;
-  // Initialiize encoder.
+  // Initialize encoder.
   virtual bool Init(const char* encode_name);
   // Check if the encoder is valid.
   virtual bool IsValid() {
 #if defined(_WIN32)
-    return (converter_to_unicode_ != nullptr &&
-            converter_to_utf8_ != nullptr) ||
+    return init_success_;
 #else
     return converter_ != nullptr ||
-#endif  // _WIN32
            internal_converter_ != InternalConverter::kNone;
+#endif  // _WIN32
   }
   // Max number of character error before giving up while converting input
   // to output.
@@ -126,6 +125,8 @@ class BufferToUtf8 {
 #if defined(_WIN32)
   UConverter* converter_to_unicode_ = nullptr;
   UConverter* converter_to_utf8_ = nullptr;
+  int code_page_ = 0;
+  bool init_success_ = false;
 #else
   iconv_t converter_ = nullptr;
 #endif  // _WIN32
@@ -142,6 +143,7 @@ inline bool ConvertEncodingBufferToUTF8String(
         input, out_str, bytes_consumed, bytes_filled, error_char_count);
   } else {
     DLOG(INFO) << "Converter not valid";
+    // TODO: add logging for chrome which encoding is missing
   }
   return false;
 }

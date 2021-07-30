@@ -14,10 +14,12 @@
 
 #include "maldoca/ole/oss_utils.h"
 
-#include <errno.h>
-
 #include <algorithm>
 #include <cstring>
+#include <errno.h>
+#if defined(_WIN32)
+#include <windows.h>
+#endif  // _WIN32
 
 #include "absl/base/call_once.h"
 #include "absl/flags/flag.h"
@@ -65,13 +67,14 @@ void HandleUConverterError(UConverter* conv, const char* encode_name,
                           const UErrorCode& err) {
   if (U_FAILURE(err)) {
     conv = nullptr;
-    LOG(ERROR) << "Fail to open icu converter for '" << encode_name
+    LOG(ERROR) << "Failed to open icu converter for '" << encode_name
                << "', error code: " << err;
   } else {
     CloseUConverter(&conv);
   }
 }
-#else
+#endif  // _WIN32
+
 inline void StripNullChar(std::string* str) {
   auto is_not_null = [](char c) { return c != '\0'; };
   auto r_it = std::find_if(str->rbegin(), str->rend(), is_not_null);
@@ -79,23 +82,15 @@ inline void StripNullChar(std::string* str) {
   auto it = std::find_if(str->begin(), str->end(), is_not_null);
   str->erase(str->begin(), it);
 }
-#endif  // _WIN32
 }  // namespace
 
 bool BufferToUtf8::Init(const char* encode_name) {
-#if defined(_WIN32)
-  if (converter_to_unicode_ != nullptr) {
-    CloseUConverter(&converter_to_unicode_);
-  }
-  if (converter_to_utf8_ != nullptr) {
-    CloseUConverter(&converter_to_utf8_);
-  }
-#else
+  DLOG(INFO) << "encode_name: " << encode_name << std::flush;
+#if !defined(_WIN32)
   if (converter_ != nullptr) {
     iconv_close(converter_);
     converter_ = nullptr;
   }
-#endif  // _WIN32
   internal_converter_ = InternalConverter::kNone;
   // Fixing missing encoding;
   // cp10000 is calld MAC in iconv
@@ -103,52 +98,25 @@ bool BufferToUtf8::Init(const char* encode_name) {
     encode_name = "MAC";
     DLOG(INFO) << "Replaced cp10000 with MAC";
   }
-#if defined(_WIN32)
-  UErrorCode err_to_unicode;
-  UErrorCode err_to_utf8;
-  converter_to_unicode_ = ucnv_open(encode_name, &err_to_unicode);
-  converter_to_utf8_ = ucnv_open("UTF-8", &err_to_utf8);
-
-  // Both "ucnv_open" have to succeed, otherwise it is considered a fail.
-  if (U_FAILURE(err_to_unicode) || U_FAILURE(err_to_utf8)) {
-    if (U_FAILURE(err_to_unicode)) {
-      HandleUConverterError(converter_to_unicode_, encode_name, err_to_utf8);
-    }
-    if (U_FAILURE(err_to_utf8)) {
-      HandleUConverterError(converter_to_utf8_, "UTF-8", err_to_utf8);
-    }
-#else
+  
   converter_ = iconv_open("UTF-8", encode_name);
   if (converter_ == reinterpret_cast<iconv_t>(-1)) {
     converter_ = nullptr;
-    LOG(ERROR) << "Fail to open iconv for '" << encode_name
+    LOG(ERROR) << "Failed to open iconv for '" << encode_name
                << "', error code: " << errno;
-#endif  // _WIN32
     // Windows encoding, we really want to make sure this works so we'll use our
     // own
-#if defined(_WIN32)
-    if (_stricmp(encode_name, "cp1251") == 0) {
-#else
     if (strcasecmp(encode_name, "cp1251") == 0) {
-#endif  // _WIN32
       internal_converter_ = InternalConverter::kCp1251;
       DLOG(INFO) << "Use internal cp1251 encoder";
       return true;
     }
-#if defined(_WIN32)
-    if (_stricmp(encode_name, "cp1252") == 0) {
-#else
     if (strcasecmp(encode_name, "cp1252") == 0) {
-#endif  // _WIN32
       internal_converter_ = InternalConverter::kCp1252;
       DLOG(INFO) << "Use internal cp1252 encoder";
       return true;
     }
-#if defined(_WIN32)
-    if (_stricmp(encode_name, "LATIN1") == 0) {
-#else
     if (strcasecmp(encode_name, "LATIN1") == 0) {
-#endif  // _WIN32
       internal_converter_ = InternalConverter::kLatin1;
       DLOG(INFO) << "Use internal LATIN1 encoder";
       return true;
@@ -156,6 +124,29 @@ bool BufferToUtf8::Init(const char* encode_name) {
     return false;
   }
   return true;
+  
+#else  // _WIN32
+  // Windows code pages have to be mapped manually.
+  if (_stricmp(encode_name, "cp1251") == 0) {
+    code_page_ = 1251;
+  } else if (_stricmp(encode_name, "cp1252") == 0) {
+    code_page_ = 1252;
+  } else if (_stricmp(encode_name, "utf-16le") == 0) {
+    code_page_ = 1200;
+  } else if (_stricmp(encode_name, "latin1") == 0) {
+    code_page_ = 28591;
+  } else if (_stricmp(encode_name, "cp936") == 0) {
+    code_page_ = 936;
+  } else {
+    init_success_ = false;
+    LOG(ERROR) << "Did not find windows code page: " << encode_name;
+    return false;
+  }
+  init_success_ = true;
+  DLOG(INFO) << "Use windows code page " << code_page_;
+  
+  return true;
+#endif  // _WIN32
 }
 
 bool BufferToUtf8::ConvertLatin1BufferToUTF8String(absl::string_view input,
@@ -434,24 +425,88 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   }
   CHECK(internal_converter_ == InternalConverter::kNone);
   size_t in_bytes_left = input.size();
+  DLOG(INFO) << "input.size: " << input.size();
   if (in_bytes_left == 0) {
     return true;
   }
   const char* input_ptr = input.data();
+
+#if defined(_WIN32)
+  int mb_size = 0;
+  int wc_size = 0;
+  wchar_t* w_str;
+  bool is_already_utf16 = code_page_ == 1200;
+ 
+  // only works for ascii??
+  /*if (is_already_utf16) {
+    out_str->resize(input.size());
+    const wchar_t* input_wptr = (wchar_t*) input.data();
+    mb_size = wcstombs(&(*out_str)[0], input_wptr, input.size());
+  } else {*/
+  
+  // No need to convert to UTF-16, if the string is already UTF-16 encoded.
+  if (!is_already_utf16) {
+    // Calculate output size in UTF-16.
+    wc_size = MultiByteToWideChar(code_page_, 0, input_ptr,
+                                         input.size(), NULL, 0);
+    DLOG(INFO) << "Output size in UTF-16: " << wc_size;
+    if (wc_size <= 0) {
+      LOG(ERROR) << "Error while calculating output size in UTF-16: " << GetLastError();
+    }
+
+    // Convert input to UTF-16.
+    w_str = new wchar_t[wc_size];
+    wc_size = MultiByteToWideChar(code_page_, 0, input_ptr,
+                                           input.size(), w_str, wc_size);
+    if (wc_size <= 0) {
+      LOG(ERROR) << "Error while converting to UTF-16: " << GetLastError();
+    }
+  } else {
+    w_str = (wchar_t*) input.data();
+    wc_size = input.size();
+  }
+
+  // Calculate output size in UTF-8.
+  mb_size = WideCharToMultiByte(CP_UTF8, 0, w_str, wc_size, NULL, 0, NULL, NULL);
+  DLOG(INFO) << "Output size in UTF-8: " << mb_size;
+  if (mb_size <= 0) {
+    LOG(ERROR) << "Error while calculating output size in UTF-8: " << GetLastError();
+  }
+
+  // Convert input to UTF-8.
+  out_str->resize(mb_size);
+  mb_size = WideCharToMultiByte(CP_UTF8, 0, w_str, wc_size,
+                                         &(*out_str)[0], mb_size, NULL, NULL);
+  if (mb_size <= 0) {
+    LOG(ERROR) << "Error while converting to UTF-8: " << GetLastError();
+  }
+
+  // TODO: fallback to internal converters if available.
+
+  DLOG(INFO) << "out_str->size(): " << out_str->size();
+  // For some reason, it preserves start and trailing \0 so remove them
+  StripNullChar(out_str);
+  DLOG(INFO) << "out_str->size() after strip: " << out_str->size();
+  *bytes_consumed = input.size();
+  DLOG(INFO) << "bytes_consumed: " << *bytes_consumed;
+  *bytes_filled = mb_size;
+  DLOG(INFO) << "bytes_filled: " << *bytes_filled;
+
+  if (!is_already_utf16) {
+    delete[] w_str;
+    return wc_size > 0 && mb_size > 0;
+  } else {
+    return mb_size > 0;
+  }
+#else // !_WIN32
   // Guess what the output size will be; make it the same to start
   // TODO(somebody): make a better guess here.
   size_t out_bytes_left = in_bytes_left;
   size_t old_output_size = out_str->size();
   size_t new_output_size = old_output_size + out_bytes_left;
   out_str->resize(new_output_size);
-  char* out_ptr = const_cast<char*>(out_str->data() + old_output_size);
+  char* out_ptr = const_cast<char*>(out_str->data() + old_output_size);  
 
-#if defined(_WIN32)
-  UErrorCode err;
-  ucnv_convert("UTF-8", "UTF-16", out_ptr, new_output_size, input_ptr,
-               in_bytes_left, &err);
-  return U_SUCCESS(err);
-#else
   while (in_bytes_left > 0) {
     size_t done = iconv(converter_, const_cast<char**>(&input_ptr),
                         &in_bytes_left, &out_ptr, &out_bytes_left);
