@@ -14,9 +14,10 @@
 
 #include "maldoca/ole/oss_utils.h"
 
+#include <errno.h>
+
 #include <algorithm>
 #include <cstring>
-#include <errno.h>
 #if defined(_WIN32)
 #include <windows.h>
 #endif  // _WIN32
@@ -64,7 +65,7 @@ void CloseUConverter(UConverter** conv) {
 }
 
 void HandleUConverterError(UConverter* conv, const char* encode_name,
-                          const UErrorCode& err) {
+                           const UErrorCode& err) {
   if (U_FAILURE(err)) {
     conv = nullptr;
     LOG(ERROR) << "Failed to open icu converter for '" << encode_name
@@ -98,7 +99,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
     encode_name = "MAC";
     DLOG(INFO) << "Replaced cp10000 with MAC";
   }
-  
+
   converter_ = iconv_open("UTF-8", encode_name);
   if (converter_ == reinterpret_cast<iconv_t>(-1)) {
     converter_ = nullptr;
@@ -124,8 +125,8 @@ bool BufferToUtf8::Init(const char* encode_name) {
     return false;
   }
   return true;
-  
-#else  // _WIN32
+
+#else   // _WIN32
   // Windows code pages have to be mapped manually.
   if (_stricmp(encode_name, "cp1251") == 0) {
     code_page_ = 1251;
@@ -144,7 +145,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
   }
   init_success_ = true;
   DLOG(INFO) << "Use windows code page " << code_page_;
-  
+
   return true;
 #endif  // _WIN32
 }
@@ -436,47 +437,50 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   int wc_size = 0;
   wchar_t* w_str;
   bool is_already_utf16 = code_page_ == 1200;
- 
+
   // only works for ascii??
   /*if (is_already_utf16) {
     out_str->resize(input.size());
     const wchar_t* input_wptr = (wchar_t*) input.data();
     mb_size = wcstombs(&(*out_str)[0], input_wptr, input.size());
   } else {*/
-  
+
   // No need to convert to UTF-16, if the string is already UTF-16 encoded.
   if (!is_already_utf16) {
     // Calculate output size in UTF-16.
-    wc_size = MultiByteToWideChar(code_page_, 0, input_ptr,
-                                         input.size(), NULL, 0);
+    wc_size =
+        MultiByteToWideChar(code_page_, 0, input_ptr, input.size(), NULL, 0);
     DLOG(INFO) << "Output size in UTF-16: " << wc_size;
     if (wc_size <= 0) {
-      LOG(ERROR) << "Error while calculating output size in UTF-16: " << GetLastError();
+      LOG(ERROR) << "Error while calculating output size in UTF-16: "
+                 << GetLastError();
     }
 
     // Convert input to UTF-16.
     w_str = new wchar_t[wc_size];
-    wc_size = MultiByteToWideChar(code_page_, 0, input_ptr,
-                                           input.size(), w_str, wc_size);
+    wc_size = MultiByteToWideChar(code_page_, 0, input_ptr, input.size(), w_str,
+                                  wc_size);
     if (wc_size <= 0) {
       LOG(ERROR) << "Error while converting to UTF-16: " << GetLastError();
     }
   } else {
-    w_str = (wchar_t*) input.data();
+    w_str = (wchar_t*)input.data();
     wc_size = input.size();
   }
 
   // Calculate output size in UTF-8.
-  mb_size = WideCharToMultiByte(CP_UTF8, 0, w_str, wc_size, NULL, 0, NULL, NULL);
+  mb_size =
+      WideCharToMultiByte(CP_UTF8, 0, w_str, wc_size, NULL, 0, NULL, NULL);
   DLOG(INFO) << "Output size in UTF-8: " << mb_size;
   if (mb_size <= 0) {
-    LOG(ERROR) << "Error while calculating output size in UTF-8: " << GetLastError();
+    LOG(ERROR) << "Error while calculating output size in UTF-8: "
+               << GetLastError();
   }
 
   // Convert input to UTF-8.
   out_str->resize(mb_size);
-  mb_size = WideCharToMultiByte(CP_UTF8, 0, w_str, wc_size,
-                                         &(*out_str)[0], mb_size, NULL, NULL);
+  mb_size = WideCharToMultiByte(CP_UTF8, 0, w_str, wc_size, &(*out_str)[0],
+                                mb_size, NULL, NULL);
   if (mb_size <= 0) {
     LOG(ERROR) << "Error while converting to UTF-8: " << GetLastError();
   }
@@ -498,14 +502,14 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   } else {
     return mb_size > 0;
   }
-#else // !_WIN32
+#else   // !_WIN32
   // Guess what the output size will be; make it the same to start
   // TODO(somebody): make a better guess here.
   size_t out_bytes_left = in_bytes_left;
   size_t old_output_size = out_str->size();
   size_t new_output_size = old_output_size + out_bytes_left;
   out_str->resize(new_output_size);
-  char* out_ptr = const_cast<char*>(out_str->data() + old_output_size);  
+  char* out_ptr = const_cast<char*>(out_str->data() + old_output_size);
 
   while (in_bytes_left > 0) {
     size_t done = iconv(converter_, const_cast<char**>(&input_ptr),
