@@ -92,7 +92,6 @@ inline void StripNullChar(std::string* str) {
 }  // namespace
 
 bool BufferToUtf8::Init(const char* encode_name) {
-  DLOG(INFO) << "encode_name: " << encode_name;
 #if !defined(_WIN32)
   if (converter_ != nullptr) {
     iconv_close(converter_);
