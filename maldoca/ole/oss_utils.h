@@ -96,7 +96,7 @@ class BufferToUtf8 {
   // Max number of character error before giving up while converting input
   // to output.
   void SetMaxError(int max_error) {
-#if defined(_WIN32)
+#if !defined(_WIN32)
     max_error_ = max_error;
 #else
     LOG(INFO) << "SetMaxError() is not implemented on Windows. Function call is ignored.";
