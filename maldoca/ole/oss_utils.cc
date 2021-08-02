@@ -150,7 +150,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
     return false;
   }
   init_success_ = true;
-  DLOG(INFO) << "Use Windows code page " << code_page_;
+  DLOG(INFO) << "Using Windows code page: " << code_page_;
   return true;
 #endif  // _WIN32
 }
