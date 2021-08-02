@@ -432,7 +432,6 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   }
   CHECK(internal_converter_ == InternalConverter::kNone);
   size_t in_bytes_left = input.size();
-  DLOG(INFO) << "input.size: " << input.size();
   if (in_bytes_left == 0) {
     return true;
   }
