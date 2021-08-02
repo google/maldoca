@@ -494,14 +494,10 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   // For some reason, it preserves start and trailing \0 so remove them
   StripNullChar(out_str);
   *bytes_consumed = input.size();
-  // Ignore the \0 (same behaviour as with Linux).
+  // Ignore the \0 (same behaviour as on Linux).
   *bytes_filled = std::max(0, mb_size - 1);
 
-  if (!is_already_utf16) {
-    return wc_size > 0 && mb_size > 0;
-  } else {
-    return mb_size > 0;
-  }
+  return true;
 #else   // !_WIN32
   // Guess what the output size will be; make it the same to start
   // TODO(somebody): make a better guess here.
