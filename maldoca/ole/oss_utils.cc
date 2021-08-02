@@ -20,6 +20,7 @@
 #include <cstring>
 #if defined(_WIN32)
 #include <windows.h>
+#include <codecvt>
 #endif  // _WIN32
 
 #include "absl/base/call_once.h"
@@ -32,6 +33,11 @@
 
 ABSL_FLAG(int32_t, default_max_proto_recursion, 400,
           "Default max allowed recursion in proto parsing from text.");
+
+#if defined(_WIN32)
+// UTF-16 little endian code page on Windows: https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
+constexpr int32_t kUtf16LECodePage = 1200;
+#endif  // _WIN32
 
 namespace maldoca {
 namespace utils {
@@ -126,26 +132,26 @@ bool BufferToUtf8::Init(const char* encode_name) {
   }
   return true;
 
-#else   // _WIN32
-  // Windows code pages have to be mapped manually.
+#else  // _WIN32
+  // Supported Windows code pages have to be mapped manually.
+  // TODO: add more supported code pages: https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
   if (_stricmp(encode_name, "cp1251") == 0) {
     code_page_ = 1251;
   } else if (_stricmp(encode_name, "cp1252") == 0) {
     code_page_ = 1252;
   } else if (_stricmp(encode_name, "utf-16le") == 0) {
-    code_page_ = 1200;
+    code_page_ = kUtf16LECodePage;
   } else if (_stricmp(encode_name, "latin1") == 0) {
     code_page_ = 28591;
   } else if (_stricmp(encode_name, "cp936") == 0) {
     code_page_ = 936;
   } else {
     init_success_ = false;
-    LOG(ERROR) << "Did not find windows code page: " << encode_name;
+    LOG(ERROR) << "Windows code page is not supported: " << encode_name;
     return false;
   }
   init_success_ = true;
-  DLOG(INFO) << "Use windows code page " << code_page_;
-
+  DLOG(INFO) << "Use Windows code page " << code_page_;
   return true;
 #endif  // _WIN32
 }
@@ -402,6 +408,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
                                                      int* bytes_consumed,
                                                      int* bytes_filled,
                                                      int* error_char_count) {
+  // TODO: refactor and split up this function.
   CHECK_NE(bytes_consumed, static_cast<int*>(nullptr));
   CHECK_NE(bytes_filled, static_cast<int*>(nullptr));
   CHECK_NE(error_char_count, static_cast<int*>(nullptr));
@@ -433,17 +440,10 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   const char* input_ptr = input.data();
 
 #if defined(_WIN32)
-  int mb_size = 0;
-  int wc_size = 0;
-  wchar_t* w_str;
-  bool is_already_utf16 = code_page_ == 1200;
-
-  // only works for ascii??
-  /*if (is_already_utf16) {
-    out_str->resize(input.size());
-    const wchar_t* input_wptr = (wchar_t*) input.data();
-    mb_size = wcstombs(&(*out_str)[0], input_wptr, input.size());
-  } else {*/
+  int mb_size = 0; // size of the multi-byte string
+  int wc_size = 0; // size of the wide-character string
+  std::unique_ptr<wchar_t*> wc_str;
+  bool is_already_utf16 = code_page_ == kUtf16LECodePage;
 
   // No need to convert to UTF-16, if the string is already UTF-16 encoded.
   if (!is_already_utf16) {
@@ -454,50 +454,50 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
     if (wc_size <= 0) {
       LOG(ERROR) << "Error while calculating output size in UTF-16: "
                  << GetLastError();
+      return false;
     }
 
-    // Convert input to UTF-16.
-    w_str = new wchar_t[wc_size];
-    wc_size = MultiByteToWideChar(code_page_, 0, input_ptr, input.size(), w_str,
+    // Allocate memory for the temp UTF-16 output and convert input to UTF-16.
+    wc_str = std::make_unique<wchar_t*>(new wchar_t[wc_size]);
+    wc_size = MultiByteToWideChar(code_page_, 0, input_ptr, input.size(), *wc_str.get(),
                                   wc_size);
     if (wc_size <= 0) {
       LOG(ERROR) << "Error while converting to UTF-16: " << GetLastError();
+      return false;
     }
   } else {
-    w_str = (wchar_t*)input.data();
-    wc_size = input.size();
+    wc_str = std::make_unique<wchar_t*>((wchar_t*)input.data());
+    wc_size = input.size() / 2;
   }
 
   // Calculate output size in UTF-8.
   mb_size =
-      WideCharToMultiByte(CP_UTF8, 0, w_str, wc_size, NULL, 0, NULL, NULL);
+      WideCharToMultiByte(CP_UTF8, 0, *wc_str.get(), wc_size, NULL, 0, NULL, NULL);
   DLOG(INFO) << "Output size in UTF-8: " << mb_size;
   if (mb_size <= 0) {
     LOG(ERROR) << "Error while calculating output size in UTF-8: "
                << GetLastError();
+    return false;
   }
 
-  // Convert input to UTF-8.
+  // Allocate proper memory and convert input to UTF-8.
   out_str->resize(mb_size);
-  mb_size = WideCharToMultiByte(CP_UTF8, 0, w_str, wc_size, &(*out_str)[0],
+  mb_size = WideCharToMultiByte(CP_UTF8, 0, *wc_str.get(), wc_size, &(*out_str)[0],
                                 mb_size, NULL, NULL);
   if (mb_size <= 0) {
     LOG(ERROR) << "Error while converting to UTF-8: " << GetLastError();
+    return false;
   }
 
   // TODO: fallback to internal converters if available.
 
-  DLOG(INFO) << "out_str->size(): " << out_str->size();
   // For some reason, it preserves start and trailing \0 so remove them
   StripNullChar(out_str);
-  DLOG(INFO) << "out_str->size() after strip: " << out_str->size();
   *bytes_consumed = input.size();
-  DLOG(INFO) << "bytes_consumed: " << *bytes_consumed;
-  *bytes_filled = mb_size;
-  DLOG(INFO) << "bytes_filled: " << *bytes_filled;
+  // Ignore the \0 (same behaviour as with Linux).
+  *bytes_filled = std::max(0, mb_size - 1);
 
   if (!is_already_utf16) {
-    delete[] w_str;
     return wc_size > 0 && mb_size > 0;
   } else {
     return mb_size > 0;
