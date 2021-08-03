@@ -440,7 +440,8 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
 #if defined(_WIN32)
   int mb_size = 0; // size of the multi-byte string
   int wc_size = 0; // size of the wide-character string
-  std::unique_ptr<wchar_t*> wc_str;
+  std::unique_ptr<wchar_t[]> wc_data;
+  const wchar_t* wc_str;
   bool is_already_utf16 = code_page_ == kUtf16LECodePage;
 
   // No need to convert to UTF-16, if the string is already UTF-16 encoded.
@@ -456,21 +457,23 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
     }
 
     // Allocate memory for the temp UTF-16 output and convert input to UTF-16.
-    wc_str = std::make_unique<wchar_t*>(new wchar_t[wc_size]);
-    wc_size = MultiByteToWideChar(code_page_, 0, input_ptr, input.size(), *wc_str.get(),
+    wc_data = std::make_unique<wchar_t[]>(wc_size);
+    wc_str = wc_data.get();
+    wc_size = MultiByteToWideChar(code_page_, 0, input_ptr, input.size(), wc_data.get(),
                                   wc_size);
     if (wc_size <= 0) {
       LOG(ERROR) << "Error while converting to UTF-16: " << GetLastError();
       return false;
     }
   } else {
-    wc_str = std::make_unique<wchar_t*>((wchar_t*)input.data());
+    wc_str = reinterpret_cast<const wchar_t*>(input.data());
+    // We're casting the input from char (1 byte) to wchar_t (2 bytes), so we also have to half the size (in wchar_t).
     wc_size = input.size() / 2;
   }
 
   // Calculate output size in UTF-8.
   mb_size =
-      WideCharToMultiByte(CP_UTF8, 0, *wc_str.get(), wc_size, NULL, 0, NULL, NULL);
+      WideCharToMultiByte(CP_UTF8, 0, wc_str, wc_size, NULL, 0, NULL, NULL);
   DLOG(INFO) << "Output size in UTF-8: " << mb_size;
   if (mb_size <= 0) {
     LOG(ERROR) << "Error while calculating output size in UTF-8: "
@@ -480,7 +483,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
 
   // Allocate proper memory and convert input to UTF-8.
   out_str->resize(mb_size);
-  mb_size = WideCharToMultiByte(CP_UTF8, 0, *wc_str.get(), wc_size, &(*out_str)[0],
+  mb_size = WideCharToMultiByte(CP_UTF8, 0, wc_str, wc_size, const_cast<char*>(out_str->data()),
                                 mb_size, NULL, NULL);
   if (mb_size <= 0) {
     LOG(ERROR) << "Error while converting to UTF-8: " << GetLastError();
@@ -489,7 +492,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
 
   // TODO: fallback to internal converters if available.
 
-  // For some reason, it preserves start and trailing \0 so remove them
+  // Remove trailing \0
   StripNullChar(out_str);
   *bytes_consumed = input.size();
   // Ignore the \0 (same behaviour as on Linux).
