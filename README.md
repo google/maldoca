@@ -7,7 +7,7 @@ The project's goal is to analyze potentially malicious documents to improve user
 ## REQUIREMENTS
 - [Bazel](https://bazel.build) (recommended version: 4.1.0)
 - [Clang](https://clang.llvm.org) (recommended version: 11 or 12)
-- OS: Linux or Windows (WIP)
+- OS: Linux or Windows
 
 ## WINDOWS
 - Some testdata files might trigger Windows Defender / AV systems. Please add an exclusion for your source directory to avoid potential issues.
