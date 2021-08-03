@@ -497,7 +497,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
 
   // TODO: fallback to internal converters if available.
 
-  // Remove trailing \0
+  // For some reason, it preserves start and trailing \0 so remove them
   StripNullChar(out_str);
   *bytes_consumed = input.size();
   // Ignore the \0 (same behaviour as on Linux).
