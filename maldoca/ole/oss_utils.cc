@@ -20,6 +20,7 @@
 #include <cstring>
 #if defined(_WIN32)
 #include <windows.h>
+
 #include <codecvt>
 #endif  // _WIN32
 
@@ -35,7 +36,8 @@ ABSL_FLAG(int32_t, default_max_proto_recursion, 400,
           "Default max allowed recursion in proto parsing from text.");
 
 #if defined(_WIN32)
-// UTF-16 little endian code page on Windows: https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
+// UTF-16 little endian code page on Windows:
+// https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
 constexpr int32_t kUtf16LECodePage = 1200;
 #endif  // _WIN32
 
@@ -131,9 +133,10 @@ bool BufferToUtf8::Init(const char* encode_name) {
   }
   return true;
 
-#else  // _WIN32
+#else   // _WIN32
   // Supported Windows code pages have to be mapped manually.
-  // TODO: add more supported code pages: https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
+  // TODO: add more supported code pages:
+  // https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
   if (_stricmp(encode_name, "cp1251") == 0) {
     code_page_ = 1251;
   } else if (_stricmp(encode_name, "cp1252") == 0) {
@@ -438,8 +441,8 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   const char* input_ptr = input.data();
 
 #if defined(_WIN32)
-  int mb_size = 0; // size of the multi-byte string
-  int wc_size = 0; // size of the wide-character string
+  int mb_size = 0;  // size of the multi-byte string
+  int wc_size = 0;  // size of the wide-character string
   std::unique_ptr<wchar_t[]> wc_data;
   const wchar_t* wc_str;
   bool is_already_utf16 = code_page_ == kUtf16LECodePage;
@@ -459,15 +462,16 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
     // Allocate memory for the temp UTF-16 output and convert input to UTF-16.
     wc_data = std::make_unique<wchar_t[]>(wc_size);
     wc_str = wc_data.get();
-    wc_size = MultiByteToWideChar(code_page_, 0, input_ptr, input.size(), wc_data.get(),
-                                  wc_size);
+    wc_size = MultiByteToWideChar(code_page_, 0, input_ptr, input.size(),
+                                  wc_data.get(), wc_size);
     if (wc_size <= 0) {
       LOG(ERROR) << "Error while converting to UTF-16: " << GetLastError();
       return false;
     }
   } else {
     wc_str = reinterpret_cast<const wchar_t*>(input.data());
-    // We're casting the input from char (1 byte) to wchar_t (2 bytes), so we also have to half the size (in wchar_t).
+    // We're casting the input from char (1 byte) to wchar_t (2 bytes), so we
+    // also have to half the size (in wchar_t).
     wc_size = input.size() / 2;
   }
 
@@ -483,8 +487,9 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
 
   // Allocate proper memory and convert input to UTF-8.
   out_str->resize(mb_size);
-  mb_size = WideCharToMultiByte(CP_UTF8, 0, wc_str, wc_size, const_cast<char*>(out_str->data()),
-                                mb_size, NULL, NULL);
+  mb_size = WideCharToMultiByte(CP_UTF8, 0, wc_str, wc_size,
+                                const_cast<char*>(out_str->data()), mb_size,
+                                NULL, NULL);
   if (mb_size <= 0) {
     LOG(ERROR) << "Error while converting to UTF-8: " << GetLastError();
     return false;
