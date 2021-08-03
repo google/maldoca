@@ -170,22 +170,6 @@ maybe(
     path = "./third_party/boringssl",
 )
 
-# ICU (i18n) library
-maybe(
-    new_local_repository,
-    name = "icu",
-    build_file = "@//:bazel/icu.BUILD",
-    path = "./third_party/icu/icu4c/source/common/",
-)
-
-# ICU (i18n) data
-maybe(
-    new_local_repository,
-    name = "icu_data",
-    build_file = "@//:bazel/icu_data.BUILD",
-    path = "./third_party/icu/icu4c/source/stubdata/",
-)
-
 # gRPC. Note it needs to be named com_github_grpc_grpc because it's referred
 # as such internally.
 local_repository(

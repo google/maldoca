@@ -66,24 +66,6 @@ void InitSAXHandler() {
   xmlInitParser();
 }
 
-#if defined(_WIN32)
-void CloseUConverter(UConverter** conv) {
-  ucnv_close(*conv);
-  *conv = nullptr;
-}
-
-void HandleUConverterError(UConverter* conv, const char* encode_name,
-                           const UErrorCode& err) {
-  if (U_FAILURE(err)) {
-    conv = nullptr;
-    LOG(ERROR) << "Failed to open icu converter for '" << encode_name
-               << "', error code: " << err;
-  } else {
-    CloseUConverter(&conv);
-  }
-}
-#endif  // _WIN32
-
 inline void StripNullChar(std::string* str) {
   auto is_not_null = [](char c) { return c != '\0'; };
   auto r_it = std::find_if(str->rbegin(), str->rend(), is_not_null);

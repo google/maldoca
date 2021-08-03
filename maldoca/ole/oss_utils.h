@@ -20,9 +20,7 @@
 #ifndef MALDOCA_OLE_OSS_UTILS_H_
 #define MALDOCA_OLE_OSS_UTILS_H_
 
-#if defined(_WIN32)
-#include "icu4c/source/common/unicode/ucnv.h"
-#else
+#if !defined(_WIN32)
 #include <iconv.h>
 #endif  // _WIN32
 
@@ -67,14 +65,7 @@ class BufferToUtf8 {
  public:
   explicit BufferToUtf8(const char* encode_name) { Init(encode_name); }
   virtual ~BufferToUtf8() {
-#if defined(_WIN32)
-    if (converter_to_unicode_ != nullptr) {
-      ucnv_close(converter_to_unicode_);
-    }
-    if (converter_to_utf8_ != nullptr) {
-      ucnv_close(converter_to_utf8_);
-    }
-#else
+#if !defined(_WIN32)
     if (converter_ != nullptr) {
       iconv_close(converter_);
     }
@@ -123,8 +114,6 @@ class BufferToUtf8 {
                                        int* bytes_consumed, int* bytes_filled,
                                        int* error_char_count);
 #if defined(_WIN32)
-  UConverter* converter_to_unicode_ = nullptr;
-  UConverter* converter_to_utf8_ = nullptr;
   int code_page_ = 0;
   bool init_success_ = false;
 #else
