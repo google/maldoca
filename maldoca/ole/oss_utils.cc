@@ -487,9 +487,8 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
 
   // Allocate proper memory and convert input to UTF-8.
   out_str->resize(mb_size);
-  mb_size = WideCharToMultiByte(CP_UTF8, 0, wc_str, wc_size,
-                                const_cast<char*>(out_str->data()), mb_size,
-                                NULL, NULL);
+  mb_size = WideCharToMultiByte(CP_UTF8, 0, wc_str, wc_size, &(*out_str)[0],
+                                mb_size, NULL, NULL);
   if (mb_size <= 0) {
     LOG(ERROR) << "Error while converting to UTF-8: " << GetLastError();
     return false;
