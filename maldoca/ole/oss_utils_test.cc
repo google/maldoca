@@ -213,8 +213,10 @@ TEST(BufferToUtf8, Init) {
 }
 
 TEST(BufferToUtf8, ConvertEncodingBufferToUTF8String_EmptyString) {
+  absl::string_view input = "";
+  absl::string_view expected_output = "";
   TestBufferToUtf8 tester;
-  tester.TestConvertEncodingBufferToUTF8String("", "UTF-16LE", "", 0, 0, 0, true);
+  tester.TestConvertEncodingBufferToUTF8String(input, "CP1252", expected_output, input.size(), expected_output.size(), 0, true);
 }
 
 TEST(BufferToUtf8, ConvertEncodingBufferToUTF8String_Latin1) {
