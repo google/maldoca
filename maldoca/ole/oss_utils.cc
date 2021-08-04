@@ -416,7 +416,6 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   }
   CHECK(internal_converter_ == InternalConverter::kNone);
   size_t in_bytes_left = input.size();
-  LOG(INFO) << "input.size(): " << input.size();
   if (in_bytes_left == 0) {
     return true;
   }
@@ -542,13 +541,9 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   // resize to actual size
   out_str->resize(std::max(out_ptr - out_str->data(), 0l));
   // For some reason, it preserves start and trailing \0 so remove them
-  LOG(INFO) << "out_str.size() before strip: " << out_str->size();
   StripNullChar(out_str);
-  LOG(INFO) << "out_str.size() after strip: " << out_str->size();
   *bytes_consumed = input.size() - in_bytes_left;
-  LOG(INFO) << "bytes_consumed: " << *bytes_consumed;
   *bytes_filled = out_str->size();
-  LOG(INFO) << "bytes_filled: " << *bytes_filled << std::flush;   
   return *error_char_count <= max_error_;
 #endif  // _WIN32
 }
