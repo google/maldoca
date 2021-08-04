@@ -50,17 +50,21 @@ class TestBufferToUtf8 : public BufferToUtf8 {
     return ConvertCp1252BufferToUTF8String(input, out_str, bytes_consumed,
                                            bytes_filled, error_char_count);
   }
-  void TestConvertEncodingBufferToUTF8String(absl::string_view input, const char* encode_name,
-      absl::string_view expected_output, int expected_bytes_consumed, int expected_bytes_filled,
-      int expected_error_cnt, bool expected_ret_value) {
+  void TestConvertEncodingBufferToUTF8String(absl::string_view input,
+                                             const char* encode_name,
+                                             absl::string_view expected_output,
+                                             int expected_bytes_consumed,
+                                             int expected_bytes_filled,
+                                             int expected_error_cnt,
+                                             bool expected_ret_value) {
     int bytes_consumed = 0;
     int bytes_filled = 0;
     int error_cnt = 0;
     std::string output;
-    bool ret = utils::ConvertEncodingBufferToUTF8String(input, encode_name,
-                                             &output, &bytes_consumed,
-                                             &bytes_filled, &error_cnt);
-                                             
+    bool ret = utils::ConvertEncodingBufferToUTF8String(
+        input, encode_name, &output, &bytes_consumed, &bytes_filled,
+        &error_cnt);
+
     EXPECT_EQ(ret, expected_ret_value);
     EXPECT_EQ(output, expected_output);
     EXPECT_EQ(bytes_consumed, expected_bytes_consumed);
@@ -216,21 +220,27 @@ TEST(BufferToUtf8, ConvertEncodingBufferToUTF8String_EmptyString) {
   absl::string_view input = "";
   absl::string_view expected_output = "";
   TestBufferToUtf8 tester;
-  tester.TestConvertEncodingBufferToUTF8String(input, "CP1252", expected_output, input.size(), expected_output.size(), 0, true);
+  tester.TestConvertEncodingBufferToUTF8String(input, "CP1252", expected_output,
+                                               input.size(),
+                                               expected_output.size(), 0, true);
 }
 
 TEST(BufferToUtf8, ConvertEncodingBufferToUTF8String_Latin1) {
   absl::string_view input = "abc";
   absl::string_view expected_output = "abc";
   TestBufferToUtf8 tester;
-  tester.TestConvertEncodingBufferToUTF8String(input, "LATIN1", expected_output, input.size(), expected_output.size(), 0, true);
+  tester.TestConvertEncodingBufferToUTF8String(input, "LATIN1", expected_output,
+                                               input.size(),
+                                               expected_output.size(), 0, true);
 }
 
 TEST(BufferToUtf8, ConvertEncodingBufferToUTF8String_UTF16) {
   absl::string_view input = "\x3d\xd8\x0c\xdc\x21";
   absl::string_view expected_output = "\xf0\x9f\x90\x8c";
   TestBufferToUtf8 tester;
-  tester.TestConvertEncodingBufferToUTF8String(input, "UTF-16LE", expected_output, input.size(), expected_output.size(), 0, true);
+  tester.TestConvertEncodingBufferToUTF8String(input, "UTF-16LE",
+                                               expected_output, input.size(),
+                                               expected_output.size(), 0, true);
 }
 
 }  // namespace
