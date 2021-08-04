@@ -480,8 +480,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   // For some reason, it preserves start and trailing \0 so remove them
   StripNullChar(out_str);
   *bytes_consumed = input.size();
-  // Ignore the \0 (same behaviour as on Linux).
-  *bytes_filled = std::max(0, mb_size - 1);
+  *bytes_filled = out_str->size();
 
   return true;
 #else   // !_WIN32
@@ -543,7 +542,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   // For some reason, it preserves start and trailing \0 so remove them
   StripNullChar(out_str);
   *bytes_consumed = input.size() - in_bytes_left;
-  *bytes_filled = out_str->size() - old_output_size;
+  *bytes_filled = out_str->size();
   return *error_char_count <= max_error_;
 #endif  // _WIN32
 }
