@@ -20,8 +20,6 @@
 #include <cstring>
 #if defined(_WIN32)
 #include <windows.h>
-
-#include <codecvt>
 #endif  // _WIN32
 
 #include "absl/base/call_once.h"
@@ -84,7 +82,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
   internal_converter_ = InternalConverter::kNone;
   // Fixing missing encoding;
   // cp10000 is calld MAC in iconv
-  if (strcmp(encode_name, "cp10000") == 0) {
+  if (absl::EqualsIgnoreCase(encode_name, "cp10000")) {
     encode_name = "MAC";
     DLOG(INFO) << "Replaced cp10000 with MAC";
   }
@@ -96,17 +94,17 @@ bool BufferToUtf8::Init(const char* encode_name) {
                << "', error code: " << errno;
     // Windows encoding, we really want to make sure this works so we'll use our
     // own
-    if (strcasecmp(encode_name, "cp1251") == 0) {
+    if (absl::EqualsIgnoreCase(encode_name, "cp1251")) {
       internal_converter_ = InternalConverter::kCp1251;
       DLOG(INFO) << "Use internal cp1251 encoder";
       return true;
     }
-    if (strcasecmp(encode_name, "cp1252") == 0) {
+    if (absl::EqualsIgnoreCase(encode_name, "cp1252")) {
       internal_converter_ = InternalConverter::kCp1252;
       DLOG(INFO) << "Use internal cp1252 encoder";
       return true;
     }
-    if (strcasecmp(encode_name, "LATIN1") == 0) {
+    if (absl::EqualsIgnoreCase(encode_name, "LATIN1")) {
       internal_converter_ = InternalConverter::kLatin1;
       DLOG(INFO) << "Use internal LATIN1 encoder";
       return true;
@@ -119,15 +117,16 @@ bool BufferToUtf8::Init(const char* encode_name) {
   // Supported Windows code pages have to be mapped manually.
   // TODO: add more supported code pages:
   // https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
-  if (_stricmp(encode_name, "cp1251") == 0) {
+  // TODO: convert to map
+  if (absl::EqualsIgnoreCase(encode_name, "cp1251")) {
     code_page_ = 1251;
-  } else if (_stricmp(encode_name, "cp1252") == 0) {
+  } else if (absl::EqualsIgnoreCase(encode_name, "cp1252")) {
     code_page_ = 1252;
-  } else if (_stricmp(encode_name, "utf-16le") == 0) {
+  } else if (absl::EqualsIgnoreCase(encode_name, "utf-16le")) {
     code_page_ = kUtf16LECodePage;
-  } else if (_stricmp(encode_name, "latin1") == 0) {
+  } else if (absl::EqualsIgnoreCase(encode_name, "latin1")) {
     code_page_ = 28591;
-  } else if (_stricmp(encode_name, "cp936") == 0) {
+  } else if (absl::EqualsIgnoreCase(encode_name, "cp936")) {
     code_page_ = 936;
   } else {
     init_success_ = false;
@@ -423,8 +422,8 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
   const char* input_ptr = input.data();
 
 #if defined(_WIN32)
-  int mb_size = 0;  // size of the multi-byte string
-  int wc_size = 0;  // size of the wide-character string
+  int wc_size = 0;  // size of the wide-character string in characters
+  int mb_size = 0;  // size of the multi-byte string in bytes
   std::unique_ptr<wchar_t[]> wc_data;
   const wchar_t* wc_str;
   bool is_already_utf16 = code_page_ == kUtf16LECodePage;
@@ -469,9 +468,8 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
 
   // Allocate proper memory and convert input to UTF-8.
   out_str->resize(mb_size);
-  mb_size = WideCharToMultiByte(CP_UTF8, 0, wc_str, wc_size,
-                                const_cast<char*>(out_str->data()), mb_size,
-                                NULL, NULL);
+  mb_size = WideCharToMultiByte(CP_UTF8, 0, wc_str, wc_size, &(*out_str)[0],
+                                mb_size, NULL, NULL);
   if (mb_size <= 0) {
     LOG(ERROR) << "Error while converting to UTF-8: " << GetLastError();
     return false;
