@@ -64,24 +64,6 @@ void InitSAXHandler() {
   xmlInitParser();
 }
 
-#if defined(_WIN32)
-void CloseUConverter(UConverter** conv) {
-  ucnv_close(*conv);
-  *conv = nullptr;
-}
-
-void HandleUConverterError(UConverter* conv, const char* encode_name,
-                           const UErrorCode& err) {
-  if (U_FAILURE(err)) {
-    conv = nullptr;
-    LOG(ERROR) << "Failed to open icu converter for '" << encode_name
-               << "', error code: " << err;
-  } else {
-    CloseUConverter(&conv);
-  }
-}
-#endif  // _WIN32
-
 inline void StripNullChar(std::string* str) {
   auto is_not_null = [](char c) { return c != '\0'; };
   auto r_it = std::find_if(str->rbegin(), str->rend(), is_not_null);
@@ -131,7 +113,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
   }
   return true;
 
-#else  // _WIN32
+#else   // _WIN32
   // Supported Windows code pages have to be mapped manually.
   // TODO: add more supported code pages:
   // https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
@@ -441,7 +423,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
 
 #if defined(_WIN32)
   int wc_size = 0;  // size of the wide-character string in characters
-  int mb_size = 0;  // size of the multi-byte string in bytes  
+  int mb_size = 0;  // size of the multi-byte string in bytes
   std::unique_ptr<wchar_t[]> wc_data;
   const wchar_t* wc_str;
   bool is_already_utf16 = code_page_ == kUtf16LECodePage;
