@@ -57,7 +57,6 @@ class TestBufferToUtf8 : public BufferToUtf8 {
     int bytes_filled = 0;
     int error_cnt = 0;
     std::string output;
-    absl::string_view expected_input;
     bool ret = utils::ConvertEncodingBufferToUTF8String(input, encode_name,
                                              &output, &bytes_consumed,
                                              &bytes_filled, &error_cnt);
