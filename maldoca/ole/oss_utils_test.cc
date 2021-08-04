@@ -53,10 +53,10 @@ class TestBufferToUtf8 : public BufferToUtf8 {
   void TestConvertEncodingBufferToUTF8String(absl::string_view input,
                                              const char* encode_name,
                                              absl::string_view expected_output,
-                                             int expected_bytes_consumed,
-                                             int expected_bytes_filled,
-                                             int expected_error_cnt,
-                                             bool expected_ret_value) {
+                                             const int expected_bytes_consumed,
+                                             const int expected_bytes_filled,
+                                             const int expected_error_cnt,
+                                             const bool expected_ret_value) {
     int bytes_consumed = 0;
     int bytes_filled = 0;
     int error_cnt = 0;
