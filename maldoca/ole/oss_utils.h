@@ -118,7 +118,7 @@ class BufferToUtf8 {
   bool init_success_ = false;
 #else
   iconv_t converter_ = nullptr;
-#endif                 // _WIN32
+#endif  // _WIN32
   int max_error_ = 0;  // defaults to give up on any error.
   InternalConverter internal_converter_ = InternalConverter::kNone;
 };
