@@ -186,6 +186,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
             {"ibm-875", 875},
             {"shift_jis", 932},
             {"gb2312", 936},
+            {"cp936", 936},
             {"big5", 950},
             {"big5-0", 950},
             {"big5-hkscs", 950},
@@ -518,8 +519,8 @@ bool BufferToUtf8::Init(const char* encode_name) {
   std::string encode_name_lower(encode_name);
   strlwr(&encode_name_lower[0]);
 
-  auto iter = name_to_code_map->find(
-      encode_name_lower) if (iter != name_to_code_map->end()) {
+  auto iter = name_to_code_map->find(encode_name_lower);
+  if (iter != name_to_code_map->end()) {
     code_page_ = iter->second;
     init_success_ = true;
     DLOG(INFO) << "Using Windows code page: " << code_page_
