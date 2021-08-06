@@ -526,8 +526,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
     DLOG(INFO) << "Using Windows code page: " << code_page_
                << " for encoding: " << encode_name_lower;
     return true;
-  }
-  else {
+  } else {
     init_success_ = false;
     LOG(ERROR) << "Windows code page is not supported: " << encode_name;
     return false;
