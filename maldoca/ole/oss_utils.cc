@@ -517,7 +517,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
   }();
 
   std::string encode_name_lower(encode_name);
-  strlwr(&encode_name_lower[0]);
+  absl::AsciiStrToLower(&encode_name_lower);
 
   auto iter = name_to_code_map->find(encode_name_lower);
   if (iter != name_to_code_map->end()) {
