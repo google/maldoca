@@ -141,6 +141,7 @@ cc_library(
         "//maldoca/base:file",
         "//maldoca/base:logging",
         "//maldoca/base:status",
+        "//maldoca/base:encoding_error",
         "@com_google_absl//absl/base",
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/memory",

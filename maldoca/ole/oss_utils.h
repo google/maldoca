@@ -132,7 +132,6 @@ inline bool ConvertEncodingBufferToUTF8String(
         input, out_str, bytes_consumed, bytes_filled, error_char_count);
   } else {
     DLOG(INFO) << "Converter not valid";
-    // TODO: add logging for chrome which encoding is missing
   }
   return false;
 }
