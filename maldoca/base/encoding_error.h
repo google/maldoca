@@ -22,13 +22,13 @@ static std::string& failed_encoding() {
   return failed_encoding;
 }
 
-void SetFailedEncoding(const char* encoding) {
+[[maybe_unused]] void SetFailedEncoding(const char* encoding) {
   failed_encoding() = std::string(encoding);
 }
 
-std::string* GetFailedEncoding() { return &failed_encoding(); }
+[[maybe_unused]] std::string* GetFailedEncoding() { return &failed_encoding(); }
 
-void ResetFailedEncoding() { failed_encoding().clear(); }
+[[maybe_unused]] void ResetFailedEncoding() { failed_encoding().clear(); }
 }  // namespace
 }  // namespace maldoca
 
