@@ -276,7 +276,7 @@ class LittleEndian {
     ::maldoca::little_endian::Store64(p, v);
   }
 };
-}  // namespace
+}  // namespace utils
 }  // namespace maldoca
 
 #endif  // MALDOCA_BASE_ENDIAN_H_
