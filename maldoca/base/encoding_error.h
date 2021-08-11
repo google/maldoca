@@ -15,7 +15,6 @@
 #ifdef MALDOCA_CHROME
 
 namespace maldoca {
-namespace {
 static inline std::string& GetFailedEncoding() {
   thread_local std::string failed_encoding;
   return failed_encoding;
@@ -26,7 +25,6 @@ inline void SetFailedEncoding(const char* encoding) {
 }
 
 inline void ResetFailedEncoding() { GetFailedEncoding().clear(); }
-}  // namespace
 }  // namespace maldoca
 
 #endif  // MALDOCA_CHROME
