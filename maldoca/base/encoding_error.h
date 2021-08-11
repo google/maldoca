@@ -16,20 +16,17 @@
 
 namespace maldoca {
 namespace {
-
-static std::string& failed_encoding() {
-  thread_local std::string failed_encoding("");
+static inline std::string& GetFailedEncoding() {
+  thread_local std::string failed_encoding;
   return failed_encoding;
 }
 
-[[maybe_unused]] void SetFailedEncoding(const char* encoding) {
-  failed_encoding() = std::string(encoding);
+[[maybe_unused]] inline void SetFailedEncoding(const char* encoding) {
+  GetFailedEncoding() = std::string(encoding);
 }
 
-[[maybe_unused]] std::string* GetFailedEncoding() { return &failed_encoding(); }
-
-[[maybe_unused]] void ResetFailedEncoding() { failed_encoding().clear(); }
-}  // namespace
+[[maybe_unused]] inline void ResetFailedEncoding() { GetFailedEncoding().clear(); }
+}  // namespace 
 }  // namespace maldoca
 
 #endif  // MALDOCA_CHROME
