@@ -300,12 +300,11 @@ absl::Status DocProcessor::ProcessDoc(absl::string_view file_name,
     }
   }
 
-  ::maldoca::ResetFailedEncoding();
   absl::Status status = current_document_pipeline->Process(doc);
   if (!status.ok()) {
-    std::string *failed_encoding = ::maldoca::GetFailedEncoding();
-    if (!failed_encoding->empty()) {
-      return maldoca::UnimplementedError(*failed_encoding,
+    std::string failed_encoding = ::maldoca::GetFailedEncoding();
+    if (!failed_encoding.empty()) {
+      return maldoca::UnimplementedError(failed_encoding,
                                          MaldocaErrorCode::MISSING_ENCODING);
     } else {
       return status;
