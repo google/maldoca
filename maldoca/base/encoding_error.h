@@ -26,7 +26,7 @@ inline void SetFailedEncoding(const char* encoding) {
 }
 
 inline void ResetFailedEncoding() { GetFailedEncoding().clear(); }
-}  // namespace 
+}  // namespace
 }  // namespace maldoca
 
 #endif  // MALDOCA_CHROME
