@@ -21,11 +21,11 @@ static inline std::string& GetFailedEncoding() {
   return failed_encoding;
 }
 
-[[maybe_unused]] inline void SetFailedEncoding(const char* encoding) {
+inline void SetFailedEncoding(const char* encoding) {
   GetFailedEncoding() = std::string(encoding);
 }
 
-[[maybe_unused]] inline void ResetFailedEncoding() { GetFailedEncoding().clear(); }
+inline void ResetFailedEncoding() { GetFailedEncoding().clear(); }
 }  // namespace 
 }  // namespace maldoca
 
