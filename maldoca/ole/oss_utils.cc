@@ -31,6 +31,7 @@
 #include "google/protobuf/text_format.h"
 #include "libxml/SAX2.h"
 #include "libxml/parserInternals.h"
+#include "maldoca/base/encoding_error.h"
 
 ABSL_FLAG(int32_t, default_max_proto_recursion, 400,
           "Default max allowed recursion in proto parsing from text.");
@@ -76,6 +77,8 @@ inline void StripNullChar(std::string* str) {
 }  // namespace
 
 bool BufferToUtf8::Init(const char* encode_name) {
+  ::maldoca::ResetFailedEncoding();
+
 #if !defined(_WIN32)
   if (converter_ != nullptr) {
     iconv_close(converter_);
@@ -96,6 +99,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
                << "', error code: " << errno;
     // Windows encoding, we really want to make sure this works so we'll use our
     // own
+    ::maldoca::SetFailedEncoding(encode_name);
     if (absl::EqualsIgnoreCase(encode_name, "cp1251")) {
       internal_converter_ = InternalConverter::kCp1251;
       DLOG(INFO) << "Use internal cp1251 encoder";
@@ -528,6 +532,7 @@ bool BufferToUtf8::Init(const char* encode_name) {
     return true;
   } else {
     init_success_ = false;
+    ::maldoca::SetFailedEncoding(encode_name);
     LOG(ERROR) << "Windows code page is not supported: " << encode_name;
     return false;
   }
