@@ -15,4 +15,4 @@ rem limitations under the License.
 cd %KOKORO_ARTIFACTS_DIR%\github\maldoca
 
 call ci\kokoro\gcp_windows\cc_coverage\cc_coverage.bat
-exit %ERRORLEVEL%
+exit /b %ERRORLEVEL%

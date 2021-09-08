@@ -16,7 +16,8 @@ rem This script should be run at the root of maldoca repo.
 
 choco install -y bazel
 choco install -y llvm
-rem seems to break the kokoro automation
+
+rem seems to break the kokoro automation so removing it
 rem refreshenv
 
 bazel --version
@@ -25,10 +26,12 @@ clang --version
 whereis bazel
 whereis clang
 
+mkdir maldoca_github
+cd maldoca_github
+git clone --recurse-submodules https://github.com/google/maldoca.git
+
 dir third_party
 dir third_party\rules_proto
 
 rem Run MalDocA test.
 bazel test --config=windows maldoca/...:all --test_output=errors
-
-exit /b %ERRORLEVEL%
