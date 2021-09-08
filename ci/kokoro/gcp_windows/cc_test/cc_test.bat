@@ -14,5 +14,6 @@ rem limitations under the License.
 
 rem This script should be run at the root of maldoca repo.
 
-rem Run MalDocA coverage.
+rem Run MalDocA test.
+bazel --version
 bazel test --config=windows maldoca/...:all --test_output=errors
