@@ -16,7 +16,8 @@ rem This script should be run at the root of maldoca repo.
 
 choco install -y bazel
 choco install -y llvm
-refreshenv
+rem seems to break the kokoro automation
+rem refreshenv
 
 bazel --version
 clang --version
