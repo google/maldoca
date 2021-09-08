@@ -19,12 +19,6 @@ git clone --recurse-submodules https://github.com/google/maldoca.git
 
 cd maldoca
 
-## DOCKER
-We proivde a docker file in "docker/Dockerfile". This is the reference
-platform we use for continous integration and optionally (arguably recommended)
-for development as well. Please check the documentation in "docker/Dockerfile" on how to
-build and use for development.
-
 ## BUILD
 Linux: bazel build --config=linux //maldoca/...
 
@@ -34,6 +28,12 @@ Windows: bazel build --config=windows //maldoca/...
 Linux: bazel test --config=linux //maldoca/...
 
 Windows: bazel test --config=windows //maldoca/...
+
+## DOCKER
+We proivde a docker file in "docker/Dockerfile". This is the reference
+platform we use for continous integration and optionally (arguably recommended)
+for development as well. Please check the documentation in "docker/Dockerfile" on how to
+build and use for development.
 
 ## CONTACT
 maldoca-community@google.com
