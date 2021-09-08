@@ -14,21 +14,14 @@ rem limitations under the License.
 
 rem This script should be run at the root of maldoca repo.
 
-rem Run MalDocA test.
-cd C:\
-
-bazel
-bazel help
-bazel help startup_options
-bazel test --config=windows maldoca/...:all --test_output=errors
-
 choco install -y bazel
+choco install -y llvm
+refreshenv
 
-bazel
-bazel help
-bazel help startup_options
+bazel --version
+clang --version
+
+rem Run MalDocA test.
 bazel test --config=windows maldoca/...:all --test_output=errors
 
-choco install -y llvm
-
-clang --version
+dir
