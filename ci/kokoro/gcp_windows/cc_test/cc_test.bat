@@ -36,4 +36,4 @@ dir third_party
 dir third_party\rules_proto
 
 rem Run MalDocA test.
-bazel test --config=windows maldoca/...:all --test_output=errors
+bazel test --config=windows maldoca/...:all --test_output=errors --verbose_failures
