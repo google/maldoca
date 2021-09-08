@@ -16,10 +16,14 @@ rem This script should be run at the root of maldoca repo.
 
 choco install -y bazel
 choco install -y llvm
-refreshenv
+rem seens to not work
+rem refreshenv
 
 bazel --version
 clang --version
+
+whereis bazel
+whereis clang
 
 rem Run MalDocA test.
 bazel test --config=windows maldoca/...:all --test_output=errors
