@@ -30,6 +30,8 @@ mkdir maldoca_github
 cd maldoca_github
 git clone --recurse-submodules https://github.com/google/maldoca.git
 
+cd maldoca
+dir
 dir third_party
 dir third_party\rules_proto
 
