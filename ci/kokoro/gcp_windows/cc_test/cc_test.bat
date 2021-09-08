@@ -22,13 +22,13 @@ bazel help
 bazel help startup_options
 bazel test --config=windows maldoca/...:all --test_output=errors
 
-choco install bazel
+choco install -y bazel
 
 bazel
 bazel help
 bazel help startup_options
 bazel test --config=windows maldoca/...:all --test_output=errors
 
-choco install llvm
+choco install -y llvm
 
 clang --version
