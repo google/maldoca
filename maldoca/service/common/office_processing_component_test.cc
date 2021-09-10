@@ -96,7 +96,6 @@ void ValidateParsedProto(absl::string_view file_base, absl::string_view ext,
   std::string input;
   MALDOCA_ASSERT_OK(
       file::GetContents(ServiceTestFilename(input_file_name), &input));
-
   ParsedDocument parsed_doc;
   DocumentFeatures doc_features;
   ProcessDocument(input_file_name, input, config, &parsed_doc, &doc_features);
