@@ -60,7 +60,7 @@ TEST(OLEReaderTest, BogusInput) {
   // to have a fixed value. Here, we're changing MiniSectorCutoff, 4
   // bytes at offset 56 (4096 is expected.)
   std::string content;
-  content = GetTestContent("vba1.bin");
+  content = GetTestContent("vba1_base64_encoded.bin");
   content.replace(56, 4, "LOL!");
   EXPECT_FALSE(OLEHeader::ParseHeader(bogus, &header));
   EXPECT_FALSE(header.IsInitialized());
@@ -74,7 +74,7 @@ TEST(OLEReaderTest, GoodInput) {
   EXPECT_FALSE(header.IsInitialized());
 
   std::string content;
-  content = GetTestContent("vba1.bin");
+  content = GetTestContent("vba1_base64_encoded.bin");
   EXPECT_TRUE(OLEHeader::ParseHeader(content, &header));
   EXPECT_EQ(header.TotalNumSector(), 45);
   EXPECT_EQ(header.SectorSize(), 512);

@@ -31,6 +31,7 @@
 #include <ctime>
 
 #include "absl/memory/memory.h"
+#include "absl/strings/escaping.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
@@ -222,6 +223,18 @@ absl::Status GetContents(const std::string& path, std::string* contents) {
           "Failed reading ", path, " with error: ", strerror(errno)));
     }
     absl::StrAppend(contents, absl::string_view(buf, ret));
+  }
+  // base64 decode file if required.
+  std::string content_tmp = *contents;
+  if (path.find("_base64_encoded") != std::string::npos &&
+      path.find("textproto") == std::string::npos) {
+    std::cout << "base64 decoding " << path << "\r\n" << std::flush;
+    if (!absl::Base64Unescape(content_tmp, contents)) {
+      return absl::InternalError(
+          absl::StrCat("Failed to base64 decode content of ", path));
+    }
+    printf("Base64 decoded output: %x%x%x%x\r\n", (*contents)[0],
+           (*contents)[1], (*contents)[2], (*contents)[3]);
   }
   return absl::OkStatus();
 }

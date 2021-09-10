@@ -49,7 +49,7 @@ std::string GetTestContent(absl::string_view filename) {
 class StreamTest : public testing::Test {
  protected:
   void SetUp() override {
-    input = GetTestContent("vba1.bin");
+    input = GetTestContent("vba1_base64_encoded.bin");
     EXPECT_TRUE(OLEHeader::ParseHeader(input, &header));
     EXPECT_TRUE(header.IsInitialized());
     EXPECT_TRUE(FAT::Read(input, header, &fat));
