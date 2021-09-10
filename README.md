@@ -30,8 +30,8 @@ Linux: bazel test --config=linux //maldoca/...
 Windows: bazel test --config=windows //maldoca/...
 
 ## DOCKER
-We proivde a docker file in "docker/Dockerfile". This is the reference
-platform we use for continous integration and optionally (arguably recommended)
+We provide a docker file in "docker/Dockerfile". This is the reference
+platform we use for continuous integration and optionally (arguably recommended)
 for development as well. Please check the documentation in "docker/Dockerfile" on how to
 build and use for development.
 
