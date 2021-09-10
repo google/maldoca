@@ -928,7 +928,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
 
         default:
           // give up
-          out_str->resize(std::max(out_ptr - out_str->data(), 0l));
+          out_str->resize(std::max(static_cast<long>(out_ptr - out_str->data()), 0l));
           LOG(ERROR) << "failed with error: " << errno
                      << ", in_bytes_left: " << in_bytes_left
                      << ", out_bytes_left: " << out_bytes_left
@@ -938,7 +938,7 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
     }
   }
   // resize to actual size
-  out_str->resize(std::max(out_ptr - out_str->data(), 0l));
+  out_str->resize(std::max(static_cast<long>(out_ptr - out_str->data()), 0l));
   // For some reason, it preserves start and trailing \0 so remove them
   StripNullChar(out_str);
   *bytes_consumed = input.size() - in_bytes_left;
