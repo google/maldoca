@@ -44,7 +44,7 @@ std::string GetTestContent(absl::string_view filename) {
 class FATTest : public testing::Test {
  protected:
   void SetUp() override {
-    content_ = GetTestContent("vba1.bin");
+    content_ = GetTestContent("vba1_base64_encoded.bin");
     EXPECT_TRUE(OLEHeader::ParseHeader(content_, &header));
   }
 

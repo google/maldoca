@@ -4,7 +4,7 @@ parsed_document {
   sha256: "8821dd555708adbee310071a507292bb9892ec0b7db80337696fc078fbbeaee9"
   doc_type: VB
   general_doc_type: GENERAL_DOC_TYPE_VBA
-  file_name: "vba1.bin"
+  file_name: "vba1_base64_encoded.bin"
   file_size: 23552
   office {
     doc_type: VB
@@ -29,7 +29,7 @@ document_features {
   sha256: "8821dd555708adbee310071a507292bb9892ec0b7db80337696fc078fbbeaee9"
   doc_type: VB
   general_doc_type: GENERAL_DOC_TYPE_VBA
-  file_name: "vba1.bin"
+  file_name: "vba1_base64_encoded.bin"
   file_size: 23552
   office {
     doc_type: VB

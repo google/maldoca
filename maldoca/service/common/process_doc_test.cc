@@ -184,7 +184,8 @@ class ProcessDocTest : public Test {
   void TestFiles(const ProcessorConfig &config) {
     DocProcessor processor(config);
 #ifndef MALDOCA_CHROME
-    ValidateProcessedProto("vba1.bin", "vba1.bin.response.textproto",
+    ValidateProcessedProto("vba1_base64_encoded.bin",
+                           "vba1_base64_encoded.bin.response.textproto",
                            &processor, DocType::VB);
     ValidateProcessedProto("image_and_text.pdf",
                            "image_and_text.pdf.response.textproto", &processor);
@@ -194,13 +195,17 @@ class ProcessDocTest : public Test {
                            "image_and_link.pdf.response.textproto", &processor);
 #endif
     ValidateProcessedProto(
-        "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431.doc",
-        "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431."
+        "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_"
+        "base64_encoded.doc",
+        "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_"
+        "base64_encoded."
         "response.textproto",
         &processor);
     ValidateProcessedProto(
-        "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d.docx",
-        "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d."
+        "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_"
+        "base64_encoded.docx",
+        "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_"
+        "base64_encoded."
         "response.textproto",
         &processor);
   }
@@ -216,7 +221,8 @@ TEST_F(ProcessDocTest, DisableMagician) {
   DocProcessor processor(config);
   ProcessDocumentRequest request;
   std::string test_file(
-      "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431.doc");
+      "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_base64_"
+      "encoded.doc");
   request.set_file_name(test_file);
   MALDOCA_ASSERT_OK(file::GetContents(ServiceTestFilename(test_file),
                                       request.mutable_doc_content()));

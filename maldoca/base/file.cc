@@ -31,12 +31,14 @@
 #include <ctime>
 
 #include "absl/memory/memory.h"
+#include "absl/strings/escaping.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
+#include "base/logging.h"
 #include "google/protobuf/text_format.h"
 #ifndef MALDOCA_CHROME
 #include "maldoca/base/ret_check.h"
@@ -45,8 +47,12 @@
 #endif  // MALDOCA_CHROME
 
 using absl::Status;
-
 using ::google::protobuf::Message;
+
+// File name substrings indicating base64 encoding respectively the lack
+// thereof.
+constexpr char kFileNameBase64EncodingIndicator[] = "_base64_encoded";
+constexpr char kFileNameTextprotoIndicator[] = "textproto";
 
 namespace maldoca {
 namespace file {
@@ -222,6 +228,16 @@ absl::Status GetContents(const std::string& path, std::string* contents) {
           "Failed reading ", path, " with error: ", strerror(errno)));
     }
     absl::StrAppend(contents, absl::string_view(buf, ret));
+  }
+  std::string content_tmp = *contents;
+  // base64 decode file if required. However, ignore textproto files.
+  if (path.find(kFileNameBase64EncodingIndicator) != std::string::npos &&
+      path.find(kFileNameTextprotoIndicator) == std::string::npos) {
+    DLOG(INFO) << "base64 decoding " << path;
+    if (!absl::Base64Unescape(content_tmp, contents)) {
+      return absl::InternalError(
+          absl::StrCat("Failed to base64 decode content of ", path));
+    }
   }
   return absl::OkStatus();
 }
