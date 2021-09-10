@@ -26,10 +26,6 @@ clang --version
 whereis bazel
 whereis clang
 
-rem mkdir maldoca_github
-rem cd maldoca_github
-rem git clone --recurse-submodules https://github.com/google/maldoca.git
-
 git submodule update --init --recursive
 
 rem Run MalDocA test.

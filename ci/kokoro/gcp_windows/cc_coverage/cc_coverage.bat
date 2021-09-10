@@ -14,5 +14,13 @@ rem limitations under the License.
 
 rem This script should be run at the root of maldoca repo.
 
+choco install -y bazel
+choco install -y llvm
+
+rem seems to break the kokoro automation so removing it
+rem refreshenv
+
+git submodule update --init --recursive
+
 rem Run MalDocA coverage.
-bazel coverage --config=windows maldoca/...:all --test_output=errors
+bazel coverage --config=windows maldoca/...:all --test_output=errors  --verbose_failures
