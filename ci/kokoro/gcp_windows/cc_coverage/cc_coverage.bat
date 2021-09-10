@@ -13,7 +13,6 @@ rem See the License for the specific language governing permissions and
 rem limitations under the License.
 
 rem This script should be run at the root of maldoca repo.
-
 choco install -y bazel
 choco install -y llvm
 
@@ -24,3 +23,4 @@ git submodule update --init --recursive
 
 rem Run MalDocA coverage.
 bazel coverage --config=windows maldoca/...:all --test_output=errors  --verbose_failures
+
