@@ -95,7 +95,7 @@ void ValidateParsedProto(absl::string_view file_base, absl::string_view ext,
   std::string input_file_name = absl::StrCat(file_base, ".", ext);
   std::string input;
   MALDOCA_ASSERT_OK(
-      file::GetContents(ServiceTestFilename(input_file_name), &input));
+      testing::GetTestContents(ServiceTestFilename(input_file_name), &input));
   ParsedDocument parsed_doc;
   DocumentFeatures doc_features;
   ProcessDocument(input_file_name, input, config, &parsed_doc, &doc_features);
@@ -138,7 +138,7 @@ void CheckConfigIsUsed(ProcessorConfig config) {
                       ->mutable_ole_to_proto_settings();
   settings->set_include_vba_code(false);  // turns off vba
   std::string input;
-  MALDOCA_ASSERT_OK(file::GetContents(
+  MALDOCA_ASSERT_OK(testing::GetTestContents(
       ServiceTestFilename("ffc835c9a950beda17fa79dd0acf28d1df3835232"
                           "877b5fdd512b3df2ffb2431_base64_encoded.doc"),
       &input));

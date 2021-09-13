@@ -83,7 +83,7 @@ class ProcesDocTest : public Test {
     std::string input_file_name = absl::StrCat(file_base, ".", ext);
     std::string input;
     MALDOCA_ASSERT_OK(
-        file::GetContents(ServiceTestFilename(input_file_name), &input));
+        testing::GetTestContents(ServiceTestFilename(input_file_name), &input));
 
 #ifndef MALDOCA_CHROME
     pdf_pipeline_.ResetPipelineData();

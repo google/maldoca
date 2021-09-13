@@ -37,8 +37,8 @@ namespace {
 #ifndef MALDOCA_CHROME
 std::string GetTestContent(absl::string_view filename) {
   std::string content;
-  auto status =
-      maldoca::file::GetContents(ServiceTestFilename(filename), &content);
+  auto status = maldoca::testing::GetTestContents(ServiceTestFilename(filename),
+                                                  &content);
   MALDOCA_CHECK_OK(status) << status;
   return content;
 }

@@ -49,11 +49,6 @@
 using absl::Status;
 using ::google::protobuf::Message;
 
-// File name substrings indicating base64 encoding respectively the lack
-// thereof.
-constexpr char kFileNameBase64EncodingIndicator[] = "_base64_encoded";
-constexpr char kFileNameTextprotoIndicator[] = "textproto";
-
 namespace maldoca {
 namespace file {
 namespace {
@@ -211,7 +206,8 @@ absl::Status Match(absl::string_view pattern,
 #endif  // MALDOCA_CHROME
 
 // TODO(someone): Make this work with general file systems.
-absl::Status GetContents(const std::string& path, std::string* contents) {
+absl::Status GetContents(const std::string& path, std::string* contents,
+                         bool decode_as_base64) {
   auto fc = FileCloser(path, "rb");
   auto fp = fc.get();
   if (fp == nullptr) {
@@ -229,12 +225,11 @@ absl::Status GetContents(const std::string& path, std::string* contents) {
     }
     absl::StrAppend(contents, absl::string_view(buf, ret));
   }
-  std::string content_tmp = *contents;
-  // base64 decode file if required. However, ignore textproto files.
-  if (path.find(kFileNameBase64EncodingIndicator) != std::string::npos &&
-      path.find(kFileNameTextprotoIndicator) == std::string::npos) {
+  // base64 decode file's content if requested.
+  if (decode_as_base64) {
     DLOG(INFO) << "base64 decoding " << path;
-    if (!absl::Base64Unescape(content_tmp, contents)) {
+    std::string contents_tmp = std::move(*contents);
+    if (!absl::Base64Unescape(contents_tmp, contents)) {
       return absl::InternalError(
           absl::StrCat("Failed to base64 decode content of ", path));
     }
@@ -253,9 +248,10 @@ std::pair<absl::string_view, absl::string_view> SplitFilename(
   return base_ext;
 }
 
-StatusOr<std::string> GetContents(absl::string_view path) {
+StatusOr<std::string> GetContents(absl::string_view path,
+                                  bool decode_as_base64) {
   std::string output;
-  auto status = GetContents(std::string(path), &output);
+  auto status = GetContents(std::string(path), &output, decode_as_base64);
   if (status.ok()) {
     return output;
   } else {
@@ -307,7 +303,7 @@ std::string CreateTempFileAndCloseOrDie(absl::string_view directory,
 #endif  // MALDOCA_CHROME
 
 absl::Status GetTextProto(absl::string_view filename, Message* proto) {
-  auto status_or = file::GetContents(filename);
+  auto status_or = file::GetContents(filename, false);
   if (!status_or.ok()) return status_or.status();
   if (google::protobuf::TextFormat::ParseFromString(status_or.value(), proto)) {
     return absl::OkStatus();

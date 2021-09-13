@@ -103,7 +103,7 @@ std::string TestFilename(absl::string_view filename) {
 
 std::string GetTestContent(absl::string_view filename) {
   std::string content;
-  auto status = maldoca::file::GetContents(TestFilename(filename), &content);
+  auto status = maldoca::testing::GetTestContents(TestFilename(filename), &content);
   EXPECT_TRUE(status.ok()) << status;
   return content;
 }
@@ -161,7 +161,7 @@ void ExtractAndPrintCode(const std::string& filename) {
 
 TEST(VBAPresenceDetection, VBAPresenceDetectionTest) {
   // These are certified OLE2/Docfiles.
-  std::string content =  GetTestContent("ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_base64_encoded");
+  std::string content = GetTestContent("ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_base64_encoded");
   EXPECT_TRUE(LikelyOLE2WithVBAContent(content));
 
   // OOXML, Office 2003 XML and straight MSO file content (not straight
@@ -183,7 +183,7 @@ TEST(BogusExtraction, BogusExtractionTest) {
   // trying a successful extraction.
   ExtractVBAFromFile(TestFilename(
     "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_base64_encoded"),
-                     &code_chunks, &error);
+                     &code_chunks, &error, true);
   EXPECT_TRUE(error.empty());
   EXPECT_NE(code_chunks.chunk_size(), 0);
   code_chunks.Clear();
@@ -257,7 +257,8 @@ TEST(MultipleExtraction, MultipleExtractionTest) {
     content = GetTestContent(item.first);
     // Both extraction methods, when successful, should return the
     // exact same thing.
-    ExtractVBAFromFile(filename, &chunks, &error);
+    bool decode_as_base64 = absl::StrContains(item.first, kFileNameBase64EncodingIndicator) && !absl::StrContains(item.first, kFileNameTextprotoIndicator);
+    ExtractVBAFromFile(filename, &chunks, &error, decode_as_base64);
     ExtractVBAFromString(content, &chunks_string, &error_string);
     EXPECT_THAT(error, testing::StrEq(""));
     EXPECT_THAT(error_string, testing::StrEq(""));
@@ -440,7 +441,7 @@ int main(int argc, char** argv) {
 
     if (!absl::GetFlag(FLAGS_input_files_list).empty()) {
       std::string content;
-      CHECK(maldoca::file::GetContents(absl::GetFlag(FLAGS_input_files_list),
+      CHECK(maldoca::testing::GetTestContents(absl::GetFlag(FLAGS_input_files_list),
                                  &content).ok());
       files = absl::StrSplit(content, '\n');
     }
