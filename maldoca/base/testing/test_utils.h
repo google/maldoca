@@ -59,7 +59,8 @@ inline std::string ServiceTestFilename(absl::string_view filename) {
 
 inline absl::Status GetTestContents(const std::string& path,
                                     std::string* contents) {
-  // base64 decode file if required. However, ignore textproto files.
+  // base64 decode file if path contains kFileNameBase64EncodingIndicator.
+  // However, ignore textproto files.
   bool decode_as_base64 =
       absl::StrContains(path, kFileNameBase64EncodingIndicator) &&
       !absl::StrContains(path, kFileNameTextprotoIndicator);
