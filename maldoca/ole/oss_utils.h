@@ -144,10 +144,11 @@ int log2Floor(uint32_t n);
 int Log2Ceiling(uint32_t n);
 
 // Read the content of filename into content. If log_error is true, errors
-// are logged. Return true upon success.
-// This function MUST be able to run before InitGoogle.
+// are logged. decode_as_base64 determines whether the file's content will be
+// base64 decoded or not. Return true upon success. This function MUST be able
+// to run before InitGoogle.
 bool ReadFileToString(absl::string_view filename, std::string* content,
-                      bool log_error);
+                      bool log_error, bool decode_as_base64 = false);
 
 // Simple collector just concat error into a string
 class StringErrorCollector : public ::google::protobuf::io::ErrorCollector {

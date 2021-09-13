@@ -161,8 +161,8 @@ class ProcessDocTest : public Test {
     } else {
       request.set_doc_type(::maldoca::utils::InferDocTypeByName(test_file));
     }
-    MALDOCA_ASSERT_OK(file::GetContents(ServiceTestFilename(test_file),
-                                        request.mutable_doc_content()));
+    MALDOCA_ASSERT_OK(testing::GetTestContents(ServiceTestFilename(test_file),
+                                               request.mutable_doc_content()));
     ProcessDocumentResponse response;
     MALDOCA_ASSERT_OK(processor->ProcessDoc(&request, &response));
 
@@ -224,8 +224,8 @@ TEST_F(ProcessDocTest, DisableMagician) {
       "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_base64_"
       "encoded.doc");
   request.set_file_name(test_file);
-  MALDOCA_ASSERT_OK(file::GetContents(ServiceTestFilename(test_file),
-                                      request.mutable_doc_content()));
+  MALDOCA_ASSERT_OK(testing::GetTestContents(ServiceTestFilename(test_file),
+                                             request.mutable_doc_content()));
   ProcessDocumentResponse response;
   // Magician is disabled and the doc_type is not set so should fail
   EXPECT_FALSE(processor.ProcessDoc(&request, &response).ok());
