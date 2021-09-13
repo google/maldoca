@@ -31,12 +31,14 @@
 #include <ctime>
 
 #include "absl/memory/memory.h"
+#include "absl/strings/escaping.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
+#include "base/logging.h"
 #include "google/protobuf/text_format.h"
 #ifndef MALDOCA_CHROME
 #include "maldoca/base/ret_check.h"
@@ -205,7 +207,8 @@ absl::Status Match(absl::string_view pattern,
 #endif  // MALDOCA_CHROME
 
 // TODO(someone): Make this work with general file systems.
-absl::Status GetContents(const std::string& path, std::string* contents) {
+absl::Status GetContents(const std::string& path, std::string* contents,
+                         bool decode_as_base64) {
   auto fc = FileCloser(path, "rb");
   auto fp = fc.get();
   if (fp == nullptr) {
@@ -223,6 +226,15 @@ absl::Status GetContents(const std::string& path, std::string* contents) {
     }
     absl::StrAppend(contents, absl::string_view(buf, ret));
   }
+  // base64 decode file's content if requested.
+  if (decode_as_base64) {
+    DLOG(INFO) << "base64 decoding " << path;
+    std::string contents_tmp = std::move(*contents);
+    if (!absl::Base64Unescape(contents_tmp, contents)) {
+      return absl::InternalError(
+          absl::StrCat("Failed to base64 decode content of ", path));
+    }
+  }
   return absl::OkStatus();
 }
 
@@ -237,9 +249,10 @@ std::pair<absl::string_view, absl::string_view> SplitFilename(
   return base_ext;
 }
 
-StatusOr<std::string> GetContents(absl::string_view path) {
+StatusOr<std::string> GetContents(absl::string_view path,
+                                  bool decode_as_base64) {
   std::string output;
-  auto status = GetContents(std::string(path), &output);
+  auto status = GetContents(std::string(path), &output, decode_as_base64);
   if (status.ok()) {
     return output;
   } else {

@@ -17,7 +17,7 @@
 #include "zlibwrapper/zlibwrapper.h"
 
 #include <assert.h>
-
+#include <algorithm>
 #include <cstring>
 #include <string>
 
