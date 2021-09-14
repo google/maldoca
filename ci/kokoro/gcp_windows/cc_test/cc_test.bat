@@ -16,6 +16,11 @@ rem This script should be run at the root of maldoca repo.
 dir
 dir maldoca/service/testdata
 
+dir %KOKORO_ARTIFACTS_DIR%
+dir %KOKORO_ARTIFACTS_DIR%/github/maldoca
+
+pwd
+
 choco install -y bazel
 choco install -y llvm
 
@@ -25,5 +30,5 @@ rem refreshenv
 git submodule update --init --recursive
 
 rem Run MalDocA test.
-bazel test --config=windows maldoca/...:all --test_output=errors --verbose_failures
+bazel test --config=windows maldoca/... --test_output=errors --verbose_failures
 

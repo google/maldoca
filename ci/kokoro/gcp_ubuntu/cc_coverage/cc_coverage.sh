@@ -23,4 +23,4 @@ set -e
 set -x
 
 # Run MalDocA coverage.
-bazel coverage --config=linux maldoca/...:all --test_output=errors --verbose_failures
+bazel coverage --config=linux maldoca/... --test_output=errors --verbose_failures

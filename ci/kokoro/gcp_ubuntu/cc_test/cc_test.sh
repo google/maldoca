@@ -23,4 +23,4 @@ set -e
 set -x
 
 # Run MalDocA tests.
-bazel test --config=linux maldoca/...:all --test_output=errors --verbose_failures
+bazel test --config=linux maldoca/... --test_output=errors --verbose_failures
