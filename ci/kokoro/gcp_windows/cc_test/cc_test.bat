@@ -13,14 +13,6 @@ rem See the License for the specific language governing permissions and
 rem limitations under the License.
 
 rem This script should be run at the root of maldoca repo.
-dir
-dir maldoca/service/testdata
-
-dir %KOKORO_ARTIFACTS_DIR%
-dir %KOKORO_ARTIFACTS_DIR%/github/maldoca
-
-pwd
-
 choco install -y bazel
 choco install -y llvm
 
