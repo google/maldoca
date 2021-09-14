@@ -229,11 +229,14 @@ absl::Status GetContents(const std::string& path, std::string* contents,
   // base64 decode file's content if requested.
   if (decode_as_base64) {
     DLOG(INFO) << "base64 decoding " << path;
-    std::string contents_tmp = std::move(*contents);
-    if (!absl::Base64Unescape(contents_tmp, contents)) {
-      return absl::InternalError(
-          absl::StrCat("Failed to base64 decode content of ", path));
+    for (int i = 0; i < contents->size(); i++) {
+      (*contents)[i] = (*contents)[i] ^ 0x42;
     }
+    /* std::string contents_tmp = std::move(*contents);
+     if (!absl::Base64Unescape(contents_tmp, contents)) {
+       return absl::InternalError(
+           absl::StrCat("Failed to base64 decode content of ", path));
+     }*/
   }
   return absl::OkStatus();
 }
