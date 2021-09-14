@@ -22,5 +22,5 @@ rem refreshenv
 git submodule update --init --recursive
 
 rem Run MalDocA coverage.
-bazel coverage --config=windows maldoca/...:all --test_output=errors  --verbose_failures
+bazel coverage --config=windows maldoca/...:all --test_output=errors --verbose_failures
 

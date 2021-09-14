@@ -303,7 +303,7 @@ std::string CreateTempFileAndCloseOrDie(absl::string_view directory,
 #endif  // MALDOCA_CHROME
 
 absl::Status GetTextProto(absl::string_view filename, Message* proto) {
-  auto status_or = file::GetContents(filename, false);
+  auto status_or = file::GetContents(filename);
   if (!status_or.ok()) return status_or.status();
   if (google::protobuf::TextFormat::ParseFromString(status_or.value(), proto)) {
     return absl::OkStatus();
