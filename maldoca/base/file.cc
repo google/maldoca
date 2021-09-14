@@ -47,7 +47,6 @@
 #endif  // MALDOCA_CHROME
 
 using absl::Status;
-
 using ::google::protobuf::Message;
 
 namespace maldoca {
