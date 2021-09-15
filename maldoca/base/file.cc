@@ -47,7 +47,7 @@
 
 // Key to xor-decode testdata files as a safety measure and to e.g. avoid being
 // deleted by AVs.
-constexpr int32_t kXorKey = 0x42;
+constexpr uint8_t kXorKey = 0x42;
 
 using absl::Status;
 using ::google::protobuf::Message;
