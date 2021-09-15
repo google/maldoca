@@ -45,7 +45,8 @@
 #include "re2/re2.h"
 #endif  // MALDOCA_CHROME
 
-// Key to xor-decode testdata files to avoid being deleted by AVs.
+// Key to xor-decode testdata files as a safety measure and to e.g. avoid being
+// deleted by AVs.
 constexpr int32_t kXorKey = 0x42;
 
 using absl::Status;
