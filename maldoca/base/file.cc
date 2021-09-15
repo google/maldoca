@@ -31,7 +31,6 @@
 #include <ctime>
 
 #include "absl/memory/memory.h"
-#include "absl/strings/escaping.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
@@ -45,6 +44,10 @@
 #include "maldoca/base/status_macros.h"
 #include "re2/re2.h"
 #endif  // MALDOCA_CHROME
+
+// Key to xor-decode testdata files as a safety measure and to e.g. avoid being
+// deleted by AVs.
+constexpr uint8_t kXorKey = 0x42;
 
 using absl::Status;
 using ::google::protobuf::Message;
@@ -207,7 +210,7 @@ absl::Status Match(absl::string_view pattern,
 
 // TODO(someone): Make this work with general file systems.
 absl::Status GetContents(const std::string& path, std::string* contents,
-                         bool decode_as_base64) {
+                         bool xor_decode_file) {
   auto fc = FileCloser(path, "rb");
   auto fp = fc.get();
   if (fp == nullptr) {
@@ -225,13 +228,11 @@ absl::Status GetContents(const std::string& path, std::string* contents,
     }
     absl::StrAppend(contents, absl::string_view(buf, ret));
   }
-  // base64 decode file's content if requested.
-  if (decode_as_base64) {
-    DLOG(INFO) << "base64 decoding " << path;
-    std::string contents_tmp = std::move(*contents);
-    if (!absl::Base64Unescape(contents_tmp, contents)) {
-      return absl::InternalError(
-          absl::StrCat("Failed to base64 decode content of ", path));
+  // xor decode the file's content if requested.
+  if (xor_decode_file) {
+    DLOG(INFO) << "xor decoding file: " << path;
+    for (int i = 0; i < contents->size(); i++) {
+      (*contents)[i] = (*contents)[i] ^ kXorKey;
     }
   }
   return absl::OkStatus();
@@ -249,9 +250,9 @@ std::pair<absl::string_view, absl::string_view> SplitFilename(
 }
 
 StatusOr<std::string> GetContents(absl::string_view path,
-                                  bool decode_as_base64) {
+                                  bool xor_decode_file) {
   std::string output;
-  auto status = GetContents(std::string(path), &output, decode_as_base64);
+  auto status = GetContents(std::string(path), &output, xor_decode_file);
   if (status.ok()) {
     return output;
   } else {
