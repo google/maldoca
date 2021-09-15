@@ -580,12 +580,12 @@ void ExtractVBAFromString(absl::string_view content, VBACodeChunks *code_chunks,
 }
 
 void ExtractVBAFromFile(const std::string &filename, VBACodeChunks *code_chunks,
-                        std::string *error, bool decode_as_base64) {
+                        std::string *error, bool xor_decode_file) {
   error->clear();
   // Fail nicely if the file can't be read. ReadFileToString will also log
   // some details about the error.
   std::string content;
-  if (!utils::ReadFileToString(filename, &content, true, decode_as_base64)) {
+  if (!utils::ReadFileToString(filename, &content, true, xor_decode_file)) {
     *error = absl::StrFormat("Can not get content for '%s'", filename);
     return;
   }

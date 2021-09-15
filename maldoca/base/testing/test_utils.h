@@ -22,9 +22,9 @@
 #include "maldoca/base/file.h"
 #include "maldoca/base/get_runfiles_dir.h"
 
-// File name substrings indicating base64 encoding respectively the lack
+// File name substrings indicating xor-encoding respectively the lack
 // thereof.
-constexpr char kFileNameBase64EncodingIndicator[] = "_base64_encoded";
+constexpr char kFileNameXorEncodingIndicator[] = "_xor_0x42_encoded";
 constexpr char kFileNameTextprotoIndicator[] = "textproto";
 
 namespace maldoca {
@@ -59,12 +59,12 @@ inline std::string ServiceTestFilename(absl::string_view filename) {
 
 inline absl::Status GetTestContents(const std::string& path,
                                     std::string* contents) {
-  // base64 decode file if path contains kFileNameBase64EncodingIndicator.
+  // xor decode file if path contains kFileNameXorEncodingIndicator.
   // However, ignore textproto files.
-  bool decode_as_base64 =
-      absl::StrContains(path, kFileNameBase64EncodingIndicator) &&
+  bool xor_decode_file =
+      absl::StrContains(path, kFileNameXorEncodingIndicator) &&
       !absl::StrContains(path, kFileNameTextprotoIndicator);
-  return ::maldoca::file::GetContents(path, contents, decode_as_base64);
+  return ::maldoca::file::GetContents(path, contents, xor_decode_file);
 }
 
 }  // namespace testing
