@@ -10,7 +10,7 @@ The project's goal is to analyze potentially malicious documents to improve user
 - OS: Linux or Windows
 
 ## GENERAL
-- Some testdata files contain malicious code! Hence, we encoded them in base64 as a safety measure. Nevertheless, be very careful when opening / processing testdata files!
+- Some testdata files contain malicious code! Hence, we use an xor-encoding (key = 0x42) as a safety measure. Hence, be very careful when opening / processing testdata files! For convenience, we provide a python script (["testdata_encode.py"](https://github.com/google/maldoca/testdata_encode.py)) to encode / decode those files. Example usage: python testdata_encode.py maldoca/service/testdata/c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d.docx
 
 ## WINDOWS
 - Bazel has some Windows related problems, e.g. maximum path length limitations. Make sure to read the [best-practices](https://docs.bazel.build/versions/main/windows.html#best-practices) to avoid them.

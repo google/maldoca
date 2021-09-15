@@ -1,7 +1,7 @@
 sha256: "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d"
 doc_type: DOCX
 general_doc_type: GENERAL_DOC_TYPE_DOC
-file_name: "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_base64_encoded.docx"
+file_name: "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_xor_0x42_encoded.docx"
 file_size: 200503
 office {
   doc_type: DOCX
