@@ -72,12 +72,12 @@ ArchiveHandler7zImpl::ArchiveHandler7zImpl(absl::string_view content)
   initialized_ = false;
 
   if (content_.empty()) {
-    DLOG(ERROR) << "'content' is empty";
+    DLOG(ERROR) << "'content' is empty!";
     return;
   }
 
   if (!zip_reader_.OpenFromString(content_)) {
-    DLOG(ERROR) << "Error while opening zip file from memory";
+    DLOG(ERROR) << "Error while opening zip file from memory!";
     return;
   }
 
@@ -91,7 +91,7 @@ bool ArchiveHandler7zImpl::GetNextEntry(std::string *filename, int64_t *size,
   DCHECK(isdir);
 
   if (!initialized_) {
-    DLOG(ERROR) << "ArchiveHandler instance not initialized";
+    DLOG(ERROR) << "ArchiveHandler instance not initialized!";
     return false;
   }
 
