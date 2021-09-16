@@ -66,10 +66,6 @@ class ArchiveHandler7z : public ArchiveHandlerTemplate<ArchiveHandler7zImpl> {
 
 ArchiveHandler::ArchiveHandler() {}
 
-ArchiveHandler7z::ArchiveHandler7z(absl::string_view content) {
-  handler_ = absl::make_unique<ArchiveHandler7zImpl>(content);
-}
-
 ArchiveHandler7zImpl::ArchiveHandler7zImpl(absl::string_view content)
     : content_(content) {
   first_entry_processed_ = false;
@@ -130,6 +126,10 @@ bool ArchiveHandler7zImpl::GetNextEntry(std::string *filename, int64_t *size,
 bool ArchiveHandler7zImpl::GetEntryContent(std::string *content) {
   return zip_reader_.ExtractCurrentEntryToString(/* not used: max_read_bytes */
                                                  1, content);
+}
+
+ArchiveHandler7z::ArchiveHandler7z(absl::string_view content) {
+  handler_ = absl::make_unique<ArchiveHandler7zImpl>(content);
 }
 
 absl::StatusOr<std::unique_ptr<ArchiveHandler>> GetArchiveHandler(
