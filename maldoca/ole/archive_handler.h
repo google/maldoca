@@ -20,6 +20,7 @@
 #include <memory>
 #include <string>
 
+#include "absl/status/statusor.h"
 #include "absl/strings/string_view.h"
 #include "absl/strings/strip.h"
 #include "maldoca/base/logging.h"
@@ -30,12 +31,12 @@ namespace utils {
 //
 // Sample usage:
 //
-//   auto status = ::maldoca::utils::GetArchiveHandler(zipped_archive_string,
+//   auto status_or = ::maldoca::utils::GetArchiveHandler(zipped_archive_string,
 //   "zip", "" , false, false);
-//   CHECK(status.ok() && status.value()->Initialized()) <<
-//   "Can't initialize, error: " << status.GetStatusString();
+//   CHECK(status_or.ok() && status_or.value()->Initialized()) <<
+//   "Can't initialize, error: " << status_or.status();
 //
-//   auto handler = handler_or.value().get();
+//   auto handler = status_or.value().get();
 //   string filename, content;
 //   int64_t size;
 //   while (handler->GetNextGoodContent(&filename, &size, &content)) {
@@ -92,29 +93,7 @@ class ArchiveHandlerTemplate : public ArchiveHandler {
   }
   bool GetNextGoodContent(std::string* filename, int64_t* size,
                           std::string* content) override {
-    DCHECK(filename);
-    DCHECK(size);
-    DCHECK(content);
-
-    std::string fn;
-    int64_t sz = 0;
-    bool isdir = false;
-    while (GetNextEntry(&fn, &sz, &isdir)) {
-      if (isdir) {
-        continue;
-      }
-      *filename = std::move(fn);
-      *size = sz;
-      content->reserve(*size);
-      bool status = GetEntryContent(content);
-      if (status) {
-        return status;
-      }
-      // else failed to get content so log and move on to next one.
-      LOG(ERROR) << "Failed to fetch " << *filename << " of size " << *size
-                 << " with error code: " << ResultCode();
-    }
-    return false;
+    return handler_->GetNextGoodContent(filename, size, content);
   }
   int NumberOfFilesInArchive() override {
     CHECK(handler_ != nullptr);

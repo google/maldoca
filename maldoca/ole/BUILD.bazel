@@ -645,6 +645,8 @@ cc_library(
     copts = DEFAULT_MALDOCA_COPTS,
     deps = [
         "//maldoca/base:logging",
+        "@com_google_absl//absl/memory",
+        "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
         "@zip_reader",
     ] + select({

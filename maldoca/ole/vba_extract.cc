@@ -75,11 +75,6 @@ ABSL_FLAG(bool, extract_malformed_content, true,
           "This flag specifies whether VBA code should be extracted from "
           "orphaned directory entries or otherwise malformed files.");
 
-ABSL_FLAG(bool, ignore_archive_reader_warning, true,
-          "This flag specifies whether to ignore warning from libarchive. "
-          "For instance, ignore when there is a mismatch between number of "
-          "decompressed bytes specified vs actual.");
-
 namespace maldoca {
 
 // Forward-declare this function, as it is used before being declared.
@@ -320,13 +315,15 @@ static absl::Status ExtractFromOLEContentInternal(
 static absl::Status ExtractFromOOXMLContentInternal(
     const std::string &original_filename, absl::string_view content,
     OLEDirectoryMessage *directory, VBACodeChunks *code_chunks) {
-  maldoca::utils::ArchiveHandler handler(content, "zip");
+  auto handler_or = ::maldoca::utils::GetArchiveHandler(
+      content, "zip", "" /*dummy location since zip uses in-memory libarchive*/,
+      false, false);
 
-  if (!handler.Initialized()) {
+  if (!handler_or.ok() || !handler_or.value()->Initialized()) {
     return absl::FailedPreconditionError(
         "Cannot initialize zip ArchiveHandler");
   }
-  handler.SetIgnoreWarning(absl::GetFlag(FLAGS_ignore_archive_reader_warning));
+  auto handler = handler_or.value().get();
 
   DLOG(INFO) << "Evaluating " << original_filename << " (" << content.length()
              << " bytes) as a OOXML file";
@@ -335,7 +332,8 @@ static absl::Status ExtractFromOOXMLContentInternal(
   int64_t size;
   std::string error;
   std::string archive_content;
-  while (handler.GetNextGoodContent(&archive_member, &size, &archive_content)) {
+  while (
+      handler->GetNextGoodContent(&archive_member, &size, &archive_content)) {
     if (!IsOLE2Content(absl::string_view(archive_content))) {
       archive_content.clear();
       continue;
