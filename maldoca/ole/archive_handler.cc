@@ -36,33 +36,6 @@ class ArchiveHandler7zImpl : public ArchiveHandler {
   bool GetNextEntry(std::string *filename, int64_t *size, bool *isdir) override;
   bool GetEntryContent(std::string *content) override;
 
-  bool GetNextGoodContent(std::string *filename, int64_t *size,
-                          std::string *content) override {
-    DCHECK(filename);
-    DCHECK(size);
-    DCHECK(content);
-
-    std::string fn;
-    int64_t sz = 0;
-    bool isdir = false;
-    while (GetNextEntry(&fn, &sz, &isdir)) {
-      if (isdir) {
-        continue;
-      }
-      *filename = std::move(fn);
-      *size = sz;
-      content->reserve(*size);
-      bool status = GetEntryContent(content);
-      if (status) {
-        return status;
-      }
-      // else failed to get content so log and move on to next one.
-      LOG(ERROR) << "Failed to fetch " << *filename << " of size " << *size
-                 << " with error code: " << ResultCode();
-    }
-    return false;
-  }
-
   int NumberOfFilesInArchive() override {
     LOG(ERROR) << "Not implemented!";
     return -1;

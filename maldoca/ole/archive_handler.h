@@ -65,8 +65,32 @@ class ArchiveHandler {
   // content (it maybe that there is an entry but we can't parse it).
   // If no more such entry, return false. It's a helper method to cover the
   // most often used scenario.
-  virtual bool GetNextGoodContent(std::string* filename, int64_t* size,
-                                  std::string* content) = 0;
+  bool GetNextGoodContent(std::string* filename, int64_t* size,
+                          std::string* content) {
+    DCHECK(filename);
+    DCHECK(size);
+    DCHECK(content);
+
+    std::string fn;
+    int64_t sz = 0;
+    bool isdir = false;
+    while (GetNextEntry(&fn, &sz, &isdir)) {
+      if (isdir) {
+        continue;
+      }
+      *filename = std::move(fn);
+      *size = sz;
+      content->reserve(*size);
+      bool status = GetEntryContent(content);
+      if (status) {
+        return status;
+      }
+      // else failed to get content so log and move on to next one.
+      LOG(ERROR) << "Failed to fetch " << *filename << " of size " << *size
+                 << " with error code: " << ResultCode();
+    }
+    return false;
+  }
 
   // Simple accessors
   virtual bool Initialized() const = 0;
@@ -90,10 +114,6 @@ class ArchiveHandlerTemplate : public ArchiveHandler {
   bool GetEntryContent(std::string* content) override {
     CHECK(handler_ != nullptr);
     return handler_->GetEntryContent(content);
-  }
-  bool GetNextGoodContent(std::string* filename, int64_t* size,
-                          std::string* content) override {
-    return handler_->GetNextGoodContent(filename, size, content);
   }
   int NumberOfFilesInArchive() override {
     CHECK(handler_ != nullptr);
