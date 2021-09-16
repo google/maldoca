@@ -20,4 +20,4 @@ namespace maldoca {
   ::grpc::ClientContext context;
   return stub_->SendProcessingRequest(&context, request, response);
 }
-}  // namespace maldoca
+}  // namespace maldoca 
