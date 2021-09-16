@@ -37,7 +37,7 @@ ABSL_FLAG(uint16_t, port, 6666, "port for communication");
 ABSL_FLAG(std::string, host, "localhost", "Host address");
 ABSL_FLAG(std::string, input_file, "", "input file");
 #ifndef MALDOCA_CHROME
-ABSL_FLAG(std::string, output_file, "", "output file, if empty goes to stdout ");
+ABSL_FLAG(std::string, output_file, "", "output file, if empty goes to stdout");
 #endif  // MALDOCA_CHROME
 ABSL_FLAG(std::string, output_format, "raw",
           "output format, one of raw|json|text");
