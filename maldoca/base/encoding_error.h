@@ -16,7 +16,9 @@
 
 namespace maldoca {
 static inline std::string& GetFailedEncoding() {
-  thread_local std::string failed_encoding;
+  // This code is not thread-safe. thread_local is not usable due to
+  // crbug.com/1261617.
+  static std::string failed_encoding;
   return failed_encoding;
 }
 
