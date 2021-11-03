@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "third_party/maldoca/base_oss/encoding_error.h"
+#include "maldoca/base/encoding_error.h"
 
 #include <string>
 
-#include "third_party/absl/synchronization/mutex.h"
+#include "absl/synchronization/mutex.h"
 
 namespace maldoca {
 namespace {
