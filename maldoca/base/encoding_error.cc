@@ -55,4 +55,3 @@ void SetFailedEncoding(const char* encoding) {
 
 void ResetFailedEncoding() { SetFailedEncoding(""); }
 }  // namespace maldoca
-

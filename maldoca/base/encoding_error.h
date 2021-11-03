@@ -25,10 +25,8 @@ std::string GetFailedEncoding();
 // Sets the failed encoding.
 void SetFailedEncoding(const char* encoding);
 
-
 // Deletes any set encoding.
 void ResetFailedEncoding();
 }  // namespace maldoca
 
 #endif  // MALDOCA_BASE_ENCODING_ERROR_H_
-
