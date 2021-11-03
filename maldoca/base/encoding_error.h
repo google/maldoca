@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef MALDOCA_CHROME
+#ifndef MALDOCA_BASE_ENCODING_ERROR_H_
+#define MALDOCA_BASE_ENCODING_ERROR_H_
+
+#include <string>
 
 namespace maldoca {
-static inline std::string& GetFailedEncoding() {
-  // This code is not thread-safe. thread_local is not usable due to
-  // crbug.com/1261617.
-  static std::string failed_encoding;
-  return failed_encoding;
-}
 
-inline void SetFailedEncoding(const char* encoding) {
-  GetFailedEncoding() = std::string(encoding);
-}
+// Returns the last failed encoding.
+std::string GetFailedEncoding();
 
-inline void ResetFailedEncoding() { GetFailedEncoding().clear(); }
+// Sets the failed encoding.
+void SetFailedEncoding(const char* encoding);
+
+// Deletes any set encoding.
+void ResetFailedEncoding();
 }  // namespace maldoca
 
-#endif  // MALDOCA_CHROME
+#endif  // MALDOCA_BASE_ENCODING_ERROR_H_

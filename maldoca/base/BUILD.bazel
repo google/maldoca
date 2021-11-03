@@ -365,7 +365,9 @@ cc_library(
 
 cc_library(
     name = "encoding_error",
+    srcs = ["encoding_error.cc"],
     hdrs = ["encoding_error.h"],
     copts = DEFAULT_MALDOCA_COPTS,
     visibility = ["//visibility:public"],
+    deps = ["@com_google_absl//absl/synchronization"],
 )
