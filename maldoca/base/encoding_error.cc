@@ -24,7 +24,7 @@ namespace {
 ABSL_CONST_INIT absl::Mutex FailedEncodingMutex(absl::kConstInit);
 
 // Maximum size for failed encodings without \0.
-constexpr uint kMaxFailedEncodingSize = 1023;
+constexpr uint32_t kMaxFailedEncodingSize = 1023;
 
 #ifndef MALDOCA_CHROME
 thread_local char failed_encoding[kMaxFailedEncodingSize + 1];
