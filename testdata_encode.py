@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+#
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,8 +30,13 @@ def xor(data, key):
   return bytearray(((data[i] ^ key[i % l]) for i in range(0, len(data))))
 
 
-key = bytearray([0x42])
-content = bytearray(open(sys.argv[1], "rb").read())
-xored = xor(content, key)
-open(str(sys.argv[1] + "_xored"), "wb").write(xored)
+def main():
+  key = bytearray([0x42])
+  content = bytearray(open(sys.argv[1], "rb").read())
+  xored = xor(content, key)
+  open(str(sys.argv[1] + "_xored"), "wb").write(xored)
+
+
+if __name__ == "__main__":
+  main()
 
