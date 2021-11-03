@@ -19,17 +19,17 @@
 import sys
 
 if len(sys.argv) != 2:
- print("usage: %s <path>" % sys.argv[0])
- sys.exit()
+  print("usage: %s <path>" % sys.argv[0])
+  sys.exit()
+
 
 def xor(data, key):
   l = len(key)
-  return bytearray((
-      (data[i] ^ key[i % l]) for i in range(0, len(data))
-  ))
+  return bytearray(((data[i] ^ key[i % l]) for i in range(0, len(data))))
+
 
 key = bytearray([0x42])
-data = bytearray(open(sys.argv[1], 'rb').read())
-xored = xor(data, key)
+content = bytearray(open(sys.argv[1], "rb").read())
+xored = xor(content, key)
 open(str(sys.argv[1] + "_xored"), "wb").write(xored)
 
