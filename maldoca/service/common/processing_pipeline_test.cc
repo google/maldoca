@@ -198,10 +198,14 @@ TEST_F(ProcesDocTest, CorrectlyParse) {
   HandlerConfig config;
   SetupPipeline(config);
   ValidateProcessedProto(
-      "MALICIOUS_ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_xor_0x42_encoded",
+      "MALICIOUS_"
+      "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_xor_"
+      "0x42_encoded",
       "doc");
   ValidateProcessedProto(
-      "MALICIOUS_c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_xor_0x42_encoded",
+      "MALICIOUS_"
+      "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_xor_"
+      "0x42_encoded",
       "docx");
 #ifndef MALDOCA_CHROME
   ValidateProcessedProto("image_and_text", "pdf");
@@ -216,10 +220,14 @@ TEST_F(ProcesDocTest, CorrectlyParse_Sandbox) {
   config.mutable_parser_config()->set_use_sandbox(true);
   SetupPipeline(config);
   ValidateProcessedProto(
-      "MALICIOUS_ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_xor_0x42_encoded",
+      "MALICIOUS_"
+      "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_xor_"
+      "0x42_encoded",
       "doc");
   ValidateProcessedProto(
-      "MALICIOUS_c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_xor_0x42_encoded",
+      "MALICIOUS_"
+      "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_xor_"
+      "0x42_encoded",
       "docx");
   ValidateProcessedProto("image_and_text", "pdf");
 }
