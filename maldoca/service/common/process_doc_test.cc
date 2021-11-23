@@ -184,9 +184,10 @@ class ProcessDocTest : public Test {
   void TestFiles(const ProcessorConfig &config) {
     DocProcessor processor(config);
 #ifndef MALDOCA_CHROME
-    ValidateProcessedProto("vba1_xor_0x42_encoded.bin",
-                           "vba1_xor_0x42_encoded.bin.response.textproto",
-                           &processor, DocType::VB);
+    ValidateProcessedProto(
+        "MALICIOUS_vba1_xor_0x42_encoded.bin",
+        "MALICIOUS_vba1_xor_0x42_encoded.bin.response.textproto", &processor,
+        DocType::VB);
     ValidateProcessedProto("image_and_text.pdf",
                            "image_and_text.pdf.response.textproto", &processor);
     ValidateProcessedProto("embedded_file.pdf",
@@ -195,14 +196,18 @@ class ProcessDocTest : public Test {
                            "image_and_link.pdf.response.textproto", &processor);
 #endif
     ValidateProcessedProto(
+        "MALICIOUS_"
         "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_xor_"
         "0x42_encoded.doc",
+        "MALICIOUS_"
         "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_xor_"
         "0x42_encoded.response.textproto",
         &processor);
     ValidateProcessedProto(
+        "MALICIOUS_"
         "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_xor_"
         "0x42_encoded.docx",
+        "MALICIOUS_"
         "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_xor_"
         "0x42_encoded.response.textproto",
         &processor);
@@ -219,6 +224,7 @@ TEST_F(ProcessDocTest, DisableMagician) {
   DocProcessor processor(config);
   ProcessDocumentRequest request;
   std::string test_file(
+      "MALICIOUS_"
       "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_xor_"
       "0x42_encoded.doc");
   request.set_file_name(test_file);

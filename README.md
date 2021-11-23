@@ -10,7 +10,7 @@ The project's goal is to analyze potentially malicious documents to improve user
 - OS: Linux or Windows
 
 ## GENERAL
-Some testdata files contain malicious code! Hence, we use a xor-encoding for some testdata files as a safety measure (key = 0x42). Therefore, be very careful when opening / processing them!
+Some testdata files contain malicious code! Hence, we use a xor-encoding for some testdata files as a safety measure (key = 0x42). Additionally, they are prefixed by "MALICIOUS_" and postfixed by "_xor_0x42_encoded". In general, be very careful when opening / processing test files!
 
 For convenience, we provide a python script (["testdata_encode.py"](https://github.com/google/maldoca/blob/master/testdata_encode.py)) to encode / decode those files. The script's output is stored in the same path, having "_xored" as file name appendix. Keep in mind that encoding a file twice decodes it again, i.e. restores the original file.
 

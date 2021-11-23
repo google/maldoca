@@ -139,13 +139,15 @@ void CheckConfigIsUsed(ProcessorConfig config) {
   settings->set_include_vba_code(false);  // turns off vba
   std::string input;
   MALDOCA_ASSERT_OK(testing::GetTestContents(
-      ServiceTestFilename("ffc835c9a950beda17fa79dd0acf28d1df3835232"
-                          "877b5fdd512b3df2ffb2431_xor_0x42_encoded.doc"),
+      ServiceTestFilename("MALICIOUS_"
+                          "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512"
+                          "b3df2ffb2431_xor_0x42_encoded.doc"),
       &input));
 
   ParsedDocument parsed_doc;
   DocumentFeatures doc_features;
   ProcessDocument(
+      "MALICIOUS_"
       "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_xor_"
       "0x42_encoded.doc",
       input, config, &parsed_doc, &doc_features);
@@ -170,10 +172,12 @@ void CheckConfigIsUsed(ProcessorConfig config) {
 TEST(ParseOfficeDoc, CorrectlyParse) {
   ProcessorConfig config = ParseTextOrDie<ProcessorConfig>(kConfgString);
   ValidateParsedProto(
+      "MALICIOUS_"
       "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_xor_"
       "0x42_encoded",
       "doc", config);
   ValidateParsedProto(
+      "MALICIOUS_"
       "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_xor_"
       "0x42_encoded",
       "docx", config);
@@ -190,10 +194,12 @@ TEST(ParseOfficeDoc, CorrectlyParse_Sandbox) {
       .mutable_parser_config()
       ->set_use_sandbox(true);
   ValidateParsedProto(
+      "MALICIOUS_"
       "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_xor_"
       "0x42_encoded",
       "doc", config);
   ValidateParsedProto(
+      "MALICIOUS_"
       "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_xor_"
       "0x42_encoded",
       "docx", config);
