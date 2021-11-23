@@ -1,0 +1,148 @@
+# proto-file: third_party/maldoca/service/proto/document_features.proto
+# proto-message: maldoca.DocumentFeatures
+sha256: "8821dd555708adbee310071a507292bb9892ec0b7db80337696fc078fbbeaee9"
+doc_type: VB
+general_doc_type: GENERAL_DOC_TYPE_VBA
+file_name: "vba1_xor_0x42_encoded.bin"
+file_size: 23552
+office {
+  doc_type: VB
+  general_doc_type: GENERAL_DOC_TYPE_VBA
+  vba_project_feature {
+    create_object_count: 2
+    create_object_non_literal_count: 2
+    standard_library_function_count {
+      key: 42
+      value: 1
+    }
+    standard_library_function_count {
+      key: 54
+      value: 1
+    }
+    standard_library_function_count {
+      key: 57
+      value: 1
+    }
+    standard_library_function_count {
+      key: 87
+      value: 2
+    }
+    standard_library_function_count {
+      key: 89
+      value: 1
+    }
+    standard_library_function_count {
+      key: 98
+      value: 1
+    }
+    standard_library_function_count {
+      key: 117
+      value: 2
+    }
+    standard_library_function_count {
+      key: 118
+      value: 4
+    }
+    standard_library_function_count {
+      key: 125
+      value: 3
+    }
+    standard_library_function_count {
+      key: 129
+      value: 1
+    }
+    standard_library_function_count {
+      key: 130
+      value: 5
+    }
+    standard_library_function_count {
+      key: 134
+      value: 5
+    }
+    standard_library_function_count {
+      key: 137
+      value: 1
+    }
+    standard_library_function_count {
+      key: 160
+      value: 2
+    }
+    standard_library_function_count {
+      key: 161
+      value: 1
+    }
+    standard_library_function_count {
+      key: 167
+      value: 1
+    }
+  }
+  vba_file_features {
+    create_object_count: 2
+    create_object_non_literal_count: 2
+    standard_library_function_count {
+      key: 42
+      value: 1
+    }
+    standard_library_function_count {
+      key: 54
+      value: 1
+    }
+    standard_library_function_count {
+      key: 57
+      value: 1
+    }
+    standard_library_function_count {
+      key: 87
+      value: 2
+    }
+    standard_library_function_count {
+      key: 89
+      value: 1
+    }
+    standard_library_function_count {
+      key: 98
+      value: 1
+    }
+    standard_library_function_count {
+      key: 117
+      value: 2
+    }
+    standard_library_function_count {
+      key: 118
+      value: 4
+    }
+    standard_library_function_count {
+      key: 125
+      value: 3
+    }
+    standard_library_function_count {
+      key: 129
+      value: 1
+    }
+    standard_library_function_count {
+      key: 130
+      value: 5
+    }
+    standard_library_function_count {
+      key: 134
+      value: 5
+    }
+    standard_library_function_count {
+      key: 137
+      value: 1
+    }
+    standard_library_function_count {
+      key: 160
+      value: 2
+    }
+    standard_library_function_count {
+      key: 161
+      value: 1
+    }
+    standard_library_function_count {
+      key: 167
+      value: 1
+    }
+  }
+}
+

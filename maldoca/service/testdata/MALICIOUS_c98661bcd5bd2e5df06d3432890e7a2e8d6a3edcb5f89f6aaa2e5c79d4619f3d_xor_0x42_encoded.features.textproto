@@ -1,0 +1,173 @@
+sha256: "c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d"
+doc_type: DOCX
+general_doc_type: GENERAL_DOC_TYPE_DOC
+file_name: "MALICIOUS_c98661bcd5bd2e5df06d3432890e7a2e8d6a3edcb5f89f6aaa2e5c79d4619f3d_xor_0x42_encoded.docx"
+file_size: 200503
+office {
+  doc_type: DOCX
+  general_doc_type: GENERAL_DOC_TYPE_DOC
+  vba_project_feature {
+    declare_stmt_count: 306
+    dll_name_count {
+      key: 1
+      value: 2
+    }
+    dll_name_count {
+      key: 5
+      value: 303
+    }
+    standard_library_function_count {
+      key: 12
+      value: 9
+    }
+    standard_library_function_count {
+      key: 23
+      value: 1
+    }
+    standard_library_function_count {
+      key: 42
+      value: 5
+    }
+    standard_library_function_count {
+      key: 46
+      value: 2
+    }
+    standard_library_function_count {
+      key: 96
+      value: 2
+    }
+    standard_library_function_count {
+      key: 98
+      value: 1
+    }
+    standard_library_function_count {
+      key: 107
+      value: 26
+    }
+    standard_library_function_count {
+      key: 113
+      value: 7
+    }
+    standard_library_function_count {
+      key: 117
+      value: 1
+    }
+    standard_library_function_count {
+      key: 118
+      value: 1
+    }
+    standard_library_function_count {
+      key: 130
+      value: 4
+    }
+    standard_library_function_count {
+      key: 134
+      value: 4
+    }
+    standard_library_function_count {
+      key: 138
+      value: 1
+    }
+    standard_library_function_count {
+      key: 161
+      value: 2
+    }
+    standard_library_function_count {
+      key: 169
+      value: 2
+    }
+  }
+  vba_file_features {
+  }
+  vba_file_features {
+    declare_stmt_count: 306
+    dll_name_count {
+      key: 1
+      value: 2
+    }
+    dll_name_count {
+      key: 5
+      value: 303
+    }
+    standard_library_function_count {
+      key: 12
+      value: 9
+    }
+    standard_library_function_count {
+      key: 23
+      value: 1
+    }
+    standard_library_function_count {
+      key: 42
+      value: 5
+    }
+    standard_library_function_count {
+      key: 46
+      value: 2
+    }
+    standard_library_function_count {
+      key: 96
+      value: 2
+    }
+    standard_library_function_count {
+      key: 98
+      value: 1
+    }
+    standard_library_function_count {
+      key: 107
+      value: 26
+    }
+    standard_library_function_count {
+      key: 113
+      value: 7
+    }
+    standard_library_function_count {
+      key: 117
+      value: 1
+    }
+    standard_library_function_count {
+      key: 118
+      value: 1
+    }
+    standard_library_function_count {
+      key: 130
+      value: 4
+    }
+    standard_library_function_count {
+      key: 134
+      value: 4
+    }
+    standard_library_function_count {
+      key: 138
+      value: 1
+    }
+    standard_library_function_count {
+      key: 161
+      value: 2
+    }
+    standard_library_function_count {
+      key: 169
+      value: 2
+    }
+  }
+  vba_file_features {
+  }
+  vba_file_features {
+  }
+  vba_file_features {
+  }
+  vba_file_features {
+  }
+  vba_file_features {
+  }
+  vba_file_features {
+  }
+  vba_file_features {
+  }
+  vba_file_features {
+  }
+  vba_file_features {
+  }
+  vba_file_features {
+  }
+}

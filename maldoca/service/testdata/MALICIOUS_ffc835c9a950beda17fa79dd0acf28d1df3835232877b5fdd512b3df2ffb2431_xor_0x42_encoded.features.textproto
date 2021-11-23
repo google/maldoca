@@ -1,0 +1,31 @@
+sha256: "ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431"
+doc_type: DOC
+general_doc_type: GENERAL_DOC_TYPE_DOC
+file_name: "MALICIOUS_ffc835c9a950beda17fa79dd0acf28d1df3835232877b5fdd512b3df2ffb2431_xor_0x42_encoded.doc"
+file_size: 34304
+office {
+  doc_type: DOC
+  general_doc_type: GENERAL_DOC_TYPE_DOC
+  vba_project_feature {
+    standard_library_function_count {
+      key: 98
+      value: 1
+    }
+    standard_library_function_count {
+      key: 118
+      value: 186
+    }
+  }
+  vba_file_features {
+  }
+  vba_file_features {
+    standard_library_function_count {
+      key: 98
+      value: 1
+    }
+    standard_library_function_count {
+      key: 118
+      value: 186
+    }
+  }
+}

