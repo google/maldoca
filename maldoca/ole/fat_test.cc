@@ -45,7 +45,7 @@ std::string GetTestContent(absl::string_view filename) {
 class FATTest : public testing::Test {
  protected:
   void SetUp() override {
-    content_ = GetTestContent("vba1_xor_0x42_encoded.bin");
+    content_ = GetTestContent("MALICIOUS_vba1_xor_0x42_encoded.bin");
     EXPECT_TRUE(OLEHeader::ParseHeader(content_, &header));
   }
 

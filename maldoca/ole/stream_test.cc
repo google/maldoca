@@ -50,7 +50,7 @@ std::string GetTestContent(absl::string_view filename) {
 class StreamTest : public testing::Test {
  protected:
   void SetUp() override {
-    input = GetTestContent("vba1_xor_0x42_encoded.bin");
+    input = GetTestContent("MALICIOUS_vba1_xor_0x42_encoded.bin");
     EXPECT_TRUE(OLEHeader::ParseHeader(input, &header));
     EXPECT_TRUE(header.IsInitialized());
     EXPECT_TRUE(FAT::Read(input, header, &fat));
