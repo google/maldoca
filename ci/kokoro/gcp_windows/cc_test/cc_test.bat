@@ -13,8 +13,8 @@ rem See the License for the specific language governing permissions and
 rem limitations under the License.
 
 rem This script should be run at the root of maldoca repo.
-choco install -y bazel
-choco install -y llvm
+choco install -y bazel --version=5.0.0
+choco install -y llvm --version=12.0.1
 
 rem seems to break the kokoro automation so removing it
 rem refreshenv

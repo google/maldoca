@@ -170,6 +170,16 @@ maybe(
     path = "./third_party/boringssl",
 )
 
+# build_bazel_rules_apple seems required for gRPC with bazel >= 5.0.0.
+# More context: https://github.com/bazelbuild/bazel/issues/13811
+http_archive(
+    name = "build_bazel_rules_apple",
+    sha256 = "0052d452af7742c8f3a4e0929763388a66403de363775db7e90adecb2ba4944b",
+    urls = [
+        "https://github.com/bazelbuild/rules_apple/releases/download/0.31.3/rules_apple.0.31.3.tar.gz",
+    ],
+)
+
 # gRPC. Note it needs to be named com_github_grpc_grpc because it's referred
 # as such internally.
 local_repository(

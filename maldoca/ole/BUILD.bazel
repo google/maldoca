@@ -604,7 +604,7 @@ cc_test(
     copts = DEFAULT_MALDOCA_COPTS,
     data = [
         "testdata/ooxml/hyperlink_relationship.docx",
-        "testdata/ooxml/sample_document.docm",
+        "testdata/ooxml/MALICIOUS_sample_document_xor_0x42_encoded.docm",
         "testdata/ooxml/sample_document_invalid_archive.docx",
     ],
     deps = [
