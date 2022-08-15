@@ -307,7 +307,8 @@ TEST(ExtractOoxml, TestParserConfig) {
   OoxmlToProtoSettings settings =
       maldoca::utils::GetDefaultOoxmlToProtoSettings();
 
-  auto ooxml = TryParseOOXMLFile("MALICIOUS_sample_document_xor_0x42_encoded.docm", settings);
+  auto ooxml = TryParseOOXMLFile(
+      "MALICIOUS_sample_document_xor_0x42_encoded.docm", settings);
   MALDOCA_EXPECT_OK(ooxml);
   EXPECT_FALSE(ooxml->summary_information().property_set().empty());
   EXPECT_FALSE(ooxml->document_summary_information().property_set().empty());
@@ -318,7 +319,8 @@ TEST(ExtractOoxml, TestParserConfig) {
   EXPECT_FALSE(ooxml->relationships().empty());
 
   settings.set_include_metadata(false);
-  ooxml = TryParseOOXMLFile("MALICIOUS_sample_document_xor_0x42_encoded.docm", settings);
+  ooxml = TryParseOOXMLFile("MALICIOUS_sample_document_xor_0x42_encoded.docm",
+                            settings);
   MALDOCA_EXPECT_OK(ooxml);
   EXPECT_TRUE(ooxml->summary_information().property_set().empty());
   EXPECT_TRUE(ooxml->document_summary_information().property_set().empty());
@@ -329,7 +331,8 @@ TEST(ExtractOoxml, TestParserConfig) {
   EXPECT_TRUE(ooxml->relationships().empty());
 
   settings.set_include_vba_code(false);
-  ooxml = TryParseOOXMLFile("MALICIOUS_sample_document_xor_0x42_encoded.docm", settings);
+  ooxml = TryParseOOXMLFile("MALICIOUS_sample_document_xor_0x42_encoded.docm",
+                            settings);
   MALDOCA_EXPECT_OK(ooxml);
   EXPECT_TRUE(ooxml->summary_information().property_set().empty());
   EXPECT_TRUE(ooxml->document_summary_information().property_set().empty());
@@ -338,7 +341,8 @@ TEST(ExtractOoxml, TestParserConfig) {
   EXPECT_TRUE(ooxml->relationships().empty());
 
   settings.set_include_structure_information(false);
-  ooxml = TryParseOOXMLFile("MALICIOUS_sample_document_xor_0x42_encoded.docm", settings);
+  ooxml = TryParseOOXMLFile("MALICIOUS_sample_document_xor_0x42_encoded.docm",
+                            settings);
   MALDOCA_EXPECT_OK(ooxml);
   EXPECT_TRUE(ooxml->summary_information().property_set().empty());
   EXPECT_TRUE(ooxml->document_summary_information().property_set().empty());
@@ -347,7 +351,8 @@ TEST(ExtractOoxml, TestParserConfig) {
   EXPECT_TRUE(ooxml->relationships().empty());
 
   settings.set_include_embedded_objects(false);
-  ooxml = TryParseOOXMLFile("MALICIOUS_sample_document_xor_0x42_encoded.docm", settings);
+  ooxml = TryParseOOXMLFile("MALICIOUS_sample_document_xor_0x42_encoded.docm",
+                            settings);
   MALDOCA_EXPECT_OK(ooxml);
   EXPECT_TRUE(ooxml->summary_information().property_set().empty());
   EXPECT_TRUE(ooxml->document_summary_information().property_set().empty());
@@ -356,7 +361,8 @@ TEST(ExtractOoxml, TestParserConfig) {
   EXPECT_TRUE(ooxml->relationships().empty());
 
   settings.set_include_vba_code(true);
-  ooxml = TryParseOOXMLFile("MALICIOUS_sample_document_xor_0x42_encoded.docm", settings);
+  ooxml = TryParseOOXMLFile("MALICIOUS_sample_document_xor_0x42_encoded.docm",
+                            settings);
   MALDOCA_EXPECT_OK(ooxml);
   EXPECT_TRUE(ooxml->summary_information().property_set().empty());
   EXPECT_TRUE(ooxml->document_summary_information().property_set().empty());
