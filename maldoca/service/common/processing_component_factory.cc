@@ -14,6 +14,7 @@
 
 #include "maldoca/service/common/processing_component_factory.h"
 
+#include "absl/strings/str_cat.h"
 #include "maldoca/service/common/office_processing_component.h"
 
 #ifndef MALDOCA_CHROME
