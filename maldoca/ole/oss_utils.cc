@@ -949,7 +949,12 @@ bool BufferToUtf8::ConvertEncodingBufferToUTF8String(absl::string_view input,
 
 xmlDocPtr XmlParseMemory(const char* buffer, int size) {
   absl::call_once(once_init, &InitSAXHandler);
-  return xmlSAXParseMemory(&sax_handler, buffer, size, 0);
+  xmlParserCtxtPtr ctxt = xmlNewParserCtxt();
+  *ctxt->sax = sax_handler;
+  xmlDocPtr doc = xmlCtxtReadMemory(ctxt, buffer, size,
+          NULL /* URL */, NULL /* encoding */, 0 /* options */);
+  xmlFreeParserCtxt(ctxt);
+  return doc;
 }
 
 // Converts an `xmlChar*` object to a string_view.
